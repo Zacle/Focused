@@ -17,3 +17,4 @@ rootProject.name = "Focused"
 include(":app")
 include(":core:model")
 include(":domain")
+include(":core:common")
