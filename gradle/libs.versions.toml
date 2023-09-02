@@ -32,6 +32,8 @@ protobufPlugin = "0.9.4"
 targetSdk = "33"
 timber = "5.0.1"
 truth = "1.1.5"
+appcompat = "1.6.1"
+material = "1.9.0"
 
 
 [libraries]
@@ -81,6 +83,8 @@ protobuf-kotlin-lite = { group = "com.google.protobuf", name = "protobuf-kotlin-
 protobuf-protoc = { group = "com.google.protobuf", name = "protoc", version.ref = "protobuf" }
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 truth = { module = "com.google.truth:truth", version.ref = "truth" }
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 
 [plugins]

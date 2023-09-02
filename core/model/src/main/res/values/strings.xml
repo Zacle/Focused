@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Misc -->
+    <string name="due_date">Due date</string>
+
+    <!-- Priority -->
+    <string name="high_priority">High</string>
+    <string name="medium_priority">Medium</string>
+    <string name="low_priority">Low</string>
+    <string name="no_priority">None</string>
+    <string name="priority">Priority</string>
+
+    <!-- Tag -->
+    <string name="tag">Tag</string>
+
+    <!-- Deadline types -->
+    <string name="yesterday">Yesterday</string>
+    <string name="today">Today</string>
+    <string name="tomorrow">Tomorrow</string>
+    <string name="upcoming">Upcoming</string>
+    <string name="someday">Someday</string>
+    <string name="this_day">This</string>
+
+    <!-- Errors -->
+    <string name="unknown_error">An unknown error occurred.</string>
+    <string name="task_not_updated">The task could not be updated. Try again</string>
+    <string name="task_not_found">The task could not be found.</string>
+    <string name="tag_not_found">The tag could not be found.</string>
+    <string name="tag_not_updated">The tag could not be updated</string>
+
+</resources>
