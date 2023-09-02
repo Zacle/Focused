@@ -16,3 +16,4 @@ dependencyResolutionManagement {
 rootProject.name = "Focused"
 include(":app")
 include(":core:model")
+include(":domain")
