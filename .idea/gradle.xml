@@ -17,6 +17,7 @@
             <option value="$PROJECT_DIR$/core/model" />
             <option value="$PROJECT_DIR$/core/ui-common" />
             <option value="$PROJECT_DIR$/core/ui-design" />
+            <option value="$PROJECT_DIR$/data-local" />
             <option value="$PROJECT_DIR$/data-repository" />
             <option value="$PROJECT_DIR$/datastore" />
             <option value="$PROJECT_DIR$/domain" />
