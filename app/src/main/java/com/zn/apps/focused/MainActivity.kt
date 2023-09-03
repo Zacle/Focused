@@ -44,17 +44,13 @@ class MainActivity : ComponentActivity() {
                     }
             }
         }
-
         /**
          * Keep the splash screen on-screen until the UI state is loaded. This condition is
          * evaluated each time the app needs to be redrawn so it should be fast to avoid blocking
          * the UI.
          */
         splashScreen.setKeepOnScreenCondition {
-            when(uiState) {
-                is UiState.Error, UiState.Loading -> true
-                is UiState.Success -> false
-            }
+            uiState !is UiState.Success
         }
 
         // Turn off the decor fitting system windows, which allows us to handle insets,

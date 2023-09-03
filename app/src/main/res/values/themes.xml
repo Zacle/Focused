@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="NightAdjusted.Theme.FocusedApp" parent="android:Theme.Material.Light.NoActionBar">
+    <style name="NightAdjusted.Theme.Focused" parent="android:Theme.Material.Light.NoActionBar">
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="27">true</item>
     </style>
 
-    <style name="PlatformAdjusted.Theme.FocusedApp" parent="NightAdjusted.Theme.FocusedApp">
+    <style name="PlatformAdjusted.Theme.Focused" parent="NightAdjusted.Theme.FocusedApp">
         <item name="android:statusBarColor">@color/black30</item>
     </style>
 
     <!-- The final theme we use -->
-    <style name="Theme.Focused" parent="PlatformAdjusted.Theme.FocusedApp" />
+    <style name="Theme.Focused" parent="PlatformAdjusted.Theme.Focused" />
 
     <style name="NightAdjusted.Theme.Splash" parent="Theme.SplashScreen">
         <item name="android:windowLightStatusBar" >true</item>
@@ -21,6 +21,7 @@
     <style name="Theme.Focused.Splash" parent="NightAdjusted.Theme.Splash">
         <item name="windowSplashScreenBackground">#FFEFDBFF</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/splash</item>
+        <item name="windowSplashScreenAnimationDuration">3000</item>
         <item name="postSplashScreenTheme">@style/Theme.Focused</item>
     </style>
 </resources>
