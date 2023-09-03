@@ -8,7 +8,6 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -19,6 +18,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.zn.apps.focused.ui.FocusedApp
 import com.zn.apps.model.UserData
+import com.zn.apps.ui_common.state.CommonScreen
 import com.zn.apps.ui_common.state.UiState
 import com.zn.apps.ui_design.theme.FocusedAppTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -86,29 +86,23 @@ class MainActivity : ComponentActivity() {
             FocusedAppTheme(
                 darkTheme = darkTheme
             ) {
-                val shouldHideOnboarding = shouldHideOnboarding(uiState = uiState)
-                FocusedApp(shouldHideOnboarding = shouldHideOnboarding)
+                CommonScreen(state = uiState) { userData->
+                    val shouldHideOnboarding = userData.shouldHideOnboarding
+                    FocusedApp(shouldHideOnboarding = shouldHideOnboarding)
+                }
             }
         }
     }
-}
-
-@Composable
-fun shouldHideOnboarding(
-    uiState: UiState<UserData>
-): Boolean = when (uiState) {
-    is UiState.Error, UiState.Loading -> true
-    is UiState.Success -> uiState.data.shouldHideOnboarding
 }
 
 /**
  * The default light scrim, as defined by androidx and the platform:
  * https://cs.android.com/androidx/platform/frameworks/support/+/androidx-main:activity/activity/src/main/java/androidx/activity/EdgeToEdge.kt;l=35-38;drc=27e7d52e8604a080133e8b842db10c89b4482598
  */
-private val lightScrim = android.graphics.Color.argb(0xe6, 0xFF, 0xFF, 0xFF)
+private val lightScrim = Color.argb(0xe6, 0xFF, 0xFF, 0xFF)
 
 /**
  * The default dark scrim, as defined by androidx and the platform:
  * https://cs.android.com/androidx/platform/frameworks/support/+/androidx-main:activity/activity/src/main/java/androidx/activity/EdgeToEdge.kt;l=40-44;drc=27e7d52e8604a080133e8b842db10c89b4482598
  */
-private val darkScrim = android.graphics.Color.argb(0x80, 0x1b, 0x1b, 0x1b)
+private val darkScrim = Color.argb(0x80, 0x1b, 0x1b, 0x1b)
