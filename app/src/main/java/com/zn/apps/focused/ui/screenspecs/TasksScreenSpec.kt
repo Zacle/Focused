@@ -1,16 +1,24 @@
 package com.zn.apps.focused.ui.screenspecs
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.LocalContext
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavBackStackEntry
+import com.zn.apps.feature.tasks.list.TasksRoute
+import com.zn.apps.feature.tasks.list.TasksUiAction
+import com.zn.apps.feature.tasks.list.TasksUiEvent
+import com.zn.apps.feature.tasks.list.TasksViewModel
+import com.zn.apps.focused.R
 import com.zn.apps.focused.ui.FocusedAppState
+import com.zn.apps.ui_common.state.CommonScreen
 import com.zn.apps.ui_design.icon.FAIcons
 import com.zn.apps.ui_design.icon.Icon
 import com.zn.apps.ui_design.icon.Icon.DrawableResourceIcon
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import com.zn.apps.feature.tasks.R as tasksR
 
 data object TasksScreenSpec: BottomNavScreenSpec {
@@ -28,13 +36,7 @@ data object TasksScreenSpec: BottomNavScreenSpec {
 
     @Composable
     override fun Content(appState: FocusedAppState, navBackStackEntry: NavBackStackEntry) {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(text = "Tasks")
-        }
-        /*val viewModel: TasksViewModel = hiltViewModel()
+        val viewModel: TasksViewModel = hiltViewModel()
 
         LaunchedEffect(Unit) {
             viewModel.submitAction(TasksUiAction.Load)
@@ -99,15 +101,15 @@ data object TasksScreenSpec: BottomNavScreenSpec {
                     }
                 }
             }
-        }*/
+        }
     }
 
-    /*private suspend fun showSnackbar(appState: FocusedAppState, message: String) {
+    private suspend fun showSnackbar(appState: FocusedAppState, message: String) {
         appState.coroutineScope.launch {
             appState.snackbarHostState.showSnackbar(
                 message = message,
                 withDismissAction = true
             )
         }
-    }*/
+    }
 }
