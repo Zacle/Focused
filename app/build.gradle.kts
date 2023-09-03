@@ -42,6 +42,7 @@ android {
         jvmTarget = libs.versions.jvmTarget.get()
     }
     buildFeatures {
+        buildConfig = true
         compose = true
     }
     composeOptions {
@@ -55,6 +56,23 @@ android {
 }
 
 dependencies {
+
+    implementation(project(":feature:onboarding"))
+    implementation(project(":feature:projects"))
+    implementation(project(":feature:report"))
+    implementation(project(":feature:tasks"))
+    implementation(project(":feature:timer"))
+
+    implementation(project(":core:model"))
+    implementation(project(":core:common"))
+    implementation(project(":core:di"))
+    implementation(project(":core:ui-design"))
+    implementation(project(":core:ui-common"))
+
+    implementation(project(":data-repository"))
+    implementation(project(":domain"))
+    implementation(project(":data-local"))
+    implementation(project(":datastore"))
 
     // Core Android dependencies
     implementation(libs.androidx.core.ktx)

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tasks">Tasks</string>
+    <string name="see_all">See all</string>
+    <string name="no_tasks">No tasks on the list.</string>
+    <string name="click_to_add_task">
+        Please click on the floating icon to add a task.
+    </string>
+</resources>
