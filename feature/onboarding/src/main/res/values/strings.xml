@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="skip">Skip</string>
+    <string name="next">Next</string>
+    <string name="get_started">Get Started</string>
+
+    <!-- Schedule tasks -->
+    <string name="schedule_tasks_title">Schedule tasks</string>
+    <string name="schedule_tasks_description">
+        Easily schedule tasks for the day, week, or month.
+        See your tasks at a glance and stay on track with your goals.
+    </string>
+
+    <!-- Run tasks -->
+    <string name="run_tasks_title">Run timer for each task</string>
+    <string name="run_tasks_description">
+        Use the pomodoro technique to focus on your tasks and avoid distractions.
+        Set a timer and work on your task until the timer goes off.
+    </string>
+
+    <!-- Organize tasks -->
+    <string name="organize_tasks_title">Organize tasks in project</string>
+    <string name="organize_tasks_description">
+        Group tasks together into projects to keep your work organized.
+        See all the tasks in a project at a glance and easily track your progress.
+    </string>
+</resources>

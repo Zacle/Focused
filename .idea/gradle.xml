@@ -22,6 +22,12 @@
             <option value="$PROJECT_DIR$/data-repository" />
             <option value="$PROJECT_DIR$/datastore" />
             <option value="$PROJECT_DIR$/domain" />
+            <option value="$PROJECT_DIR$/feature" />
+            <option value="$PROJECT_DIR$/feature/onboarding" />
+            <option value="$PROJECT_DIR$/feature/projects" />
+            <option value="$PROJECT_DIR$/feature/report" />
+            <option value="$PROJECT_DIR$/feature/tasks" />
+            <option value="$PROJECT_DIR$/feature/timer" />
           </set>
         </option>
       </GradleProjectSettings>
