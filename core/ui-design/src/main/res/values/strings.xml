@@ -31,4 +31,7 @@
     <string name="delete">Delete Task</string>
     <string name="delete_task_message">Are you sure to delete this task?</string>
 
+    <!-- Tags -->
+    <string name="all">All</string>
+
 </resources>

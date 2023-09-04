@@ -23,13 +23,14 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.zn.apps.model.data.tag.Tag
+import com.zn.apps.ui_design.R
 import com.zn.apps.ui_design.theme.FocusedAppTheme
 
 @Composable
@@ -40,6 +41,8 @@ fun TagChips(
     modifier: Modifier = Modifier
 ) {
 
+    val defaultTagName = stringResource(id = R.string.all)
+
     LazyRow(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -47,7 +50,15 @@ fun TagChips(
             .heightIn(min = 16.dp)
             .padding(vertical = 4.dp)
     ) {
-        items(tags) { tag ->
+        item {
+            TagChip(
+                tag = Tag(id = "", name = defaultTagName),
+                selected = selectedTagId.isEmpty(),
+                onTagSelected = onTagSelected
+            )
+        }
+
+        items(tags, key = { it.id }) { tag ->
             TagChip(
                 tag = tag,
                 selected = tag.id == selectedTagId,
@@ -64,11 +75,7 @@ fun TagChip(
     onTagSelected: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-
-    val selectedState by remember {
-        mutableStateOf(selected)
-    }
-    val transition = updateTransition(targetState = selectedState, label = "tag transition")
+    val transition = updateTransition(targetState = selected, label = "tag transition")
 
     val backgroundColor by transition.animateColor(
         label = "tag backgroundColor",
@@ -153,7 +160,6 @@ fun TagChipsPreview() {
         val selectedTag = Tag(name = "work")
         TagChips(
             tags = listOf(
-                Tag(name = "all"),
                 selectedTag,
                 Tag(name = "study"),
                 Tag(name = "social"),

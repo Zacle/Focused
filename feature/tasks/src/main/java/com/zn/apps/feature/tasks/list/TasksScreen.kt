@@ -54,6 +54,7 @@ import com.zn.apps.ui_design.component.FAFloatingButton
 import com.zn.apps.ui_design.component.FATopAppBar
 import com.zn.apps.ui_design.component.TagChips
 import com.zn.apps.ui_design.icon.FAIcons
+import com.zn.apps.ui_design.icon.Icon.DrawableResourceIcon
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -135,6 +136,8 @@ fun TasksScreen(
         topBar = {
             FATopAppBar(
                 titleName = stringResource(id = R.string.tasks),
+                onNavigationIconClicked = {},
+                navigationIcon = DrawableResourceIcon(FAIcons.menu),
                 scrollBehavior = scrollBehavior
             ) {
                 TagChips(

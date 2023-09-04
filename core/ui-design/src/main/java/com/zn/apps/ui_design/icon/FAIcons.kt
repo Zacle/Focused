@@ -19,6 +19,7 @@ object FAIcons {
     val calendar = R.drawable.calendar
     val add_time = R.drawable.time_add
     val delete = R.drawable.delete
+    val menu = R.drawable.menu
 }
 
 /**

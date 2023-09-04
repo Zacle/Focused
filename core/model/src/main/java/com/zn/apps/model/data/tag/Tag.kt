@@ -11,6 +11,13 @@ data class Tag(
     var color: Int? = null,
     var selected: Boolean? = false
 ) {
+
+    /** Only IDs are used for equality. */
+    override fun equals(other: Any?): Boolean = this === other || (other is Tag && other.id == id)
+
+    /** Only IDs are used for equality. */
+    override fun hashCode(): Int = id.hashCode()
+
     fun getDisplayName() = name.lowercase().replaceFirstChar { it.uppercase() }
 }
 

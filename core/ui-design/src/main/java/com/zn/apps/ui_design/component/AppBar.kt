@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -26,17 +27,22 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TileMode
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.zn.apps.model.data.tag.Tag
+import com.zn.apps.ui_design.icon.Icon
+import com.zn.apps.ui_design.icon.Icon.DrawableResourceIcon
+import com.zn.apps.ui_design.icon.Icon.ImageVectorIcon
 import com.zn.apps.ui_design.theme.FocusedAppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FATopAppBar(
     titleName: String,
+    navigationIcon: Icon,
+    onNavigationIconClicked: () -> Unit,
     modifier: Modifier = Modifier,
-    navigationIcon: (@Composable () -> Unit)? = null,
     actions: @Composable RowScope.() -> Unit = {},
     scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState()),
     content: @Composable () -> Unit
@@ -68,8 +74,26 @@ fun FATopAppBar(
                     )
                 },
                 navigationIcon = {
-                    if (navigationIcon != null) {
-                        navigationIcon()
+                    when(navigationIcon) {
+                        is DrawableResourceIcon -> {
+                            IconButton(onClick = onNavigationIconClicked) {
+                                Icon(
+                                    painter = painterResource(id = navigationIcon.id),
+                                    contentDescription = null,
+                                    tint = FATopAppBarDefaults.appBarContentColor(),
+                                    modifier = Modifier.size(24.dp)
+                                )
+                            }
+                        }
+                        is ImageVectorIcon -> {
+                            IconButton(onClick = onNavigationIconClicked) {
+                                Icon(
+                                    imageVector = navigationIcon.imageVector,
+                                    contentDescription = null,
+                                    tint = FATopAppBarDefaults.appBarContentColor()
+                                )
+                            }
+                        }
                     }
                 },
                 actions = actions,
@@ -94,15 +118,8 @@ fun FocusedAppBarPreview() {
         val selectedTag = Tag(name = "work")
         FATopAppBar(
             titleName = "Tasks",
-            navigationIcon = {
-                IconButton(onClick = { /*TODO*/ }) {
-                    Icon(
-                        imageVector = Icons.Default.Menu,
-                        contentDescription = null,
-                        tint = FATopAppBarDefaults.appBarContentColor()
-                    )
-                }
-            }
+            navigationIcon = ImageVectorIcon(Icons.Default.Menu),
+            onNavigationIconClicked = {}
         ) {
             TagChips(
                 tags = listOf(
