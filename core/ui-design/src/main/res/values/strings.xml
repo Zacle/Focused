@@ -33,5 +33,13 @@
 
     <!-- Tags -->
     <string name="all">All</string>
+    <string name="select_tag">Select Tag</string>
+    <string name="no_tag">No Tag</string>
+
+    <!-- Priority -->
+    <string name="select_priority">Select Priority</string>
+
+    <!-- Projects -->
+    <string name="select_project">Select Project</string>
 
 </resources>
