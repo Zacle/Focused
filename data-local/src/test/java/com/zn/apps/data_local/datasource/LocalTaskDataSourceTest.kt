@@ -10,8 +10,8 @@ import com.zn.apps.model.data.task.TaskResource
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
 import org.junit.Test
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
@@ -34,28 +34,28 @@ class LocalTaskDataSourceTest {
     fun `Given a task with empty project, the projectId should be null`() = runTest {
         whenever(taskDao.getTask("")).thenReturn(flowOf(populatedTaskEntity_1))
         val result = localTaskDataSource.getTask("").first()
-        Assert.assertNull(result?.projectId)
+        assertNull(result?.projectId)
     }
 
     @Test
     fun `Given a task with empty project, the project name should be empty`() = runTest {
         whenever(taskDao.getTask("")).thenReturn(flowOf(populatedTaskEntity_1))
         val result = localTaskDataSource.getTask("").first()
-        Assert.assertEquals("", result?.projectName)
+        assertEquals("", result?.projectName)
     }
 
     @Test
     fun `Given a task with empty tag, the tagId should be null`() = runTest {
         whenever(taskDao.getTask("")).thenReturn(flowOf(populatedTaskEntity_3))
         val result = localTaskDataSource.getTask("").first()
-        Assert.assertNull(result?.tagId)
+        assertNull(result?.tagId)
     }
 
     @Test
     fun `Given a task with empty tag, the tagName should be empty`() = runTest {
         whenever(taskDao.getTask("")).thenReturn(flowOf(populatedTaskEntity_3))
         val result = localTaskDataSource.getTask("").first()
-        Assert.assertEquals("", result?.tagName)
+        assertEquals("", result?.tagName)
     }
 
     @Test
@@ -89,7 +89,7 @@ class LocalTaskDataSourceTest {
     fun `should be able to return a null task resource for non existent taskId`() = runTest {
         whenever(taskDao.getTask("")).thenReturn(flowOf(null))
         val result = localTaskDataSource.getTask("").first()
-        Assert.assertNull(result)
+        assertNull(result)
     }
 
     @Test

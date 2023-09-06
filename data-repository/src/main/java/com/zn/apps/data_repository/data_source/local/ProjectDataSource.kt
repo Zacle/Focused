@@ -11,7 +11,8 @@ import kotlinx.coroutines.flow.Flow
 interface ProjectDataSource {
 
     /**
-     * Get all projects
+     * Get all projects. Convert data from [PopulatedProjectEntity] to a [ProjectResource] model
+     * to be presented to the UI
      */
     fun getProjectResources(): Flow<List<ProjectResource>>
 
