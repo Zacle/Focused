@@ -5,7 +5,7 @@ import com.zn.apps.domain.repository.TagRepository
 import com.zn.apps.domain.util.TestUtils
 import com.zn.apps.model.usecase.UseCaseException
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.mockito.kotlin.doThrow
 import org.mockito.kotlin.mock
@@ -35,7 +35,7 @@ class DeleteTagUseCaseTest {
         try {
             useCase.process(request)
         } catch (e: Throwable) {
-            Assert.assertTrue(e is UseCaseException.TagNotFoundException)
+            assertTrue(e is UseCaseException.TagNotFoundException)
         }
     }
 }

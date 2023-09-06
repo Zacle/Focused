@@ -15,6 +15,18 @@ sealed class UseCaseException(cause: Throwable): Throwable(cause) {
     class TaskNotFoundException(cause: Throwable): UseCaseException(cause)
 
     /**
+     * If the project was not updated or added, throws an exception that will be used
+     * to display what happened
+     */
+    class ProjectNotUpdatedException(cause: Throwable): UseCaseException(cause)
+
+    /**
+     * If we tried to request a project and couldn't find, throws an exception to let the user
+     * that project was not found
+     */
+    class ProjectNotFoundException(cause: Throwable): UseCaseException(cause)
+
+    /**
      * If the tag was not updated or added, throws an exception that will be used
      * to display what happened
      */

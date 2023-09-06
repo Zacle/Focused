@@ -1,5 +1,6 @@
 package com.zn.apps.domain.util
 
+import com.zn.apps.model.data.project.Project
 import com.zn.apps.model.data.tag.Tag
 import com.zn.apps.model.data.task.Pomodoro
 import com.zn.apps.model.data.task.Task
@@ -20,6 +21,9 @@ object TestUtils {
     val sportTag = Tag(name = "sport")
     val workTag = Tag(name = "work")
     val studyTag = Tag(name = "study")
+
+    val project_1 = Project(name = "UI design", color = 0)
+    val project_2 = Project(name = "Machine Learning", color = 1)
 
     /**
      * Tasks with no project or tag and its task resources

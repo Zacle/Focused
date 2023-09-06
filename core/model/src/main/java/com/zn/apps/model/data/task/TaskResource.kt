@@ -1,7 +1,7 @@
 package com.zn.apps.model.data.task
 
 /**
- * External data layer representation of a fully populated Focused news resource
+ * External data layer representation of a fully populated Focused tasks resource
  *
  * @param task the task associated to the resource
  * @param projectId the project id if this task belongs to a project

@@ -20,13 +20,3 @@ data class Tag(
 
     fun getDisplayName() = name.lowercase().replaceFirstChar { it.uppercase() }
 }
-
-fun Tag.copy(
-    name: String = this.name,
-    color: Int? = this.color
-) =
-    Tag(
-        id = this.id,
-        name = name,
-        color = color
-    )
