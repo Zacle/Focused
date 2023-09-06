@@ -28,7 +28,7 @@ class UpsertTagUseCaseTest {
     }
 
     @Test
-    fun `adding or modifying a non existent tag should throw a task not found exception`() = runTest {
+    fun `adding or modifying a non existent tag should throw a tag not found exception`() = runTest {
         val tag = TestUtils.workTag
         val request = UpsertTagUseCase.Request(tag)
         doThrow(SQLiteException()).`when`(tagRepository).upsertTag(tag)
