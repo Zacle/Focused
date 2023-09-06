@@ -4,7 +4,7 @@ import java.time.OffsetDateTime
 import java.util.UUID
 
 data class Project(
-    val id: String? = UUID.randomUUID().toString(),
+    val id: String = UUID.randomUUID().toString(),
     var name: String,
     var color: Int,
     var createdAt: OffsetDateTime = OffsetDateTime.now(),

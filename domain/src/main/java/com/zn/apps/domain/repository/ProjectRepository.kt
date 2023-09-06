@@ -12,11 +12,11 @@ interface ProjectRepository {
     fun getProjectResources(): Flow<List<ProjectResource>>
 
     /**
-     * Get the project resource that matches the project id
+     * Get the project that matches the project id
      *
      * @param projectId the id of the project to be retrieved
      */
-    fun getProjectResource(projectId: String): Flow<ProjectResource?>
+    fun getProject(projectId: String): Flow<Project?>
 
     /**
      * Update the project if it already exists or insert a new project
