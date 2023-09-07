@@ -4,7 +4,6 @@ import com.zn.apps.data_local.database.project.PopulatedProjectEntity
 import com.zn.apps.data_local.database.project.ProjectDao
 import com.zn.apps.data_local.database.tag.TagEntity
 import com.zn.apps.data_local.model.asEntity
-import com.zn.apps.data_local.model.asExternalModel
 import com.zn.apps.model.data.project.Project
 import com.zn.apps.model.data.project.ProjectResource
 import com.zn.apps.model.data.task.Task
@@ -35,12 +34,6 @@ class LocalProjectDataSourceTest {
     fun `should return a list of project with an empty tag name`() = runTest {
         val list = listOf(populatedProjectEntity_3)
         whenever(projectDao.getProjects()).thenReturn(flowOf(list))
-        val expected = listOf(ProjectResource(
-            project = list[0].project.asExternalModel(),
-            tagName = "",
-            numberOfTasksCompleted = 0,
-            numberOfTasks = 0
-        ))
         val result = localProjectDataSource.getProjectResources().first()
         assertTrue(result[0].tagName.isEmpty())
     }

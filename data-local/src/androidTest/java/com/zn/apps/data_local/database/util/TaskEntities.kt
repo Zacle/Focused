@@ -1,10 +1,12 @@
 package com.zn.apps.data_local.database.util
 
 import android.graphics.Color
+import com.zn.apps.data_local.database.project.PopulatedProjectEntity
 import com.zn.apps.data_local.database.project.ProjectEntity
 import com.zn.apps.data_local.database.tag.TagEntity
 import com.zn.apps.data_local.database.task.PopulatedTaskEntity
 import com.zn.apps.data_local.model.asEntity
+import com.zn.apps.model.data.project.Project
 import com.zn.apps.model.data.tag.Tag
 import com.zn.apps.model.data.task.Pomodoro
 import com.zn.apps.model.data.task.Task
@@ -90,4 +92,28 @@ object TaskEntities {
     val sportTag = Tag(name = "sportTag", color = Color.LTGRAY).asEntity()
     val designTag = Tag(name = "designTag", color = Color.WHITE).asEntity()
     val otherTag = Tag(name = "otherTag", color = Color.BLUE).asEntity()
+
+    /**
+     * Projects
+     */
+    val project_1 = Project(name = "project_1", color = 1, tagId = studyTag.id)
+    val project_2 = Project(name = "project_2", color = 2)
+    val project_3 = Project(name = "project_3", color = 3)
+    val project_4 = Project(name = "project_4", color = 1, tagId = designTag.id)
+
+    val populatedProjectEntity_1 = PopulatedProjectEntity(
+        project = project_1.asEntity(),
+        tags = listOf(studyTag),
+        tasks = listOf(task_1, task_2, task_4).map { it.asEntity() }
+    )
+    val populatedProjectEntity_2 = PopulatedProjectEntity(
+        project = project_2.asEntity(),
+        tags = emptyList(),
+        tasks = emptyList()
+    )
+    val populatedProjectEntity_3 = PopulatedProjectEntity(
+        project = project_3.asEntity(),
+        tags = emptyList(),
+        tasks = listOf(task_3).map { it.asEntity() }
+    )
 }

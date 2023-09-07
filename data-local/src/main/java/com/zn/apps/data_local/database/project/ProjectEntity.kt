@@ -35,11 +35,4 @@ data class ProjectEntity(
     val completedTime: OffsetDateTime? = null,
     @ColumnInfo(name = "completed")
     var completed: Boolean = false
-) {
-
-    /** Only IDs are used for equality. */
-    override fun equals(other: Any?): Boolean = this === other || (other is ProjectEntity && other.id == id)
-
-    /** Only IDs are used for equality. */
-    override fun hashCode(): Int = id.hashCode()
-}
+)

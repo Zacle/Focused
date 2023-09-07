@@ -21,6 +21,9 @@ interface ProjectDao {
     fun getProject(projectId: String): Flow<ProjectEntity?>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertAllProjects(projects: List<ProjectEntity>)
+
+    @Insert
     suspend fun insertProject(project: ProjectEntity)
 
     @Update
