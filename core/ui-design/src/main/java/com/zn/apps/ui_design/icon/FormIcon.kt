@@ -25,17 +25,19 @@ fun FormIcon(
     icon: DrawableResourceIcon,
     modifier: Modifier = Modifier,
 ) {
+    val isColorTransparent = color == Color.Transparent
+
     Box(
         modifier = modifier
             .clip(RoundedCornerShape(percent = 40))
-            .background(color.copy(0.5f))
+            .background(if (isColorTransparent) color else color.copy(0.5f))
             .padding(horizontal = 10.dp, vertical = 2.dp),
         contentAlignment = Alignment.Center
     ) {
         Icon(
             painter = painterResource(id = icon.id),
             contentDescription = null,
-            tint = MaterialTheme.colorScheme.primary,
+            tint = if (isColorTransparent) MaterialTheme.colorScheme.onBackground else Color.White,
             modifier = Modifier
                 .padding(4.dp)
                 .size(20.dp)
