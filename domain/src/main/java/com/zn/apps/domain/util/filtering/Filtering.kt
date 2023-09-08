@@ -2,6 +2,7 @@ package com.zn.apps.domain.util.filtering
 
 import com.zn.apps.filter.Filter
 import com.zn.apps.filter.Filter.DateFilter
+import com.zn.apps.filter.Filter.ProjectFilter
 import com.zn.apps.filter.Filter.TagFilter
 import com.zn.apps.model.data.task.TaskResource
 
@@ -22,6 +23,7 @@ internal interface Filtering {
             return when(filter) {
                 is TagFilter -> TagFilteringStrategy(taskResources)
                 is DateFilter -> DueDateFilteringStrategy(taskResources)
+                is ProjectFilter -> ProjectFilteringStrategy(taskResources)
             }
         }
     }

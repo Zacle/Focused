@@ -109,7 +109,7 @@ fun TasksRoute(
         onRelatedTasksSelected = onRelatedTasksSelected,
         onTaskCompleted = onTaskCompleted,
         onStartTaskPressed = onStartTaskPressed,
-        onFloatActionPressed = { showModalBottomSheet = true }
+        shouldShowModalSheet = { showModalBottomSheet = it }
     )
 }
 
@@ -124,7 +124,7 @@ fun TasksScreen(
     onRelatedTasksSelected: (Int) -> Unit,
     onTaskCompleted: (Task) -> Unit,
     onStartTaskPressed: (Task) -> Unit,
-    onFloatActionPressed: () -> Unit,
+    shouldShowModalSheet: (Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
@@ -149,7 +149,7 @@ fun TasksScreen(
         },
         floatingActionButton = {
             FAFloatingButton(
-                onClick = onFloatActionPressed,
+                onClick = { shouldShowModalSheet(true) },
                 painter = painterResource(id = R.drawable.add_task),
                 description = stringResource(id = R.string.click_to_add_task)
             )

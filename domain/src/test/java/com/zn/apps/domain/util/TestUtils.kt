@@ -65,7 +65,8 @@ object TestUtils {
         task = task_1_2,
         tagId = workTag.id,
         tagName = workTag.getDisplayName(),
-        projectCompleted = true
+        projectCompleted = true,
+        projectId = project_1.id
     )
     /* priority medium */
     val task_1_3 = Task(
@@ -83,7 +84,8 @@ object TestUtils {
     val taskResource_1_3 = TaskResource(
         task = task_1_3,
         tagId = studyTag.id,
-        tagName = studyTag.getDisplayName()
+        tagName = studyTag.getDisplayName(),
+        projectId = project_1.id
     )
     val task_1_4 = Task(
         name = "task_1_4",
@@ -105,7 +107,8 @@ object TestUtils {
         )
     )
     val taskResource_2_1 = TaskResource(
-        task = task_2_1
+        task = task_2_1,
+        projectId = project_2.id
     )
     val task_2_2 = Task(
         name = "task_2_2",
@@ -115,7 +118,8 @@ object TestUtils {
     val taskResource_2_2 = TaskResource(
         task = task_2_2,
         tagId = workTag.id,
-        tagName = workTag.getDisplayName()
+        tagName = workTag.getDisplayName(),
+        projectId = project_1.id
     )
     val task_2_3 = Task(
         name = "task_2_3",
