@@ -12,6 +12,11 @@ interface ProjectRepository {
     fun getProjectResources(): Flow<List<ProjectResource>>
 
     /**
+     * Get projects, do not embed tasks and tags
+     */
+    fun getProjects(): Flow<List<Project>>
+
+    /**
      * Get the project that matches the project id
      *
      * @param projectId the id of the project to be retrieved

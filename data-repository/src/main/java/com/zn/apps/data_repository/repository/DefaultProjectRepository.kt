@@ -14,6 +14,10 @@ class DefaultProjectRepository(
         return projectDataSource.getProjectResources()
     }
 
+    override fun getProjects(): Flow<List<Project>> {
+        return projectDataSource.getProjects()
+    }
+
     override fun getProject(projectId: String): Flow<Project?> {
         return projectDataSource.getProject(projectId)
     }

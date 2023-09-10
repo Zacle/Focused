@@ -25,7 +25,7 @@ class LocalProjectDataSourceTest {
 
     @Test
     fun `should return an empty list of project resource`() = runTest {
-        whenever(projectDao.getProjects()).thenReturn(flowOf(emptyList()))
+        whenever(projectDao.getPopulatedProjects()).thenReturn(flowOf(emptyList()))
         val response = localProjectDataSource.getProjectResources().first()
         assertEquals(emptyList<ProjectResource>(), response)
     }
@@ -33,7 +33,7 @@ class LocalProjectDataSourceTest {
     @Test
     fun `should return a list of project with an empty tag name`() = runTest {
         val list = listOf(populatedProjectEntity_3)
-        whenever(projectDao.getProjects()).thenReturn(flowOf(list))
+        whenever(projectDao.getPopulatedProjects()).thenReturn(flowOf(list))
         val result = localProjectDataSource.getProjectResources().first()
         assertTrue(result[0].tagName.isEmpty())
     }
@@ -41,7 +41,7 @@ class LocalProjectDataSourceTest {
     @Test
     fun `should return a list of project with no tasks`() = runTest {
         val list = listOf(populatedProjectEntity_2)
-        whenever(projectDao.getProjects()).thenReturn(flowOf(list))
+        whenever(projectDao.getPopulatedProjects()).thenReturn(flowOf(list))
         val result = localProjectDataSource.getProjectResources().first()[0]
         assertEquals(result.numberOfTasks, 0)
         assertEquals(result.numberOfTasksCompleted, 0)
@@ -50,7 +50,7 @@ class LocalProjectDataSourceTest {
     @Test
     fun `should return a list of project with a tag name`() = runTest {
         val list = listOf(populatedProjectEntity_1)
-        whenever(projectDao.getProjects()).thenReturn(flowOf(list))
+        whenever(projectDao.getPopulatedProjects()).thenReturn(flowOf(list))
         val result = localProjectDataSource.getProjectResources().first()[0]
         assertEquals("tag", result.tagName)
     }
@@ -58,7 +58,7 @@ class LocalProjectDataSourceTest {
     @Test
     fun `should return a list of project with tasks data`() = runTest {
         val list = listOf(populatedProjectEntity_1)
-        whenever(projectDao.getProjects()).thenReturn(flowOf(list))
+        whenever(projectDao.getPopulatedProjects()).thenReturn(flowOf(list))
         val result = localProjectDataSource.getProjectResources().first()[0]
         assertEquals(2, result.numberOfTasks)
         assertEquals(1, result.numberOfTasksCompleted)

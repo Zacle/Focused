@@ -57,14 +57,14 @@ class ProjectDaoTest {
 
     @Test
     fun shouldReturnEmpty() = runTest {
-        val result = projectDao.getProjects().first()
+        val result = projectDao.getPopulatedProjects().first()
         assertThat(result).isEmpty()
     }
 
     @Test
     fun returnProjectWithNoTag() = runTest {
         projectDao.insertAllProjects(listOf(project_2, project_3).map { it.asEntity() })
-        val actual = projectDao.getProjects().first()
+        val actual = projectDao.getPopulatedProjects().first()
         val expected = listOf(
             PopulatedProjectEntity(
                 project = project_2.asEntity(),
@@ -84,7 +84,7 @@ class ProjectDaoTest {
     fun returnProjectWithTagEmbedded() = runTest {
         tagDao.insertAllTags(listOf(studyTag, sportTag))
         projectDao.insertAllProjects(listOf(project_1, project_2).map { it.asEntity() })
-        val actual = projectDao.getProjects().first()
+        val actual = projectDao.getPopulatedProjects().first()
         val expected = listOf(
             PopulatedProjectEntity(
                 project = project_1.asEntity(),
@@ -103,7 +103,7 @@ class ProjectDaoTest {
     @Test
     fun returnProjectWithNoTasks() = runTest {
         projectDao.insertAllProjects(listOf(project_2, project_3).map { it.asEntity() })
-        val actual = projectDao.getProjects().first()
+        val actual = projectDao.getPopulatedProjects().first()
         val expected = listOf(
             PopulatedProjectEntity(
                 project = project_2.asEntity(),
@@ -125,7 +125,7 @@ class ProjectDaoTest {
         projectDao.insertAllProjects(listOf(project_1, project_2, project_4).map { it.asEntity() })
         val tasks = listOf(taskEntity_1.copy(projectId = project_1.id), taskEntity_4.copy(projectId = project_4.id))
         taskDao.insertTasks(tasks)
-        val actual = projectDao.getProjects().first()
+        val actual = projectDao.getPopulatedProjects().first()
         val expected = listOf(
             PopulatedProjectEntity(
                 project = project_1.asEntity(),

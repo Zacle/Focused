@@ -17,6 +17,11 @@ interface ProjectDataSource {
     fun getProjectResources(): Flow<List<ProjectResource>>
 
     /**
+     * Get all projects and do not populate them with tags and tasks
+     */
+    fun getProjects(): Flow<List<Project>>
+
+    /**
      * Get a project that match the given id or returns null
      *
      * @param projectId

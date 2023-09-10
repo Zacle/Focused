@@ -15,7 +15,10 @@ interface ProjectDao {
 
     @Transaction
     @Query("SELECT * FROM project")
-    fun getProjects(): Flow<List<PopulatedProjectEntity>>
+    fun getPopulatedProjects(): Flow<List<PopulatedProjectEntity>>
+
+    @Query("SELECT * FROM project")
+    fun getProjects(): Flow<List<ProjectEntity>>
 
     @Query("SELECT * FROM project WHERE id = :projectId")
     fun getProject(projectId: String): Flow<ProjectEntity?>

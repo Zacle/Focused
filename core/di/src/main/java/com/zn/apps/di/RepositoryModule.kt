@@ -1,11 +1,14 @@
 package com.zn.apps.di
 
+import com.zn.apps.data_repository.data_source.local.ProjectDataSource
 import com.zn.apps.data_repository.data_source.local.TagDataSource
 import com.zn.apps.data_repository.data_source.local.TaskDataSource
+import com.zn.apps.data_repository.repository.DefaultProjectRepository
 import com.zn.apps.data_repository.repository.DefaultTagRepository
 import com.zn.apps.data_repository.repository.DefaultTaskRepository
 import com.zn.apps.data_repository.repository.DefaultUserDataRepository
 import com.zn.apps.datastore.FocusedUserPreferencesDataSource
+import com.zn.apps.domain.repository.ProjectRepository
 import com.zn.apps.domain.repository.TagRepository
 import com.zn.apps.domain.repository.TaskRepository
 import com.zn.apps.domain.repository.UserDataRepository
@@ -33,4 +36,9 @@ object RepositoryModule {
     fun providesTagRepository(
         tagDataSource: TagDataSource
     ): TagRepository = DefaultTagRepository(tagDataSource)
+
+    @Provides
+    fun providesProjectRepository(
+        projectDataSource: ProjectDataSource
+    ): ProjectRepository = DefaultProjectRepository(projectDataSource)
 }

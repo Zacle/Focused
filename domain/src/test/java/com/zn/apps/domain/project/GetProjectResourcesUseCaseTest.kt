@@ -11,10 +11,10 @@ import org.junit.Test
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
 
-class GetProjectsUseCaseTest {
+class GetProjectResourcesUseCaseTest {
 
     private val projectRepository = mock<ProjectRepository>()
-    private val useCase = GetProjectsUseCase(
+    private val useCase = GetProjectResourcesUseCase(
         mock(),
         projectRepository
     )
@@ -22,7 +22,7 @@ class GetProjectsUseCaseTest {
     @Test
     fun `should return all projects`() = runTest {
         val projects = listOf(projectResource_1, projectResource_2)
-        val request = GetProjectsUseCase.Request
+        val request = GetProjectResourcesUseCase.Request
         whenever(projectRepository.getProjectResources()).thenReturn(flowOf(projects))
         val response = useCase.process(request).first()
         assertEquals(projects, response.projectResources)

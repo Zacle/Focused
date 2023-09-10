@@ -9,14 +9,22 @@ import com.zn.apps.model.data.project.ProjectResource
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.mapLatest
+import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class LocalProjectDataSource(
+class LocalProjectDataSource @Inject constructor(
     private val projectDao: ProjectDao
 ): ProjectDataSource {
+    override fun getProjects(): Flow<List<Project>> {
+        return projectDao.getProjects().mapLatest {
+            it.map {  projectEntity ->
+                projectEntity.asExternalModel()
+            }
+        }
+    }
 
     override fun getProjectResources(): Flow<List<ProjectResource>> {
-        return projectDao.getProjects().mapLatest { populatedProjects ->
+        return projectDao.getPopulatedProjects().mapLatest { populatedProjects ->
             populatedProjects.mapTo(mutableListOf()) { populatedProject ->
                 val tasksCompleted = populatedProject.tasks.count { task ->
                     task.completed
