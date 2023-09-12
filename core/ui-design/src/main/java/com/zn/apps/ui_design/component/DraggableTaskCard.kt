@@ -2,6 +2,7 @@ package com.zn.apps.ui_design.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -82,7 +83,7 @@ fun DraggableTaskCard(
             modifier = Modifier
                 .align(Alignment.CenterEnd)
                 .onGloballyPositioned {
-                    cardOffset = it.size.height.toFloat()
+                    cardOffset = it.size.width.toFloat()
                 }
         )
         TaskCard(
@@ -136,7 +137,7 @@ fun ActionsRow(
     Surface(
         modifier = modifier
             .clip(RoundedCornerShape(10.dp)),
-        color = MaterialTheme.colorScheme.surface.copy(0.7f),
+        color = Color.Transparent,
         contentColor = MaterialTheme.colorScheme.onSurface
     ) {
         Row(
@@ -177,7 +178,10 @@ fun SingleAction(
 ) {
     Column(
         modifier = modifier
-            .clickable { onClick() },
+            .clickable(
+                indication = null,
+                interactionSource = remember { MutableInteractionSource() }
+            ) { onClick() },
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

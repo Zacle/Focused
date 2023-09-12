@@ -35,7 +35,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -48,7 +47,6 @@ import androidx.compose.ui.graphics.Color.Companion.Green
 import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.input.pointer.positionChange
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -64,6 +62,7 @@ import kotlin.math.roundToInt
 const val CARD_OFFSET = 300f
 const val ANIMATION_DURATION = 600
 const val TASK_PROGRESS_WIDTH_COMPACT = 130
+const val DRAG_AMOUNT = 6
 
 
 @SuppressLint("UnusedTransitionTargetStateParameter")
@@ -81,8 +80,6 @@ fun TaskCard(
     isRevealed: Boolean = false
 ) {
 
-    var offsetX by remember { mutableFloatStateOf(0f) }
-
     val transitionState = remember {
         MutableTransitionState(isRevealed).apply {
             targetState = !isRevealed
@@ -92,7 +89,7 @@ fun TaskCard(
     val offsetTransition by transition.animateFloat(
         label = "taskCardOffsetTransition",
         transitionSpec = { tween(ANIMATION_DURATION) },
-        targetValueByState = { if (isRevealed) cardOffset - offsetX else -offsetX }
+        targetValueByState = { if (isRevealed) cardOffset else -0f }
     )
     val elevationTransition by transition.animateDp(
         label = "taskCardElevationTransition",
@@ -123,7 +120,7 @@ fun TaskCard(
     Surface(
         modifier = modifier
             .fillMaxWidth()
-            .offset { IntOffset((offsetX + offsetTransition).roundToInt(), 0) }
+            .offset { IntOffset(-offsetTransition.roundToInt(), 0) }
             .clip(RoundedCornerShape(10.dp))
             .then(border)
             .clickable(onClick = {
@@ -134,19 +131,11 @@ fun TaskCard(
                 }
             })
             .pointerInput(Unit) {
-                detectHorizontalDragGestures { change, dragAmount ->
-                    val original = Offset(offsetX, 0f)
-                    val summed = original + Offset(x = dragAmount, y = 0f)
-                    val newValue = Offset(x = summed.x.coerceIn(0f, cardOffset), y = 0f)
-                    if (newValue.x >= 10) {
-                        onExpand()
-                        return@detectHorizontalDragGestures
-                    } else if (newValue.x <= 0) {
-                        onCollapse()
-                        return@detectHorizontalDragGestures
+                detectHorizontalDragGestures { _, dragAmount ->
+                    when {
+                        dragAmount <= -DRAG_AMOUNT -> onExpand()
+                        dragAmount > DRAG_AMOUNT -> onCollapse()
                     }
-                    if (change.positionChange() != Offset.Zero) change.consume()
-                    offsetX = newValue.x
                 }
             },
         color = MaterialTheme.colorScheme.primaryContainer,
@@ -194,7 +183,7 @@ fun TaskCard(
                 Text(
                     text = task.name,
                     fontWeight = FontWeight.Bold,
-                    style = MaterialTheme.typography.bodySmall,
+                    style = MaterialTheme.typography.bodyMedium,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
