@@ -6,12 +6,11 @@ import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -48,6 +47,8 @@ import com.zn.apps.common.minutesToMilliseconds
 import com.zn.apps.feature.tasks.R
 import com.zn.apps.model.data.task.RelatedTasksMetaDataResult
 import com.zn.apps.model.data.task.Task
+import com.zn.apps.ui_common.InsertTaskBottomSheetContent
+import com.zn.apps.ui_common.delegate.TasksUiStateHolder
 import com.zn.apps.ui_design.component.DraggableTaskCard
 import com.zn.apps.ui_design.component.EmptyScreen
 import com.zn.apps.ui_design.component.FAFloatingButton
@@ -62,6 +63,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun TasksRoute(
     tasksUiModel: TasksUiModel,
+    uiStateHolder: TasksUiStateHolder,
     selectedTagId: String,
     snackbarHostState: SnackbarHostState,
     coroutineScope: CoroutineScope,
@@ -88,16 +90,17 @@ fun TasksRoute(
 
     if (showModalBottomSheet) {
         ModalBottomSheet(
-            onDismissRequest = { showModalBottomSheet = false }
+            onDismissRequest = { showModalBottomSheet = false },
+            sheetState = bottomSheetState,
+            modifier = Modifier
+                .navigationBarsPadding()
         ) {
-            // TODO build bottom sheet content
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text("TODO")
-            }
+            InsertTaskBottomSheetContent(
+                upsertTask = upsertTask,
+                projects = uiStateHolder.projects,
+                tags = uiStateHolder.tags,
+                shouldShowModalSheet = { showModalBottomSheet = it }
+            )
         }
     }
 

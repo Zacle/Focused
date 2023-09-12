@@ -9,6 +9,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,6 +17,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
@@ -33,13 +35,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.chargemap.compose.numberpicker.NumberPicker
-import com.zn.apps.ui_design.component.ThemePreviews
 import com.zn.apps.ui_design.R
+import com.zn.apps.ui_design.component.ThemePreviews
 import com.zn.apps.ui_design.theme.FocusedAppTheme
 
 @Composable
@@ -118,27 +121,52 @@ fun PomodoroDialog(
                 )
                 when(selectedPomodoroTab) {
                     SelectedPomodoroTab.NUMBER -> {
-                        val label = stringResource(id = R.string.pomodoro)
-                        NumberPicker(
-                            value = pomodoroNumberValue,
-                            onValueChange = {
-                                pomodoroNumberValue = it
-                            },
-                            range = 0..100,
-                            dividersColor = Color.Transparent,
-                            label = { label }
-                        )
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center
+                        ) {
+                            NumberPicker(
+                                value = pomodoroNumberValue,
+                                onValueChange = {
+                                    pomodoroNumberValue = it
+                                },
+                                range = 0..100,
+                                dividersColor = Color.Transparent,
+                                textStyle = TextStyle(
+                                    color = MaterialTheme.colorScheme.onBackground,
+                                    fontStyle = MaterialTheme.typography.bodySmall.fontStyle
+                                )
+                            )
+                            Spacer(modifier = Modifier.width(16.dp))
+                            Text(
+                                text = stringResource(id = R.string.pomodoro),
+                                style = MaterialTheme.typography.bodyMedium
+                            )
+                        }
                     }
                     SelectedPomodoroTab.LENGTH -> {
-                        val label = stringResource(id = R.string.minutes)
-                        NumberPicker(
-                            value = pomodoroLengthValue,
-                            onValueChange = {
-                                pomodoroLengthValue = it
-                            },
-                            range = 1..500,
-                            label = { label }
-                        )
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center
+                        ) {
+                            NumberPicker(
+                                value = pomodoroLengthValue,
+                                onValueChange = {
+                                    pomodoroLengthValue = it
+                                },
+                                range = 1..500,
+                                dividersColor = Color.Transparent,
+                                textStyle = TextStyle(
+                                    color = MaterialTheme.colorScheme.onBackground,
+                                    fontStyle = MaterialTheme.typography.bodySmall.fontStyle
+                                )
+                            )
+                            Spacer(modifier = Modifier.width(16.dp))
+                            Text(
+                                text = stringResource(id = R.string.minutes),
+                                style = MaterialTheme.typography.bodyMedium
+                            )
+                        }
                     }
                 }
                 DialogDoneOrCancel(
@@ -175,11 +203,7 @@ fun PomodoroTab(
     onSelected: () -> Unit,
 ) {
 
-    val selectedState by remember {
-        mutableStateOf(selected)
-    }
-
-    val transition = updateTransition(targetState = selectedState, label = "pomodoro tab transition")
+    val transition = updateTransition(targetState = selected, label = "pomodoro tab transition")
 
     val background by transition.animateColor(
         label = "pomodoroTabBackground",

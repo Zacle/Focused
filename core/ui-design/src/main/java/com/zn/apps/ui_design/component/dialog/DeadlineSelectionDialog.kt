@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,7 +27,9 @@ import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerDefaults
 import androidx.compose.material3.DatePickerDialog
+import androidx.compose.material3.DatePickerFormatter
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -54,9 +57,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import com.zn.apps.ui_design.component.ThemePreviews
 import com.zn.apps.common.DeadlineType
 import com.zn.apps.ui_design.R
+import com.zn.apps.ui_design.component.ThemePreviews
 import com.zn.apps.ui_design.icon.FAIcons
 import com.zn.apps.ui_design.theme.FocusedAppTheme
 import java.time.Instant
@@ -67,6 +70,9 @@ import java.time.ZoneId
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import java.util.Locale
+
+private val DatePickerTitlePadding = PaddingValues(start = 24.dp, end = 12.dp, top = 16.dp)
+private val DatePickerHeadlinePadding = PaddingValues(start = 24.dp, end = 12.dp, bottom = 12.dp)
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
@@ -88,7 +94,7 @@ fun DeadlineSelectionDialog(
         mutableStateOf(false)
     }
     val datePickerState = rememberDatePickerState(
-        initialSelectedDateMillis = dateTime?.toInstant()?.toEpochMilli(),
+        initialSelectedDateMillis = dateTime?.toInstant()?.toEpochMilli()
     )
     val timerPickerState = rememberTimePickerState(
         is24Hour = DateFormat.is24HourFormat(LocalContext.current),
@@ -111,38 +117,47 @@ fun DeadlineSelectionDialog(
     DatePickerDialog(
         onDismissRequest = { onDismissRequest(false) },
         properties = DialogProperties(
-            dismissOnClickOutside = false,
-            dismissOnBackPress = false
+            dismissOnBackPress = true,
+            dismissOnClickOutside = false
         ),
-        confirmButton = {
-            date = datePickerState.selectedDateMillis?.let {
-                LocalDate.ofInstant(
-                    Instant.ofEpochMilli(it),
-                    ZoneId.systemDefault()
-                )
-            }
-            onDateTimeSelected(
-                date?.let {
-                    OffsetDateTime.of(
-                        date,
-                        time,
-                        ZoneOffset.systemDefault().rules.getOffset(Instant.now())
-                    )
-                }
-            )
-        },
-        dismissButton = { onDismissRequest(false) },
+        confirmButton = {},
         shape = RoundedCornerShape(20.dp)
     ) {
+
         Column(
             modifier = Modifier.verticalScroll(rememberScrollState())
         ) {
+
             DatePicker(
                 state = datePickerState,
                 showModeToggle = false,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 8.dp)
+                    .fillMaxWidth(),
+                title = {
+                    Text(
+                        text = stringResource(id = R.string.select_due_date),
+                        modifier = Modifier
+                            .padding(DatePickerTitlePadding)
+                    )
+                },
+                headline = {
+                    if (datePickerState.selectedDateMillis == null) {
+                        Text(
+                            text = stringResource(id = R.string.no_date),
+                            style = MaterialTheme.typography.headlineMedium,
+                            maxLines = 1,
+                            modifier = Modifier
+                                .padding(DatePickerHeadlinePadding)
+                        )
+                    } else {
+                        DatePickerDefaults.DatePickerHeadline(
+                            state = datePickerState,
+                            dateFormatter = remember { DatePickerFormatter() },
+                            modifier = Modifier
+                                .padding(DatePickerHeadlinePadding)
+                        )
+                    }
+                }
             )
 
             FlowRow(
@@ -171,7 +186,7 @@ fun DeadlineSelectionDialog(
                         date = LocalDate.now()
                         timeType = DeadlineType.TODAY
                         datePickerState.setSelection(
-                            date?.atStartOfDay()?.toInstant(ZoneOffset.of(ZoneOffset.systemDefault().id))?.toEpochMilli()
+                            date?.atStartOfDay()?.toInstant(ZoneOffset.UTC)?.toEpochMilli()
                         )
                     },
                     text = stringResource(id = R.string.today)
@@ -185,7 +200,7 @@ fun DeadlineSelectionDialog(
                         date = LocalDate.now().plusDays(1)
                         timeType = DeadlineType.TOMORROW
                         datePickerState.setSelection(
-                            date?.atStartOfDay()?.toInstant(ZoneOffset.of(ZoneOffset.systemDefault().id))?.toEpochMilli()
+                            date?.atStartOfDay()?.toInstant(ZoneOffset.UTC)?.toEpochMilli()
                         )
                     },
                     text = stringResource(id = R.string.tomorrow)
@@ -199,7 +214,7 @@ fun DeadlineSelectionDialog(
                         date = LocalDate.now().plusDays(7)
                         timeType = DeadlineType.UPCOMING
                         datePickerState.setSelection(
-                            date?.atStartOfDay()?.toInstant(ZoneOffset.of(ZoneOffset.systemDefault().id))?.toEpochMilli()
+                            date?.atStartOfDay()?.toInstant(ZoneOffset.UTC)?.toEpochMilli()
                         )
                     },
                     text = stringResource(id = R.string.next_week)
@@ -240,6 +255,19 @@ fun DeadlineSelectionDialog(
                     )
                 }
             }
+            Spacer(modifier = Modifier.height(16.dp))
+
+            DialogDoneOrCancel(
+                onDismissRequest = { onDismissRequest(false) },
+                value = datePickerState.selectedDateMillis?.let {
+                    OffsetDateTime.of(
+                        LocalDate.ofInstant(Instant.ofEpochMilli(it), ZoneId.systemDefault()),
+                        time,
+                        ZoneOffset.systemDefault().rules.getOffset(Instant.now())
+                    )
+                },
+                onSave = onDateTimeSelected
+            )
         }
     }
 }

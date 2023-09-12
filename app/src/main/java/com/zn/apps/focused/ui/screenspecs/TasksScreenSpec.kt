@@ -43,6 +43,7 @@ data object TasksScreenSpec: BottomNavScreenSpec {
         }
 
         val selectedTagId by viewModel.selectedTag.collectAsStateWithLifecycle()
+        val uiStateHolder by viewModel.tasksUiStateHolder.collectAsStateWithLifecycle()
 
         viewModel.uiStateFlow.collectAsStateWithLifecycle().value.let { state ->
             CommonScreen(
@@ -53,6 +54,7 @@ data object TasksScreenSpec: BottomNavScreenSpec {
             ) { tasksUiModel ->
                 TasksRoute(
                     tasksUiModel = tasksUiModel,
+                    uiStateHolder = uiStateHolder,
                     selectedTagId = selectedTagId,
                     snackbarHostState = appState.snackbarHostState,
                     coroutineScope = appState.coroutineScope,

@@ -25,7 +25,6 @@ fun FATextInput(
     name: String,
     placeholder: String,
     icon: DrawableResourceIcon,
-    color: Color,
     onValueChange: (String) -> Unit
 ) {
     Row(
@@ -33,7 +32,7 @@ fun FATextInput(
         horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         FormIcon(
-            color = color,
+            color = Color.Transparent,
             icon = icon
         )
         FAOutlinedTextField(name, onValueChange, placeholder)
@@ -91,7 +90,6 @@ fun FATextInputPreview() {
                 name = "",
                 placeholder = "Enter task name...",
                 icon = DrawableResourceIcon(FAIcons.TaskDestination),
-                color = Color.Transparent,
                 onValueChange = {}
             )
         }

@@ -28,6 +28,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.zn.apps.model.data.project.Project
 import com.zn.apps.model.data.tag.Tag
 import com.zn.apps.model.data.task.TaskPriority
 import com.zn.apps.ui_design.R
@@ -108,13 +109,14 @@ fun ChoosePriority(
             Icon(
                 painter = painterResource(id = FAIcons.priority),
                 contentDescription = stringResource(id = R.string.select_priority),
-                tint = getPriorityColor(selectedPriority)
+                tint = getPriorityColor(selectedPriority),
+                modifier = Modifier.size(24.dp)
             )
         }
         DropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false },
-            modifier = Modifier.background(MaterialTheme.colorScheme.background.copy(alpha = 0.8f))
+            modifier = Modifier.background(MaterialTheme.colorScheme.tertiaryContainer)
         ) {
             DropDownTitle(text = stringResource(id = R.string.select_priority))
             TaskPriority.values().forEach { taskPriority ->
@@ -133,24 +135,27 @@ fun ChoosePriority(
 @Composable
 fun ChooseTag(
     tags: List<Tag>,
-    selectedTag: Tag?,
+    selectedTagId: String?,
     onTagSelected: (Tag?) -> Unit,
 ) {
     var tagDropDownExpanded by remember {
         mutableStateOf(false)
     }
     Box {
+        val tag = tags.firstOrNull { it.id == selectedTagId }
+
         IconButton(onClick = { tagDropDownExpanded = true }) {
             Icon(
                 painter = painterResource(id = FAIcons.tag),
                 contentDescription = stringResource(id = R.string.select_tag),
-                tint = selectedTag?.uiColor() ?: Color.Unspecified
+                tint = tag?.uiColor() ?: Color.Gray,
+                modifier = Modifier.size(24.dp)
             )
         }
         DropdownMenu(
             expanded = tagDropDownExpanded,
             onDismissRequest = { tagDropDownExpanded = false },
-            modifier = Modifier.background(MaterialTheme.colorScheme.background.copy(alpha = 0.8f))
+            modifier = Modifier.background(MaterialTheme.colorScheme.tertiaryContainer)
         ) {
             DropDownTitle(text = stringResource(id = R.string.select_tag))
             DropDownItem(
@@ -189,6 +194,50 @@ fun DropDownTitle(
         onClick = {},
         enabled = false
     )
+}
+
+@Composable
+fun SelectProject(
+    projectId: String? = null,
+    projects: List<Project>,
+    onProjectIdSelected: (String?) -> Unit
+) {
+    var expanded by remember { mutableStateOf(false) }
+
+    Box {
+        val project = projects.firstOrNull { it.id == projectId }
+        val color = project?.uiColor() ?: MaterialTheme.colorScheme.primary
+
+        FAInputSelector(
+            icon = DrawableResourceIcon(FAIcons.project_form_icon),
+            backgroundColor = color,
+            onClick = { expanded = true },
+            text = project?.name ?: stringResource(id = R.string.select_project)
+        )
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false },
+            modifier = Modifier.background(MaterialTheme.colorScheme.tertiaryContainer)
+        ) {
+            DropDownTitle(text = stringResource(id = R.string.select_project))
+            DropDownItem(
+                item = Tag(name = stringResource(id = R.string.no_project)),
+                onItemSelected = { onProjectIdSelected(null) },
+                onDropDownExpanded = { expanded = false },
+                text = stringResource(id = R.string.no_tag),
+                color = Color.Gray
+            )
+            projects.forEach { project ->
+                DropDownItem(
+                    item = project,
+                    onItemSelected = { onProjectIdSelected(it.id) },
+                    onDropDownExpanded = { expanded = false },
+                    text = project.name,
+                    color = Color(project.color)
+                )
+            }
+        }
+    }
 }
 
 @Composable

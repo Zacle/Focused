@@ -41,7 +41,7 @@ class TasksViewModel @Inject constructor(
     /**
      * Hold the current selected tag for filtering
      */
-    var selectedTag  = MutableStateFlow("")
+    var selectedTag = MutableStateFlow("")
         private set
 
     override fun initState(): UiState<TasksUiModel> = UiState.Loading

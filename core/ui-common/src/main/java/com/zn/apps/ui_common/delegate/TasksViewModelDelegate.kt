@@ -1,6 +1,8 @@
 package com.zn.apps.ui_common.delegate
 
 import com.zn.apps.common.network.di.ApplicationScope
+import com.zn.apps.domain.project.GetProjectsUseCase
+import com.zn.apps.domain.tag.GetTagsUseCase
 import com.zn.apps.domain.task.DeleteTaskUseCase
 import com.zn.apps.domain.task.UpsertTaskUseCase
 import com.zn.apps.model.data.task.Pomodoro
@@ -9,6 +11,8 @@ import com.zn.apps.model.usecase.Result
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.time.OffsetDateTime
@@ -79,6 +83,8 @@ interface TasksViewModelDelegate {
 class DefaultTasksViewModelDelegate @Inject constructor(
     private val upsertTaskUseCase: UpsertTaskUseCase,
     private val deleteTaskUseCase: DeleteTaskUseCase,
+    private val getTagsUseCase: GetTagsUseCase,
+    private val getProjectsUseCase: GetProjectsUseCase,
     @ApplicationScope val scope: CoroutineScope
 ): TasksViewModelDelegate {
 
@@ -86,6 +92,32 @@ class DefaultTasksViewModelDelegate @Inject constructor(
      * State Holder for screen dialogs
      */
     override val tasksUiStateHolder = MutableStateFlow(TasksUiStateHolder())
+
+    init {
+        scope.launch {
+            combine(
+                getProjectsUseCase.execute(GetProjectsUseCase.Request),
+                getTagsUseCase.execute(GetTagsUseCase.Request)
+            ) { projectsResult, tagsResult ->
+                Pair(projectsResult, tagsResult)
+            }.collectLatest { pair ->
+                if (pair.first is Result.Success) {
+                    tasksUiStateHolder.update {
+                        it.copy(
+                            projects = (pair.first as Result.Success<GetProjectsUseCase.Response>).data.projects
+                        )
+                    }
+                }
+                if (pair.second is Result.Success) {
+                    tasksUiStateHolder.update {
+                        it.copy(
+                            tags = (pair.second as Result.Success<GetTagsUseCase.Response>).data.tags
+                        )
+                    }
+                }
+            }
+        }
+    }
 
     private fun upsert(task: Task): Result<Any>? {
         var result: Result<Any>? = null

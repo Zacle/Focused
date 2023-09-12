@@ -25,6 +25,7 @@ object FAIcons {
     val project_form_icon = R.drawable.project_form_icon
     val priority = R.drawable.task_priority
     val tag = R.drawable.tag
+    val task_name = R.drawable.task_name
 }
 
 /**

@@ -23,11 +23,15 @@
     <string name="estimated_task_time">Estimated task time</string>
     <string name="someday">Someday</string>
     <string name="next_week">Next Week</string>
+    <string name="select_pomodoro">Select Pomodoro</string>
 
     <!-- Due Date -->
+    <string name="select_due_date">Select due date</string>
     <string name="due_date">Due Date</string>
+    <string name="no_date">No Date</string>
 
-    <!-- Delete Task -->
+    <!-- Tasks -->
+    <string name="enter_task_name">Enter task name</string>
     <string name="delete">Delete Task</string>
     <string name="delete_task_message">Are you sure to delete this task?</string>
 
@@ -41,5 +45,6 @@
 
     <!-- Projects -->
     <string name="select_project">Select Project</string>
+    <string name="no_project">No Project</string>
 
 </resources>

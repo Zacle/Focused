@@ -22,7 +22,7 @@ fun <T> DialogDoneOrCancel(
     onSave: (T) -> Unit
 ) {
     Row(
-        modifier = Modifier.padding(end = 8.dp),
+        modifier = Modifier.padding(end = 8.dp, bottom = 12.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.End
     ) {
