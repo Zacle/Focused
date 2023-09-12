@@ -2,19 +2,27 @@ package com.zn.apps.feature.tasks.list
 
 import android.annotation.SuppressLint
 import androidx.activity.compose.BackHandler
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.LinearOutSlowInEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.add
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -59,7 +67,7 @@ import com.zn.apps.ui_design.icon.Icon.DrawableResourceIcon
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 fun TasksRoute(
     tasksUiModel: TasksUiModel,
@@ -88,12 +96,17 @@ fun TasksRoute(
         }
     }
 
-    if (showModalBottomSheet) {
+    AnimatedVisibility(
+        visible = showModalBottomSheet,
+        enter = slideInVertically(
+            animationSpec = tween(durationMillis = 3000, easing = LinearOutSlowInEasing)
+        ),
+        exit = slideOutVertically()
+    ) {
         ModalBottomSheet(
             onDismissRequest = { showModalBottomSheet = false },
             sheetState = bottomSheetState,
-            modifier = Modifier
-                .navigationBarsPadding()
+            windowInsets = WindowInsets.ime.add(BottomSheetDefaults.windowInsets)
         ) {
             InsertTaskBottomSheetContent(
                 upsertTask = upsertTask,

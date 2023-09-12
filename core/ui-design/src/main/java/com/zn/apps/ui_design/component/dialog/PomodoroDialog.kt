@@ -134,13 +134,13 @@ fun PomodoroDialog(
                                 dividersColor = Color.Transparent,
                                 textStyle = TextStyle(
                                     color = MaterialTheme.colorScheme.onBackground,
-                                    fontStyle = MaterialTheme.typography.bodySmall.fontStyle
+                                    fontStyle = MaterialTheme.typography.bodyMedium.fontStyle
                                 )
                             )
                             Spacer(modifier = Modifier.width(16.dp))
                             Text(
                                 text = stringResource(id = R.string.pomodoro),
-                                style = MaterialTheme.typography.bodyMedium
+                                style = MaterialTheme.typography.bodyLarge
                             )
                         }
                     }
@@ -158,13 +158,13 @@ fun PomodoroDialog(
                                 dividersColor = Color.Transparent,
                                 textStyle = TextStyle(
                                     color = MaterialTheme.colorScheme.onBackground,
-                                    fontStyle = MaterialTheme.typography.bodySmall.fontStyle
+                                    fontStyle = MaterialTheme.typography.bodyMedium.fontStyle
                                 )
                             )
                             Spacer(modifier = Modifier.width(16.dp))
                             Text(
                                 text = stringResource(id = R.string.minutes),
-                                style = MaterialTheme.typography.bodyMedium
+                                style = MaterialTheme.typography.bodyLarge
                             )
                         }
                     }

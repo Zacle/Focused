@@ -13,6 +13,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.core.view.WindowCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -55,8 +56,7 @@ class MainActivity : ComponentActivity() {
 
         // Turn off the decor fitting system windows, which allows us to handle insets,
         // including IME animations, and go edge-to-edge
-        // This also sets up the initial system bar style based on the platform theme
-        enableEdgeToEdge()
+        WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
             val darkTheme = isSystemInDarkTheme()

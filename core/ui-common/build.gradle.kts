@@ -48,16 +48,18 @@ dependencies {
     implementation(project(":core:model"))
     implementation(project(":core:common"))
     implementation(project(":core:ui-design"))
-    //implementation(project(":di"))
+    implementation(project(":core:di"))
     implementation(project(":domain"))
 
     // Compose
     implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.lifecycle.runtimeCompose)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.ui.util)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.hilt.navigation.compose)
 
     debugImplementation(libs.androidx.compose.ui.tooling)
 

@@ -3,6 +3,7 @@ package com.zn.apps.ui_common
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
@@ -38,6 +39,7 @@ import com.zn.apps.ui_design.component.FATextInput
 import com.zn.apps.ui_design.component.SelectProject
 import com.zn.apps.ui_design.component.dialog.DeadlineSelectionDialog
 import com.zn.apps.ui_design.component.dialog.PomodoroDialog
+import com.zn.apps.ui_design.component.dialog.getEstimatedTime
 import com.zn.apps.ui_design.icon.FAIcons
 import com.zn.apps.ui_design.icon.Icon
 import java.time.OffsetDateTime
@@ -84,7 +86,9 @@ fun InsertTaskBottomSheetContent(
     }
 
     Surface(
-        color = Color.Transparent
+        color = Color.Transparent,
+        modifier = Modifier
+            .navigationBarsPadding()
     ) {
         Column(
             modifier = modifier
@@ -105,7 +109,6 @@ fun InsertTaskBottomSheetContent(
             )
             /**
              * Enter the task name
-             * TODO: Make the keyboard disappear after pressing on back button
              */
             FATextInput(
                 name = formState.name,
@@ -125,7 +128,11 @@ fun InsertTaskBottomSheetContent(
                 backgroundColor = Color.Transparent,
                 onClick = { showPomodoroDialog = true },
                 text = stringResource(id = R.string.select_pomodoro),
-                icon = Icon.DrawableResourceIcon(FAIcons.pomodoro)
+                icon = Icon.DrawableResourceIcon(FAIcons.pomodoro),
+                label = getEstimatedTime(
+                    pomodoroNumber = formState.pomodoroNumber,
+                    pomodoroLength = formState.pomodoroLength
+                )
             )
 
             Row(
