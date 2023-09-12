@@ -100,30 +100,32 @@ fun DraggableTaskCard(
         )
     }
 
-    if (showDeleteDialog) {
-        SimpleConfirmationDialog(
-            title = R.string.delete,
-            text = R.string.delete_task_message,
-            confirmationAction = onDeleteTaskConfirmed,
-            cancelAction = onDeleteTaskDismissed
-        )
-    }
-    if (showDueDateDialog) {
-        DeadlineSelectionDialog(
-            dateTime = task.dueDate,
-            onDateTimeSelected = { onUpdateDueDateConfirmed(it) },
-            onDismissRequest = { onUpdateDueDateDismissed() }
-        )
-    }
-    if (showPomodoroDialog) {
-        PomodoroDialog(
-            pomodoroNumber = task.pomodoro.pomodoroNumber,
-            pomodoroLength = task.pomodoro.pomodoroLength.millisecondsToMinutes(),
-            setShowDialog = { onUpdatePomodoroDismissed() },
-            onSave = {
-                onUpdatePomodoroConfirmed(it)
-            }
-        )
+    if (isTaskRevealed) {
+        if (showDeleteDialog) {
+            SimpleConfirmationDialog(
+                title = R.string.delete,
+                text = R.string.delete_task_message,
+                confirmationAction = onDeleteTaskConfirmed,
+                cancelAction = onDeleteTaskDismissed
+            )
+        }
+        if (showDueDateDialog) {
+            DeadlineSelectionDialog(
+                dateTime = task.dueDate,
+                onDateTimeSelected = { onUpdateDueDateConfirmed(it) },
+                onDismissRequest = { onUpdateDueDateDismissed() }
+            )
+        }
+        if (showPomodoroDialog) {
+            PomodoroDialog(
+                pomodoroNumber = task.pomodoro.pomodoroNumber,
+                pomodoroLength = task.pomodoro.pomodoroLength.millisecondsToMinutes(),
+                setShowDialog = { onUpdatePomodoroDismissed() },
+                onSave = {
+                    onUpdatePomodoroConfirmed(it)
+                }
+            )
+        }
     }
 }
 
