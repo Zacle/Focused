@@ -24,9 +24,10 @@ import com.zn.apps.ui_common.delegate.TasksViewModelDelegate
 import com.zn.apps.ui_common.state.BaseViewModel
 import com.zn.apps.ui_common.state.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -95,24 +96,24 @@ class TasksViewModel @Inject constructor(
         }
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     private fun loadTasksWithTags() {
         viewModelScope.launch {
-            combine(
-                getTasksWithTagsUseCase.execute(
-                    GetTasksWithTagsUseCase.Request(
-                        filter = Filter.TagFilter(
-                            filterId = selectedTag.value,
-                            grouping = Grouping.DeadlineTypeGrouping
-                        ),
-                        taskCompleted = false
+            selectedTag
+                .flatMapLatest { tagId ->
+                    getTasksWithTagsUseCase.execute(
+                        GetTasksWithTagsUseCase.Request(
+                            filter = Filter.TagFilter(
+                                filterId = tagId,
+                                grouping = Grouping.DeadlineTypeGrouping
+                            ),
+                            taskCompleted = false
+                        )
                     )
-                ),
-                selectedTag
-            ) { result, _ ->
-                converter.convert(result)
-            }.collectLatest { state ->
-                submitState(state)
-            }
+                }
+                .collectLatest { result ->
+                    submitState(converter.convert(result))
+                }
         }
     }
 }

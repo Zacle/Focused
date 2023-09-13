@@ -37,6 +37,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TimePicker
+import androidx.compose.material3.TimePickerDefaults
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
@@ -110,7 +111,14 @@ fun DeadlineSelectionDialog(
                 showTimeDialog = false
             }
         ) {
-            TimePicker(state = timerPickerState)
+            TimePicker(
+                state = timerPickerState,
+                colors = TimePickerDefaults.colors(
+                    clockDialColor = MaterialTheme.colorScheme.tertiaryContainer,
+                    timeSelectorSelectedContainerColor = MaterialTheme.colorScheme.inversePrimary,
+                    timeSelectorUnselectedContainerColor = MaterialTheme.colorScheme.tertiaryContainer
+                )
+            )
         }
     }
 
@@ -224,7 +232,10 @@ fun DeadlineSelectionDialog(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 30.dp, vertical = 4.dp)
-                    .clickable { showTimeDialog = true },
+                    .clickable(
+                        indication = null,
+                        interactionSource = remember { MutableInteractionSource() }
+                    ) { showTimeDialog = true },
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Row(

@@ -44,5 +44,7 @@ dependencies {
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.mockito.kotlin)
 
+    implementation(libs.timber)
+
     coreLibraryDesugaring(libs.desugar.jdk.libs)
 }
