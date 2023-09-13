@@ -4,11 +4,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import com.zn.apps.focused.ui.navigation.graphs.mainGraph
 import com.zn.apps.feature.onboarding.navigation.onboardingScreen
 import com.zn.apps.focused.ui.FocusedAppState
 import com.zn.apps.focused.ui.navigation.Graph.MAIN_GRAPH_ROUTE
 import com.zn.apps.focused.ui.navigation.Graph.ROOT_GRAPH_ROUTE
+import com.zn.apps.focused.ui.navigation.graphs.mainGraph
 
 @Composable
 fun FANavHost(
