@@ -38,6 +38,22 @@ object TestUtils {
         tagName = "test"
     )
 
+    val project_3 = Project(name = "Learn Math", color = 1, completed = true)
+    val projectResource_3 = ProjectResource(
+        project = project_3,
+        numberOfTasks = 3,
+        numberOfTasksCompleted = 1,
+        tagName = "test"
+    )
+
+    val project_4 = Project(name = "Skills", color = 1)
+    val projectResource_4 = ProjectResource(
+        project = project_4,
+        numberOfTasks = 3,
+        numberOfTasksCompleted = 1,
+        tagName = "test"
+    )
+
     /**
      * Tasks with no project or tag and its task resources
      */
