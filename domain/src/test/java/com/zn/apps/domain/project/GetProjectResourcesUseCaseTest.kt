@@ -6,7 +6,7 @@ import com.zn.apps.domain.util.TestUtils.projectResource_2
 import com.zn.apps.domain.util.TestUtils.projectResource_3
 import com.zn.apps.domain.util.TestUtils.projectResource_4
 import com.zn.apps.model.data.project.ProjectFilterType
-import com.zn.apps.model.data.project.ProjectFiltrator
+import com.zn.apps.model.data.project.ProjectFiltration
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
@@ -26,7 +26,7 @@ class GetProjectResourcesUseCaseTest {
     @Test
     fun `should return all projects`() = runTest {
         val projects = listOf(projectResource_1, projectResource_2)
-        val filter = ProjectFiltrator(
+        val filter = ProjectFiltration(
             filterType = ProjectFilterType.ALL,
             query = ""
         )
@@ -39,7 +39,7 @@ class GetProjectResourcesUseCaseTest {
     @Test
     fun `should return all completed projects that matches the empty query`() = runTest {
         val projects = listOf(projectResource_1, projectResource_2, projectResource_3, projectResource_4)
-        val filter = ProjectFiltrator(
+        val filter = ProjectFiltration(
             filterType = ProjectFilterType.COMPLETED,
             query = ""
         )
@@ -53,7 +53,7 @@ class GetProjectResourcesUseCaseTest {
     @Test
     fun `should return all completed projects that matches the query`() = runTest {
         val projects = listOf(projectResource_1, projectResource_2, projectResource_3, projectResource_4)
-        val filter = ProjectFiltrator(
+        val filter = ProjectFiltration(
             filterType = ProjectFilterType.COMPLETED,
             query = "ma"
         )
@@ -67,7 +67,7 @@ class GetProjectResourcesUseCaseTest {
     @Test
     fun `should return empty list if all completed projects don't match the query`() = runTest {
         val projects = listOf(projectResource_1, projectResource_2, projectResource_3, projectResource_4)
-        val filter = ProjectFiltrator(
+        val filter = ProjectFiltration(
             filterType = ProjectFilterType.COMPLETED,
             query = "Skill"
         )
@@ -81,7 +81,7 @@ class GetProjectResourcesUseCaseTest {
     @Test
     fun `should return all ongoing projects that matches the empty query`() = runTest {
         val projects = listOf(projectResource_1, projectResource_2, projectResource_3, projectResource_4)
-        val filter = ProjectFiltrator(
+        val filter = ProjectFiltration(
             filterType = ProjectFilterType.ONGOING,
             query = ""
         )
@@ -97,7 +97,7 @@ class GetProjectResourcesUseCaseTest {
     @Test
     fun `should return all ongoing projects that matches the query`() = runTest {
         val projects = listOf(projectResource_1, projectResource_2, projectResource_3, projectResource_4)
-        val filter = ProjectFiltrator(
+        val filter = ProjectFiltration(
             filterType = ProjectFilterType.ONGOING,
             query = "ma"
         )
@@ -113,7 +113,7 @@ class GetProjectResourcesUseCaseTest {
     @Test
     fun `should return empty list if all ongoing projects don't match the query`() = runTest {
         val projects = listOf(projectResource_1, projectResource_2, projectResource_3, projectResource_4)
-        val filter = ProjectFiltrator(
+        val filter = ProjectFiltration(
             filterType = ProjectFilterType.ONGOING,
             query = "os"
         )
@@ -129,7 +129,7 @@ class GetProjectResourcesUseCaseTest {
     @Test
     fun `should return all projects that matches the query`() = runTest {
         val projects = listOf(projectResource_1, projectResource_2, projectResource_3, projectResource_4)
-        val filter = ProjectFiltrator(
+        val filter = ProjectFiltration(
             filterType = ProjectFilterType.ALL,
             query = "ma"
         )
@@ -145,7 +145,7 @@ class GetProjectResourcesUseCaseTest {
     @Test
     fun `should return empty list if all projects don't match the query`() = runTest {
         val projects = listOf(projectResource_1, projectResource_2, projectResource_3, projectResource_4)
-        val filter = ProjectFiltrator(
+        val filter = ProjectFiltration(
             filterType = ProjectFilterType.ALL,
             query = "fintech"
         )

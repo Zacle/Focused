@@ -1,7 +1,9 @@
 package com.zn.apps.ui_common.delegate
 
 import com.zn.apps.common.network.di.ApplicationScope
+import com.zn.apps.domain.project.DeleteProjectUseCase
 import com.zn.apps.domain.project.GetProjectsUseCase
+import com.zn.apps.domain.project.UpsertProjectUseCase
 import com.zn.apps.domain.tag.GetTagsUseCase
 import com.zn.apps.domain.task.DeleteTaskUseCase
 import com.zn.apps.domain.task.UpsertTaskUseCase
@@ -28,6 +30,18 @@ object DelegateModule {
             deleteTaskUseCase = deleteTaskUseCase,
             getTagsUseCase = getTagsUseCase,
             getProjectsUseCase = getProjectsUseCase,
+            scope = scope
+        )
+
+    @Provides
+    fun providesProjectsViewModelDelegate(
+        upsertProjectUseCase: UpsertProjectUseCase,
+        deleteProjectUseCase: DeleteProjectUseCase,
+        @ApplicationScope scope: CoroutineScope
+    ): ProjectsViewModelDelegate =
+        DefaultProjectsViewModelDelegate(
+            upsertProjectUseCase = upsertProjectUseCase,
+            deleteProjectUseCase = deleteProjectUseCase,
             scope = scope
         )
 }

@@ -6,7 +6,7 @@ package com.zn.apps.model.data.project
  * @param filterType filter project based on the current status
  * @param query filter project that matches the query and also the [filterType]
  */
-data class ProjectFiltrator(
-    val filterType: ProjectFilterType,
+data class ProjectFiltration(
+    val filterType: ProjectFilterType = ProjectFilterType.ALL,
     val query: String = ""
 )

@@ -5,7 +5,7 @@ import com.zn.apps.domain.repository.ProjectRepository
 import com.zn.apps.model.data.project.ProjectFilterType.ALL
 import com.zn.apps.model.data.project.ProjectFilterType.COMPLETED
 import com.zn.apps.model.data.project.ProjectFilterType.ONGOING
-import com.zn.apps.model.data.project.ProjectFiltrator
+import com.zn.apps.model.data.project.ProjectFiltration
 import com.zn.apps.model.data.project.ProjectResource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -22,7 +22,7 @@ class GetProjectResourcesUseCase(
     }
 
     private fun filter(
-        filter: ProjectFiltrator,
+        filter: ProjectFiltration,
         projectResources: List<ProjectResource>
     ): List<ProjectResource> {
         val projects = projectResources.filter { projectResource ->
@@ -35,7 +35,7 @@ class GetProjectResourcesUseCase(
         return projects.filter { it.project.name.contains(filter.query, ignoreCase = true) }
     }
 
-    data class Request(val filter: ProjectFiltrator): UseCase.Request
+    data class Request(val filter: ProjectFiltration): UseCase.Request
 
     data class Response(val projectResources: List<ProjectResource>): UseCase.Response
 }
