@@ -1,7 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="projects">Projects</string>
+    <string name="no_projects">No Projects at the moment</string>
+    <string name="click_to_add_project">
+        Please click on the floating icon to add a project.
+    </string>
+    <string name="select_project">Select Project</string>
+    <string name="no_project">No Project</string>
+    <string name="ongoing">Ongoing</string>
+    <string name="completed">Completed</string>
+    <string name="search_project">Search Project</string>
+    <string name="edit_project">Edit Project</string>
+    <string name="close_edit_project">Close Edit Project</string>
+    <string name="complete_project">Complete Project?</string>
+    <string name="complete_project_text">
+        Completing a project will also hide all its tasks, even if they are not yet completed
+    </string>
+    <string name="incomplete_project">Incomplete Project?</string>
+    <string name="incomplete_project_text">
+        Setting a project incomplete will display all its tasks
+    </string>
+    <string name="delete_project">Delete Project?</string>
+    <string name="delete_project_text">
+        Deleting a project will also delete all its tasks. Are you sure?
+    </string>
+    <string name="project_name_cant_be_blank">Project name can\'t be blank</string>
+    <string name="update_project">Update Project</string>
+    <string name="project_updated">Project Updated</string>
 
     <!-- Errors -->
     <string name="unknown_error">An unknown error occurred.</string>
+    <string name="project_no_tasks">No Tasks</string>
 </resources>

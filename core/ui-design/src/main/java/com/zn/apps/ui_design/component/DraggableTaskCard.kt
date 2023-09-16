@@ -24,7 +24,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -38,6 +37,7 @@ import com.zn.apps.ui_design.component.dialog.PomodoroDialog
 import com.zn.apps.ui_design.component.dialog.SimpleConfirmationDialog
 import com.zn.apps.ui_design.component.dialog.UiPomodoroState
 import com.zn.apps.ui_design.icon.FAIcons
+import com.zn.apps.ui_design.icon.Icon
 import com.zn.apps.ui_design.theme.FocusedAppTheme
 import java.time.OffsetDateTime
 
@@ -147,21 +147,21 @@ fun ActionsRow(
         ) {
             SingleAction(
                 text = stringResource(id = R.string.pomodoro),
-                painter = painterResource(id = FAIcons.pomodoro),
+                icon = Icon.DrawableResourceIcon(id = FAIcons.pomodoro),
                 color = MaterialTheme.colorScheme.primary,
                 onClick = onPomodoroPressed,
                 modifier = Modifier.size(ACTION_SIZE.dp)
             )
             SingleAction(
                 text = stringResource(id = R.string.due_date),
-                painter = painterResource(id = FAIcons.calendar),
+                icon = Icon.DrawableResourceIcon(id = FAIcons.calendar),
                 color = MaterialTheme.colorScheme.primary,
                 onClick = onDueDatePressed,
                 modifier = Modifier.size(ACTION_SIZE.dp)
             )
             SingleAction(
                 text = stringResource(id = R.string.delete),
-                painter = painterResource(id = FAIcons.delete),
+                icon = Icon.DrawableResourceIcon(id = FAIcons.delete),
                 color = MaterialTheme.colorScheme.error,
                 onClick = onDeletePressed,
                 modifier = Modifier.size(ACTION_SIZE.dp)
@@ -173,7 +173,7 @@ fun ActionsRow(
 @Composable
 fun SingleAction(
     text: String,
-    painter: Painter,
+    icon: Icon,
     color: Color,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
@@ -194,12 +194,24 @@ fun SingleAction(
                 .padding(6.dp),
             contentAlignment = Alignment.Center
         ) {
-            Icon(
-                painter = painter,
-                contentDescription = text,
-                tint = color,
-                modifier = Modifier.size(24.dp)
-            )
+            when(icon) {
+                is Icon.DrawableResourceIcon -> {
+                    Icon(
+                        painter = painterResource(id = icon.id),
+                        contentDescription = text,
+                        tint = color,
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+                is Icon.ImageVectorIcon -> {
+                    Icon(
+                        imageVector = icon.imageVector,
+                        contentDescription = text,
+                        tint = color,
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+            }
         }
     }
 }

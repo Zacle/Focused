@@ -3,6 +3,8 @@ package com.zn.apps.ui_design.icon
 import androidx.annotation.DrawableRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -26,6 +28,8 @@ object FAIcons {
     val priority = R.drawable.task_priority
     val tag = R.drawable.tag
     val task_name = R.drawable.task_name
+    val check_mark = Icons.Default.Check
+    val edit = Icons.Default.Edit
 }
 
 /**
