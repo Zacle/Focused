@@ -22,8 +22,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -58,7 +56,6 @@ fun ProjectsRoute(
     projectsUiModel: ProjectsUiModel,
     projectFiltration: ProjectFiltration,
     uiStateHolder: ProjectsUiStateHolder,
-    snackbarHostState: SnackbarHostState,
     coroutineScope: CoroutineScope,
     onProjectFilterTypeSelected: (ProjectFilterType) -> Unit,
     upsertProject: (Project) -> Unit,
@@ -104,7 +101,6 @@ fun ProjectsRoute(
     ProjectsScreen(
         projectsUiModel = projectsUiModel,
         projectFiltration = projectFiltration,
-        snackbarHostState = snackbarHostState,
         onProjectFilterTypeSelected = onProjectFilterTypeSelected,
         onProjectPressed = onProjectPressed,
         navigateToEditProject = navigateToEditProject,
@@ -118,7 +114,6 @@ fun ProjectsRoute(
 fun ProjectsScreen(
     projectsUiModel: ProjectsUiModel,
     projectFiltration: ProjectFiltration,
-    snackbarHostState: SnackbarHostState,
     onProjectFilterTypeSelected: (ProjectFilterType) -> Unit,
     onProjectPressed: (String) -> Unit,
     navigateToEditProject: (String) -> Unit,
@@ -153,11 +148,10 @@ fun ProjectsScreen(
         floatingActionButton = {
             FAFloatingButton(
                 onClick = { shouldShowModalSheet(true) },
-                painter = painterResource(id = FAIcons.ProjectDestination),
+                painter = painterResource(id = R.drawable.add_project),
                 description = stringResource(id = R.string.click_to_add_project)
             )
         },
-        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         modifier = modifier
     ) { innerPadding ->
 

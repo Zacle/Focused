@@ -28,8 +28,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
@@ -73,7 +71,6 @@ fun TasksRoute(
     tasksUiModel: TasksUiModel,
     uiStateHolder: TasksUiStateHolder,
     selectedTagId: String,
-    snackbarHostState: SnackbarHostState,
     coroutineScope: CoroutineScope,
     onRelatedTasksSelected: (Int) -> Unit,
     onTagPressed: (String) -> Unit,
@@ -120,7 +117,6 @@ fun TasksRoute(
     TasksScreen(
         tasksUiModel = tasksUiModel,
         selectedTagId = selectedTagId,
-        snackbarHostState = snackbarHostState,
         onTagSelected = onTagPressed,
         onRelatedTasksSelected = onRelatedTasksSelected,
         onTaskCompleted = onTaskCompleted,
@@ -135,7 +131,6 @@ fun TasksRoute(
 fun TasksScreen(
     tasksUiModel: TasksUiModel,
     selectedTagId: String,
-    snackbarHostState: SnackbarHostState,
     onTagSelected: (String) -> Unit,
     onRelatedTasksSelected: (Int) -> Unit,
     onTaskCompleted: (Task) -> Unit,
@@ -170,7 +165,6 @@ fun TasksScreen(
                 description = stringResource(id = R.string.click_to_add_task)
             )
         },
-        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         modifier = modifier
             .nestedScroll(scrollBehavior.nestedScrollConnection)
     ) { innerPadding ->

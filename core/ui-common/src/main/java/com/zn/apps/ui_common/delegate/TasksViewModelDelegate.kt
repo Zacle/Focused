@@ -23,7 +23,7 @@ interface TasksViewModelDelegate {
     val tasksUiStateHolder: StateFlow<TasksUiStateHolder>
 
     /** set the task completed */
-    fun setTaskCompleted(task: Task): Result<Any>?
+    fun setTaskCompleted(task: Task)
 
     /** flag the task that we intend to update the due date */
     fun updateDueDatePressed(task: Task)
@@ -36,7 +36,7 @@ interface TasksViewModelDelegate {
      *
      * @return [Result] if the update was successful or unsuccessful to notify the user
      */
-    fun updateDueDateConfirmed(offsetDateTime: OffsetDateTime?): Result<Any>?
+    fun updateDueDateConfirmed(offsetDateTime: OffsetDateTime?)
 
     /** flag the task that we intend to update the pomodoro */
     fun updatePomodoroPressed(task: Task)
@@ -49,7 +49,7 @@ interface TasksViewModelDelegate {
      *
      * @return [Result] if the update was successful or unsuccessful to notify the user
      */
-    fun updatePomodoroConfirmed(pomodoro: Pomodoro): Result<Any>?
+    fun updatePomodoroConfirmed(pomodoro: Pomodoro)
 
     /** flag the task that we intend to update to delete */
     fun deleteTaskPressed(task: Task)
@@ -62,7 +62,7 @@ interface TasksViewModelDelegate {
      *
      * @return [Result] if the delete was successful or unsuccessful to notify the user
      */
-    fun deleteTaskConfirmed(): Result<Any>?
+    fun deleteTaskConfirmed()
 
     /**
      * Insert or modify the task
@@ -119,22 +119,18 @@ class DefaultTasksViewModelDelegate @Inject constructor(
         }
     }
 
-    private fun upsert(task: Task): Result<Any>? {
-        var result: Result<Any>? = null
+    private fun upsert(task: Task) {
         scope.launch {
             upsertTaskUseCase.execute(
                 UpsertTaskUseCase.Request(
                     task = task
                 )
-            ).collect {
-                result = it
-            }
+            )
         }
-        return result
     }
 
-    override fun setTaskCompleted(task: Task): Result<Any>? {
-        return upsert(task.copy(completed = true, completedTime = OffsetDateTime.now()))
+    override fun setTaskCompleted(task: Task) {
+        upsert(task.copy(completed = true, completedTime = OffsetDateTime.now()))
     }
 
     override fun updateDueDatePressed(task: Task) {
@@ -149,16 +145,14 @@ class DefaultTasksViewModelDelegate @Inject constructor(
         }
     }
 
-    override fun updateDueDateConfirmed(offsetDateTime: OffsetDateTime?): Result<Any>? {
+    override fun updateDueDateConfirmed(offsetDateTime: OffsetDateTime?) {
         val task = tasksUiStateHolder.value.taskPressed
-        var result: Result<Any>? = null
         if (task != null) {
-            result = upsert(task.copy(dueDate = offsetDateTime))
+            upsert(task.copy(dueDate = offsetDateTime))
         }
         tasksUiStateHolder.update {
             it.copy(showDueDateDialog = false, taskPressed = null)
         }
-        return result
     }
 
     override fun updatePomodoroPressed(task: Task) {
@@ -173,16 +167,14 @@ class DefaultTasksViewModelDelegate @Inject constructor(
         }
     }
 
-    override fun updatePomodoroConfirmed(pomodoro: Pomodoro): Result<Any>? {
+    override fun updatePomodoroConfirmed(pomodoro: Pomodoro) {
         val task = tasksUiStateHolder.value.taskPressed
-        var result: Result<Any>? = null
         if (task != null) {
-            result = upsert(task.copy(pomodoro = pomodoro))
+            upsert(task.copy(pomodoro = pomodoro))
         }
         tasksUiStateHolder.update {
             it.copy(showPomodoroDialog = false, taskPressed = null)
         }
-        return result
     }
 
     override fun deleteTaskPressed(task: Task) {
@@ -197,24 +189,20 @@ class DefaultTasksViewModelDelegate @Inject constructor(
         }
     }
 
-    override fun deleteTaskConfirmed(): Result<Any>? {
+    override fun deleteTaskConfirmed() {
         val task = tasksUiStateHolder.value.taskPressed
-        var result: Result<Any>? = null
         if (task != null) {
             scope.launch {
                 deleteTaskUseCase.execute(
                     DeleteTaskUseCase.Request(
                         task = task
                     )
-                ).collect {
-                    result = it
-                }
+                )
             }
         }
         tasksUiStateHolder.update {
             it.copy(showDeleteTaskDialog = false, taskPressed = null)
         }
-        return result
     }
 
     override fun upsertTask(task: Task) {

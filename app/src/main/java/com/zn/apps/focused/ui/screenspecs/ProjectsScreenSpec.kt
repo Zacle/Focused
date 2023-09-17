@@ -54,7 +54,6 @@ data object ProjectsScreenSpec: BottomNavScreenSpec {
                     projectsUiModel = projectsUiModel,
                     projectFiltration = projectFiltration,
                     uiStateHolder = uiStateHolder,
-                    snackbarHostState = appState.snackbarHostState,
                     coroutineScope = appState.coroutineScope,
                     onProjectPressed = { projectId ->
                         viewModel.submitAction(ProjectsUiAction.NavigateToRelatedTasks(projectId))
@@ -79,9 +78,6 @@ data object ProjectsScreenSpec: BottomNavScreenSpec {
                 when(it) {
                     ProjectsUiEvent.ProjectDeleted -> {
                         showSnackbar(appState, context.getString(R.string.project_deleted))
-                    }
-                    ProjectsUiEvent.ProjectNotDeleted -> {
-                        showSnackbar(appState, context.getString(R.string.project_not_deleted))
                     }
                     is ProjectsUiEvent.NavigateToEditProject -> {
                         // TODO navigate to edit project

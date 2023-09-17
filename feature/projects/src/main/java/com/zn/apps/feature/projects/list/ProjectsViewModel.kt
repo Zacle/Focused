@@ -3,7 +3,6 @@ package com.zn.apps.feature.projects.list
 import androidx.lifecycle.viewModelScope
 import com.zn.apps.domain.project.GetProjectResourcesUseCase
 import com.zn.apps.model.data.project.ProjectFiltration
-import com.zn.apps.model.usecase.Result
 import com.zn.apps.ui_common.delegate.ProjectsViewModelDelegate
 import com.zn.apps.ui_common.state.BaseViewModel
 import com.zn.apps.ui_common.state.UiState
@@ -49,13 +48,7 @@ class ProjectsViewModel @Inject constructor(
             ProjectsUiAction.SearchProjectDismissed -> searchProjectDismissed()
             ProjectsUiAction.DeleteProjectPressed -> deleteProjectPressed()
             ProjectsUiAction.DeleteProjectDismissed -> deleteProjectDismissed()
-            ProjectsUiAction.DeleteProjectConfirmed -> {
-                when(deleteProjectConfirmed()) {
-                    is Result.Success -> submitSingleEvent(ProjectsUiEvent.ProjectDeleted)
-                    is Result.Error -> submitSingleEvent(ProjectsUiEvent.ProjectNotDeleted)
-                    else -> {}
-                }
-            }
+            ProjectsUiAction.DeleteProjectConfirmed -> { submitSingleEvent(ProjectsUiEvent.ProjectDeleted) }
             ProjectsUiAction.CompleteProjectPressed -> setProjectCompletedPressed()
             ProjectsUiAction.CompleteProjectDismissed -> setProjectCompletedDismissed()
             ProjectsUiAction.CompleteProjectConfirmed -> setProjectCompletedConfirmed()

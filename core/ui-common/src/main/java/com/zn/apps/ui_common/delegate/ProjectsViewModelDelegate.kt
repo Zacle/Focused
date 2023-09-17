@@ -43,7 +43,7 @@ interface ProjectsViewModelDelegate {
      *
      * @return [Result] if the delete was successful or unsuccessful to notify the user
      */
-    fun deleteProjectConfirmed(): Result<Any>?
+    fun deleteProjectConfirmed()
 
     /**
      * mark that the user is currently searching
@@ -134,22 +134,18 @@ class DefaultProjectsViewModelDelegate @Inject constructor(
         }
     }
 
-    override fun deleteProjectConfirmed(): Result<Any>? {
+    override fun deleteProjectConfirmed() {
         val project = projectsUiStateHolder.value.projectPressed
-        var result: Result<Any>? = null
         if (project != null) {
             scope.launch {
                 deleteProjectUseCase.execute(
                     DeleteProjectUseCase.Request(project)
-                ).collect {
-                    result = it
-                }
+                )
             }
         }
         projectsUiStateHolder.update {
             it.copy(showDeleteProjectDialog = false, projectPressed = null)
         }
-        return result
     }
 
     override fun searchProjectPressed() {

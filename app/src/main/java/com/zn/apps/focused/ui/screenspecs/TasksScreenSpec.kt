@@ -56,7 +56,6 @@ data object TasksScreenSpec: BottomNavScreenSpec {
                     tasksUiModel = tasksUiModel,
                     uiStateHolder = uiStateHolder,
                     selectedTagId = selectedTagId,
-                    snackbarHostState = appState.snackbarHostState,
                     coroutineScope = appState.coroutineScope,
                     onRelatedTasksSelected = { deadlineType ->
                         viewModel.submitAction(TasksUiAction.NavigateToRelatedTasks(deadlineType))
@@ -80,12 +79,6 @@ data object TasksScreenSpec: BottomNavScreenSpec {
         LaunchedEffect(Unit) {
             viewModel.singleEventFlow.collectLatest {
                 when(it) {
-                    TasksUiEvent.TaskNotUpdated -> {
-                        showSnackbar(appState, context.getString(R.string.task_not_updated))
-                    }
-                    TasksUiEvent.TaskNotDeleted -> {
-                        showSnackbar(appState, context.getString(R.string.task_not_deleted))
-                    }
                     TasksUiEvent.TaskDeleted -> {
                         showSnackbar(appState, context.getString(R.string.task_deleted))
                     }

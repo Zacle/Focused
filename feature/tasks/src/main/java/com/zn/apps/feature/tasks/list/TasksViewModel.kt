@@ -18,8 +18,6 @@ import com.zn.apps.feature.tasks.list.TasksUiAction.UpdatePomodoroPressed
 import com.zn.apps.feature.tasks.list.TasksUiAction.UpdatedDueDateConfirmed
 import com.zn.apps.filter.Filter
 import com.zn.apps.filter.Grouping
-import com.zn.apps.model.usecase.Result.Error
-import com.zn.apps.model.usecase.Result.Success
 import com.zn.apps.ui_common.delegate.TasksViewModelDelegate
 import com.zn.apps.ui_common.state.BaseViewModel
 import com.zn.apps.ui_common.state.UiState
@@ -55,40 +53,16 @@ class TasksViewModel @Inject constructor(
         when (action) {
             Load -> loadTasksWithTags()
             is TagPressed -> selectedTag.value = action.tagId
-            is TaskCompleted -> {
-                when(setTaskCompleted(action.task)) {
-                    is Success -> submitSingleEvent(TasksUiEvent.DueDateUpdated)
-                    is Error -> submitSingleEvent(TasksUiEvent.TaskNotUpdated)
-                    else -> {}
-                }
-            }
+            is TaskCompleted -> { submitSingleEvent(TasksUiEvent.DueDateUpdated) }
             is UpdateDueDatePressed -> updateDueDatePressed(action.task)
             UpdateDueDateDismissed -> updateDueDateDismissed()
-            is UpdatedDueDateConfirmed -> {
-                when(updateDueDateConfirmed(action.offsetDateTime)) {
-                    is Success -> submitSingleEvent(TasksUiEvent.DueDateUpdated)
-                    is Error -> submitSingleEvent(TasksUiEvent.TaskNotUpdated)
-                    else -> {}
-                }
-            }
+            is UpdatedDueDateConfirmed -> { submitSingleEvent(TasksUiEvent.DueDateUpdated) }
             is UpdatePomodoroPressed -> updatePomodoroPressed(action.task)
             UpdatePomodoroDismissed -> updatePomodoroDismissed()
-            is UpdatePomodoroConfirmed -> {
-                when(updatePomodoroConfirmed(action.pomodoro)) {
-                    is Success -> submitSingleEvent(TasksUiEvent.PomodoroUpdated)
-                    is Error -> submitSingleEvent(TasksUiEvent.TaskNotUpdated)
-                    else -> {}
-                }
-            }
+            is UpdatePomodoroConfirmed -> { submitSingleEvent(TasksUiEvent.PomodoroUpdated) }
             is DeleteTaskPressed -> deleteTaskPressed(action.task)
             DeleteTaskDismissed -> deleteTaskDismissed()
-            DeleteTaskConfirmed -> {
-                when(deleteTaskConfirmed()) {
-                    is Success -> submitSingleEvent(TasksUiEvent.TaskDeleted)
-                    is Error -> submitSingleEvent(TasksUiEvent.TaskNotDeleted)
-                    else -> {}
-                }
-            }
+            DeleteTaskConfirmed -> { submitSingleEvent(TasksUiEvent.TaskDeleted) }
             is NavigateToTask -> submitSingleEvent(TasksUiEvent.NavigateToTask(action.taskId))
             is NavigateToRelatedTasks -> {
                 submitSingleEvent(TasksUiEvent.NavigateToRelatedTasks(action.deadlineType))
