@@ -3,11 +3,13 @@ package com.zn.apps.ui_common.delegate
 import com.zn.apps.common.network.di.ApplicationScope
 import com.zn.apps.domain.project.DeleteProjectUseCase
 import com.zn.apps.domain.project.UpsertProjectUseCase
+import com.zn.apps.domain.tag.GetTagsUseCase
 import com.zn.apps.model.data.project.Project
 import com.zn.apps.model.usecase.Result
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.time.OffsetDateTime
@@ -72,10 +74,24 @@ interface ProjectsViewModelDelegate {
 class DefaultProjectsViewModelDelegate @Inject constructor(
     private val upsertProjectUseCase: UpsertProjectUseCase,
     private val deleteProjectUseCase: DeleteProjectUseCase,
+    getTagsUseCase: GetTagsUseCase,
     @ApplicationScope val scope: CoroutineScope
 ): ProjectsViewModelDelegate {
 
     override val projectsUiStateHolder = MutableStateFlow(ProjectsUiStateHolder())
+
+    init {
+        scope.launch {
+            getTagsUseCase.execute(GetTagsUseCase.Request)
+                .collectLatest { result ->
+                    if (result is Result.Success) {
+                        projectsUiStateHolder.update {
+                            it.copy(tags = result.data.tags)
+                        }
+                    }
+                }
+        }
+    }
 
     override fun setProjectCompletedPressed() {
         projectsUiStateHolder.update {

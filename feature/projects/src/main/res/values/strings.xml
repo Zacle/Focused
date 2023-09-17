@@ -6,7 +6,11 @@
         Please click on the floating icon to add a project.
     </string>
     <string name="select_project">Select Project</string>
+    <string name="select_tag">Select Tag</string>
+    <string name="enter_project_name">Enter project name</string>
+    <string name="no_tag">No Tag</string>
     <string name="no_project">No Project</string>
+    <string name="all">All</string>
     <string name="ongoing">Ongoing</string>
     <string name="completed">Completed</string>
     <string name="search_project">Search Project</string>
@@ -27,8 +31,10 @@
     <string name="project_name_cant_be_blank">Project name can\'t be blank</string>
     <string name="update_project">Update Project</string>
     <string name="project_updated">Project Updated</string>
+    <string name="done">Done</string>
 
     <!-- Errors -->
     <string name="unknown_error">An unknown error occurred.</string>
     <string name="project_no_tasks">No Tasks</string>
+
 </resources>

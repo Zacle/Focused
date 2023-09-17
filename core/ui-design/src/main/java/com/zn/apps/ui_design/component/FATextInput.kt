@@ -25,14 +25,15 @@ fun FATextInput(
     name: String,
     placeholder: String,
     icon: DrawableResourceIcon,
-    onValueChange: (String) -> Unit
+    onValueChange: (String) -> Unit,
+    color: Color = Color.Transparent
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         FormIcon(
-            color = Color.Transparent,
+            color = color,
             icon = icon
         )
         FAOutlinedTextField(name, onValueChange, placeholder)
