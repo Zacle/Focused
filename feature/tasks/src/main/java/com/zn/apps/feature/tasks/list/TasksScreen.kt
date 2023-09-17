@@ -270,19 +270,19 @@ fun TaskSection(
         onCompleted = setTaskCompleted,
         onStartTask = { startRunningTask(task) },
         onDeleteTaskPressed = {
-            viewModel.submitAction(TasksUiAction.DeleteTaskPressed(task))
+            viewModel.submitAction(TasksUiAction.DeleteTaskPressed)
         },
         onDeleteTaskDismissed = { viewModel.submitAction(TasksUiAction.DeleteTaskDismissed) },
         onDeleteTaskConfirmed = { viewModel.submitAction(TasksUiAction.DeleteTaskConfirmed) },
         onUpdateDueDatePressed = {
-            viewModel.submitAction(TasksUiAction.UpdateDueDatePressed(task))
+            viewModel.submitAction(TasksUiAction.UpdateDueDatePressed)
         },
         onUpdateDueDateDismissed = { viewModel.submitAction(TasksUiAction.UpdateDueDateDismissed) },
         onUpdateDueDateConfirmed = {
             viewModel.submitAction(TasksUiAction.UpdatedDueDateConfirmed(it))
         },
         onUpdatePomodoroPressed = {
-            viewModel.submitAction(TasksUiAction.UpdatePomodoroPressed(task))
+            viewModel.submitAction(TasksUiAction.UpdatePomodoroPressed)
         },
         onUpdatePomodoroDismissed = { viewModel.submitAction(TasksUiAction.UpdatePomodoroDismissed) },
         onUpdatePomodoroConfirmed = {

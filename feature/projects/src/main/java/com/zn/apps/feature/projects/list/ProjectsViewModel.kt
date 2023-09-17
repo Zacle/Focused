@@ -48,7 +48,10 @@ class ProjectsViewModel @Inject constructor(
             ProjectsUiAction.SearchProjectDismissed -> searchProjectDismissed()
             ProjectsUiAction.DeleteProjectPressed -> deleteProjectPressed()
             ProjectsUiAction.DeleteProjectDismissed -> deleteProjectDismissed()
-            ProjectsUiAction.DeleteProjectConfirmed -> { submitSingleEvent(ProjectsUiEvent.ProjectDeleted) }
+            ProjectsUiAction.DeleteProjectConfirmed -> {
+                deleteProjectConfirmed()
+                submitSingleEvent(ProjectsUiEvent.ProjectDeleted)
+            }
             ProjectsUiAction.CompleteProjectPressed -> setProjectCompletedPressed()
             ProjectsUiAction.CompleteProjectDismissed -> setProjectCompletedDismissed()
             ProjectsUiAction.CompleteProjectConfirmed -> setProjectCompletedConfirmed()

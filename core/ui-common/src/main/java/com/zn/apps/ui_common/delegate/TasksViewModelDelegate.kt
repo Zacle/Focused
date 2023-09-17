@@ -26,7 +26,7 @@ interface TasksViewModelDelegate {
     fun setTaskCompleted(task: Task)
 
     /** flag the task that we intend to update the due date */
-    fun updateDueDatePressed(task: Task)
+    fun updateDueDatePressed()
 
     /** Ignore the task that has been flagged */
     fun updateDueDateDismissed()
@@ -39,7 +39,7 @@ interface TasksViewModelDelegate {
     fun updateDueDateConfirmed(offsetDateTime: OffsetDateTime?)
 
     /** flag the task that we intend to update the pomodoro */
-    fun updatePomodoroPressed(task: Task)
+    fun updatePomodoroPressed()
 
     /** Ignore the task that has been flagged */
     fun updatePomodoroDismissed()
@@ -52,7 +52,7 @@ interface TasksViewModelDelegate {
     fun updatePomodoroConfirmed(pomodoro: Pomodoro)
 
     /** flag the task that we intend to update to delete */
-    fun deleteTaskPressed(task: Task)
+    fun deleteTaskPressed()
 
     /** Ignore the task that has been flagged */
     fun deleteTaskDismissed()
@@ -133,9 +133,9 @@ class DefaultTasksViewModelDelegate @Inject constructor(
         upsert(task.copy(completed = true, completedTime = OffsetDateTime.now()))
     }
 
-    override fun updateDueDatePressed(task: Task) {
+    override fun updateDueDatePressed() {
         tasksUiStateHolder.update {
-            it.copy(showDueDateDialog = true, taskPressed = task)
+            it.copy(showDueDateDialog = true)
         }
     }
 
@@ -155,9 +155,9 @@ class DefaultTasksViewModelDelegate @Inject constructor(
         }
     }
 
-    override fun updatePomodoroPressed(task: Task) {
+    override fun updatePomodoroPressed() {
         tasksUiStateHolder.update {
-            it.copy(showPomodoroDialog = true, taskPressed = task)
+            it.copy(showPomodoroDialog = true)
         }
     }
 
@@ -177,9 +177,9 @@ class DefaultTasksViewModelDelegate @Inject constructor(
         }
     }
 
-    override fun deleteTaskPressed(task: Task) {
+    override fun deleteTaskPressed() {
         tasksUiStateHolder.update {
-            it.copy(showDeleteTaskDialog = true, taskPressed = task)
+            it.copy(showDeleteTaskDialog = true)
         }
     }
 

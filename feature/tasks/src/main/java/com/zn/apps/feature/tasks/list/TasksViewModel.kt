@@ -54,15 +54,24 @@ class TasksViewModel @Inject constructor(
             Load -> loadTasksWithTags()
             is TagPressed -> selectedTag.value = action.tagId
             is TaskCompleted -> { submitSingleEvent(TasksUiEvent.DueDateUpdated) }
-            is UpdateDueDatePressed -> updateDueDatePressed(action.task)
+            is UpdateDueDatePressed -> updateDueDatePressed()
             UpdateDueDateDismissed -> updateDueDateDismissed()
-            is UpdatedDueDateConfirmed -> { submitSingleEvent(TasksUiEvent.DueDateUpdated) }
-            is UpdatePomodoroPressed -> updatePomodoroPressed(action.task)
+            is UpdatedDueDateConfirmed -> {
+                updateDueDateConfirmed(action.offsetDateTime)
+                submitSingleEvent(TasksUiEvent.DueDateUpdated)
+            }
+            is UpdatePomodoroPressed -> updatePomodoroPressed()
             UpdatePomodoroDismissed -> updatePomodoroDismissed()
-            is UpdatePomodoroConfirmed -> { submitSingleEvent(TasksUiEvent.PomodoroUpdated) }
-            is DeleteTaskPressed -> deleteTaskPressed(action.task)
+            is UpdatePomodoroConfirmed -> {
+                updatePomodoroConfirmed(action.pomodoro)
+                submitSingleEvent(TasksUiEvent.PomodoroUpdated)
+            }
+            is DeleteTaskPressed -> deleteTaskPressed()
             DeleteTaskDismissed -> deleteTaskDismissed()
-            DeleteTaskConfirmed -> { submitSingleEvent(TasksUiEvent.TaskDeleted) }
+            DeleteTaskConfirmed -> {
+                deleteTaskConfirmed()
+                submitSingleEvent(TasksUiEvent.TaskDeleted)
+            }
             is NavigateToTask -> submitSingleEvent(TasksUiEvent.NavigateToTask(action.taskId))
             is NavigateToRelatedTasks -> {
                 submitSingleEvent(TasksUiEvent.NavigateToRelatedTasks(action.deadlineType))
