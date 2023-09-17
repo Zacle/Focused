@@ -214,7 +214,8 @@ fun TaskCard(
                             Text(
                                 text = "${task.pomodoro.pomodoroCompleted}/${task.pomodoro.pomodoroNumber}",
                                 modifier = Modifier.padding(start = 8.dp),
-                                color = MaterialTheme.colorScheme.secondary
+                                color = MaterialTheme.colorScheme.secondary,
+                                style = MaterialTheme.typography.labelSmall
                             )
                         }
                     }

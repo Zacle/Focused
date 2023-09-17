@@ -37,11 +37,13 @@ object DelegateModule {
     fun providesProjectsViewModelDelegate(
         upsertProjectUseCase: UpsertProjectUseCase,
         deleteProjectUseCase: DeleteProjectUseCase,
+        getTagsUseCase: GetTagsUseCase,
         @ApplicationScope scope: CoroutineScope
     ): ProjectsViewModelDelegate =
         DefaultProjectsViewModelDelegate(
             upsertProjectUseCase = upsertProjectUseCase,
             deleteProjectUseCase = deleteProjectUseCase,
+            getTagsUseCase = getTagsUseCase,
             scope = scope
         )
 }

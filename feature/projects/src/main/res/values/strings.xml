@@ -10,6 +10,7 @@
     <string name="enter_project_name">Enter project name</string>
     <string name="no_tag">No Tag</string>
     <string name="no_project">No Project</string>
+    <string name="no_completed_project">No completed project so far</string>
     <string name="all">All</string>
     <string name="ongoing">Ongoing</string>
     <string name="completed">Completed</string>

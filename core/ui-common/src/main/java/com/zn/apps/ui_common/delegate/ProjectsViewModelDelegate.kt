@@ -109,8 +109,10 @@ class DefaultProjectsViewModelDelegate @Inject constructor(
         val project = projectsUiStateHolder.value.projectPressed
         if (project != null) {
             scope.launch {
+                val completed = !project.completed
+                val completedTime = if (project.completed) null else OffsetDateTime.now()
                 val request = UpsertProjectUseCase.Request(
-                    project.copy(completed = true, completedTime = OffsetDateTime.now())
+                    project.copy(completed = completed, completedTime = completedTime)
                 )
                 upsertProjectUseCase.execute(request)
             }

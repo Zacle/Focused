@@ -8,7 +8,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -17,9 +16,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
+import com.zn.apps.feature.onboarding.navigation.onboardingRoute
 import com.zn.apps.focused.ui.navigation.FANavHost
 import com.zn.apps.focused.ui.navigation.Graph
-import com.zn.apps.feature.onboarding.navigation.onboardingRoute
 import com.zn.apps.focused.ui.screenspecs.BottomNavScreenSpec
 import com.zn.apps.ui_design.component.FANavigationBar
 import com.zn.apps.ui_design.component.FANavigationBarItem
@@ -70,7 +69,6 @@ fun MainScaffold(
         containerColor = Color.Transparent,
         contentColor = MaterialTheme.colorScheme.onBackground,
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
-        snackbarHost = { SnackbarHost(appState.snackbarHostState) },
         bottomBar = {
             if (appState.shouldShowBottomBar) {
                 FABottomBar(
