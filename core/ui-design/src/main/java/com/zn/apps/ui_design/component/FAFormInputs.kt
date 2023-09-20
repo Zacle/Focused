@@ -103,12 +103,13 @@ fun FAInputSelector(
 @Composable
 fun ChoosePriority(
     onPrioritySelected: (TaskPriority) -> Unit,
-    selectedPriority: TaskPriority
+    selectedPriority: TaskPriority,
+    modifier: Modifier = Modifier
 ) {
     var expanded by remember {
         mutableStateOf(false)
     }
-    Box {
+    Box(modifier) {
         IconButton(onClick = { expanded = true }) {
             Icon(
                 painter = painterResource(id = FAIcons.priority),

@@ -2,6 +2,7 @@ package com.zn.apps.ui_design.icon
 
 import androidx.annotation.DrawableRes
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Edit
@@ -17,6 +18,7 @@ object FAIcons {
     val TimerDestination = R.drawable.timer
     val ArrowForward = Icons.Default.ArrowForward
     val KeyboardArrowRight = Icons.Default.KeyboardArrowRight
+    val ArrowBack = Icons.Default.ArrowBack
     val KeyboardArrowDown = Icons.Default.KeyboardArrowDown
     val pomodoro = R.drawable.pomodoro
     val play_circle = R.drawable.play_circle

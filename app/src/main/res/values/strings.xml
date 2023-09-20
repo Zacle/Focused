@@ -3,6 +3,7 @@
 
     <string name="task_not_updated">The task couldn\'t be updated. Try again</string>
     <string name="task_deleted">Task deleted</string>
+    <string name="task_updated">Task updated</string>
     <string name="task_not_deleted">The task couldn\'t be deleted. Try again</string>
     <string name="due_date_updated">Due date updated</string>
     <string name="pomodoro_updated">Pomodoro updated</string>

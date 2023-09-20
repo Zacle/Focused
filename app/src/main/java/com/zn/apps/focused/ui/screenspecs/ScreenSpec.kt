@@ -13,7 +13,8 @@ sealed interface ScreenSpec {
             TimerScreenSpec,
             TasksScreenSpec,
             ProjectsScreenSpec,
-            ReportScreenSpec
+            ReportScreenSpec,
+            TaskScreenSpec
         ).associateBy { it.route }
     }
 
@@ -25,9 +26,6 @@ sealed interface ScreenSpec {
 
     /* deeplink to access the screen from external apps */
     val deepLinks: List<NavDeepLink> get() = emptyList()
-
-    @Composable
-    fun TopBar(appState: FocusedAppState, navBackStackEntry: NavBackStackEntry)
 
     @Composable
     fun Content(appState: FocusedAppState, navBackStackEntry: NavBackStackEntry)

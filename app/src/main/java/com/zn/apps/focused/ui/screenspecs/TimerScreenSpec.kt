@@ -22,11 +22,6 @@ data object TimerScreenSpec: BottomNavScreenSpec {
     override val route: String = "timer"
 
     @Composable
-    override fun TopBar(appState: FocusedAppState, navBackStackEntry: NavBackStackEntry) {
-        TODO("Not yet implemented")
-    }
-
-    @Composable
     override fun Content(appState: FocusedAppState, navBackStackEntry: NavBackStackEntry) {
         Box(
             modifier = Modifier.fillMaxSize(),

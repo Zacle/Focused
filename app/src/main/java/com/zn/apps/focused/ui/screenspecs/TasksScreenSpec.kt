@@ -30,11 +30,6 @@ data object TasksScreenSpec: BottomNavScreenSpec {
     override val route: String = "tasks"
 
     @Composable
-    override fun TopBar(appState: FocusedAppState, navBackStackEntry: NavBackStackEntry) {
-        TODO("Not yet implemented")
-    }
-
-    @Composable
     override fun Content(appState: FocusedAppState, navBackStackEntry: NavBackStackEntry) {
         val viewModel: TasksViewModel = hiltViewModel()
 
@@ -89,7 +84,7 @@ data object TasksScreenSpec: BottomNavScreenSpec {
                         showSnackbar(appState, context.getString(R.string.pomodoro_updated))
                     }
                     is TasksUiEvent.NavigateToTask -> {
-                        // TODO navigate to task using the id
+                        appState.navController.navigate(TaskScreenSpec.buildRoute(it.taskId))
                     }
                     is TasksUiEvent.NavigateToRelatedTasks -> {
                         // TODO navigate to related tasks

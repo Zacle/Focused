@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
@@ -183,12 +182,11 @@ fun TaskCard(
                 Text(
                     text = task.name,
                     fontWeight = FontWeight.Bold,
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = MaterialTheme.typography.bodySmall,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
                 if (task.pomodoro.pomodoroNumber > 0) {
-                    Spacer(modifier = Modifier.size(8.dp))
                     Row(
                         modifier = Modifier
                             .padding(top = 4.dp),

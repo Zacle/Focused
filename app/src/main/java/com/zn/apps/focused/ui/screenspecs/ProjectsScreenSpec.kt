@@ -30,11 +30,6 @@ data object ProjectsScreenSpec: BottomNavScreenSpec {
     override val route: String = "projects"
 
     @Composable
-    override fun TopBar(appState: FocusedAppState, navBackStackEntry: NavBackStackEntry) {
-        TODO("Not yet implemented")
-    }
-
-    @Composable
     override fun Content(appState: FocusedAppState, navBackStackEntry: NavBackStackEntry) {
         val viewModel: ProjectsViewModel = hiltViewModel()
 
