@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import com.zn.apps.common.millisecondsToMinutes
 import com.zn.apps.common.minutesToMilliseconds
 import com.zn.apps.feature.tasks.R
+import com.zn.apps.model.data.tag.Tag
 import com.zn.apps.model.data.task.Task
 import com.zn.apps.model.data.task.TaskPriority
 import com.zn.apps.ui_common.delegate.TasksUiStateHolder
@@ -231,6 +232,13 @@ fun TaskContent(
                         .fillMaxWidth()
                         .padding(vertical = 8.dp)
                 ) { onClick ->
+                    DropDownItem(
+                        item = Tag(name = stringResource(id = uiDesignR.string.no_project)),
+                        onItemSelected = { formStateSetter(formState.copy(selectedProjectId = null)) },
+                        onDropDownExpanded = { onClick() },
+                        text = stringResource(id = uiDesignR.string.no_tag),
+                        color = Color.Gray
+                    )
                     uiStateHolder.projects.forEach { project ->
                         DropDownItem(
                             item = project,

@@ -151,7 +151,7 @@ fun ProjectActionsRow(
     Surface(
         modifier = modifier
             .clip(RoundedCornerShape(10.dp)),
-        color = MaterialTheme.colorScheme.surface.copy(0.5f),
+        color = Color.Transparent,
         contentColor = MaterialTheme.colorScheme.onSurface
     ) {
         Row(

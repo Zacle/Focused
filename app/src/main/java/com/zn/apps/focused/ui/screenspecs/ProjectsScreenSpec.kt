@@ -75,7 +75,7 @@ data object ProjectsScreenSpec: BottomNavScreenSpec {
                         showSnackbar(appState, context.getString(R.string.project_deleted))
                     }
                     is ProjectsUiEvent.NavigateToEditProject -> {
-                        // TODO navigate to edit project
+                        appState.navController.navigate(ProjectScreenSpec.buildRoute(it.projectId))
                     }
                     is ProjectsUiEvent.NavigateToRelatedTasks -> {
                         // TODO navigate to related tasks

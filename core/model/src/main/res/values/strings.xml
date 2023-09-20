@@ -28,5 +28,6 @@
     <string name="task_not_found">The task could not be found.</string>
     <string name="tag_not_found">The tag could not be found.</string>
     <string name="tag_not_updated">The tag could not be updated</string>
+    <string name="project_not_found">The project could not be found</string>
 
 </resources>
