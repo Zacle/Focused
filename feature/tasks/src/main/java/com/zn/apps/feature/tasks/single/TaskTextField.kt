@@ -127,7 +127,7 @@ fun SelectTagChip(
                 Icon(
                     painter = painterResource(id = FAIcons.tag),
                     contentDescription = null,
-                    tint = tag?.uiColor()?.copy(alpha = 0.7f) ?: Color.Gray,
+                    tint = MaterialTheme.colorScheme.onSurface,
                     modifier = Modifier.size(20.dp)
                 )
             },
