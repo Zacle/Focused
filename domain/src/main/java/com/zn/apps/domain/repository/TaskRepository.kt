@@ -7,6 +7,11 @@ import kotlinx.coroutines.flow.Flow
 interface TaskRepository {
 
     /**
+     * Get all task resources with no filter
+     */
+    fun getTasks(): Flow<List<TaskResource>>
+
+    /**
      * Get task resources. Task Resources are embedded with project and tag to display
      * on the screen
      *

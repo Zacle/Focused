@@ -9,6 +9,11 @@ import kotlinx.coroutines.flow.Flow
 class DefaultTaskRepository(
     private val datasource: TaskDataSource
 ): TaskRepository {
+
+    override fun getTasks(): Flow<List<TaskResource>> {
+        return datasource.getTasks()
+    }
+
     override fun getTaskResources(completed: Boolean): Flow<List<TaskResource>> {
         return datasource.getTasks(completed)
     }

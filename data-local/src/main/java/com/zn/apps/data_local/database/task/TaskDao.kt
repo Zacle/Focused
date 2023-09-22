@@ -14,6 +14,10 @@ import kotlinx.coroutines.flow.Flow
 interface TaskDao {
 
     @Transaction
+    @Query("SELECT * FROM task")
+    fun getTasks(): Flow<List<PopulatedTaskEntity>>
+
+    @Transaction
     @Query("SELECT * FROM task WHERE completed = :completed")
     fun getTasks(completed: Boolean): Flow<List<PopulatedTaskEntity>>
 

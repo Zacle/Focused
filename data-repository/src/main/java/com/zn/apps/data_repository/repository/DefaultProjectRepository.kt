@@ -2,6 +2,7 @@ package com.zn.apps.data_repository.repository
 
 import com.zn.apps.data_repository.data_source.local.ProjectDataSource
 import com.zn.apps.domain.repository.ProjectRepository
+import com.zn.apps.model.data.project.PopulatedProjectResource
 import com.zn.apps.model.data.project.Project
 import com.zn.apps.model.data.project.ProjectResource
 import kotlinx.coroutines.flow.Flow
@@ -9,6 +10,10 @@ import kotlinx.coroutines.flow.Flow
 class DefaultProjectRepository(
     private val projectDataSource: ProjectDataSource
 ): ProjectRepository {
+
+    override fun getPopulatedProjectResource(projectId: String): Flow<PopulatedProjectResource?> {
+        return projectDataSource.getPopulatedProjectResource(projectId)
+    }
 
     override fun getProjectResources(): Flow<List<ProjectResource>> {
         return projectDataSource.getProjectResources()

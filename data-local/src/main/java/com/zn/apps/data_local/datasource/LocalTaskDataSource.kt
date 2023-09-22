@@ -16,6 +16,23 @@ import javax.inject.Inject
 class LocalTaskDataSource @Inject constructor(
     private val taskDao: TaskDao
 ): TaskDataSource {
+
+    override fun getTasks(): Flow<List<TaskResource>> =
+        taskDao.getTasks().mapLatest { tasks ->
+            tasks.mapTo(mutableListOf()) { populatedTaskEntity ->
+                val (projectId, projectName, projectCompleted) = getProjectIdAndName(populatedTaskEntity)
+                val (tagId, tagName) = getTagIdAndName(populatedTaskEntity)
+                TaskResource(
+                    task = populatedTaskEntity.task.asExternalModel(),
+                    projectId = projectId,
+                    projectName = projectName,
+                    projectCompleted = projectCompleted,
+                    tagId = tagId,
+                    tagName = tagName
+                )
+            }
+        }
+
     override fun getTasks(completed: Boolean): Flow<List<TaskResource>> =
         taskDao.getTasks(completed).mapLatest { tasks ->
             tasks.mapTo(mutableListOf()) { populatedTaskEntity ->

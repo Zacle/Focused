@@ -11,6 +11,11 @@ import kotlinx.coroutines.flow.Flow
 interface TaskDataSource {
 
     /**
+     * Get all task resources with no filter
+     */
+    fun getTasks(): Flow<List<TaskResource>>
+
+    /**
      * Get all tasks
      */
     fun getTasks(completed: Boolean): Flow<List<TaskResource>>

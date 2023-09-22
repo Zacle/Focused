@@ -1,10 +1,16 @@
 package com.zn.apps.domain.repository
 
+import com.zn.apps.model.data.project.PopulatedProjectResource
 import com.zn.apps.model.data.project.Project
 import com.zn.apps.model.data.project.ProjectResource
 import kotlinx.coroutines.flow.Flow
 
 interface ProjectRepository {
+
+    /**
+     * Get populated project resource
+     */
+    fun getPopulatedProjectResource(projectId: String): Flow<PopulatedProjectResource?>
 
     /**
      * Get project resources. Project Resources are embedded with tasks and tag's name
