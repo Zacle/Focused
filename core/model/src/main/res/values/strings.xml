@@ -3,6 +3,7 @@
 
     <!-- Misc -->
     <string name="due_date">Due date</string>
+    <string name="no_date">No date</string>
 
     <!-- Priority -->
     <string name="high_priority">High</string>
@@ -13,6 +14,7 @@
 
     <!-- Tag -->
     <string name="tag">Tag</string>
+    <string name="no_tag">No tag</string>
 
     <!-- Deadline types -->
     <string name="yesterday">Yesterday</string>

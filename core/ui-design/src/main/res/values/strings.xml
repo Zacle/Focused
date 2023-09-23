@@ -34,17 +34,31 @@
     <string name="enter_task_name">Enter task name</string>
     <string name="delete">Delete Task</string>
     <string name="delete_task_message">Are you sure to delete this task?</string>
+    <string name="click_to_add_task">
+        Please click on the floating icon to add a task.
+    </string>
+    <string name="estimated_time">Estimated time</string>
+    <string name="elapsed_time">Elapsed time</string>
+    <string name="tasks_to_be_completed">Tasks to be completed</string>
+    <string name="completed_tasks">Completed tasks</string>
+    <string name="no_tasks">No tasks on the list.</string>
+    <string name="see_all">See all</string>
 
     <!-- Tags -->
     <string name="all">All</string>
     <string name="select_tag">Select Tag</string>
     <string name="no_tag">No Tag</string>
+    <string name="tag">Tag</string>
 
     <!-- Priority -->
     <string name="select_priority">Select Priority</string>
+    <string name="priority">Priority</string>
 
     <!-- Projects -->
     <string name="select_project">Select Project</string>
     <string name="no_project">No Project</string>
+
+    <!-- Grouping -->
+    <string name="group_tasks">Group tasks by</string>
 
 </resources>

@@ -1,5 +1,6 @@
 package com.zn.apps.di
 
+import android.content.Context
 import com.zn.apps.domain.GetTasksWithTagsUseCase
 import com.zn.apps.domain.UseCase
 import com.zn.apps.domain.repository.TaskRepository
@@ -11,6 +12,7 @@ import com.zn.apps.domain.task.UpsertTaskUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 
 
@@ -27,8 +29,9 @@ object TaskUseCaseModule {
     @Provides
     fun providesGetTasksUseCase(
         configuration: UseCase.Configuration,
+        @ApplicationContext context: Context,
         taskRepository: TaskRepository
-    ): GetTasksUseCase = GetTasksUseCase(configuration, taskRepository)
+    ): GetTasksUseCase = GetTasksUseCase(configuration, context, taskRepository)
 
     @Provides
     fun providesGetTaskUseCase(

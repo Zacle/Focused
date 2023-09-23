@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.add
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.BottomSheetDefaults
@@ -134,7 +135,8 @@ fun ProjectsScreen(
                         Icon(
                             painter = painterResource(id = FAIcons.search),
                             contentDescription = stringResource(id = R.string.search_project),
-                            tint = FATopAppBarDefaults.appBarContentColor()
+                            tint = FATopAppBarDefaults.appBarContentColor(),
+                            modifier = Modifier.size(24.dp)
                         )
                     }
                 }
@@ -158,7 +160,7 @@ fun ProjectsScreen(
         Crossfade(
             targetState = projectFiltration,
             label = "projects screen crossfade",
-            animationSpec = tween(durationMillis = 3000, easing = LinearOutSlowInEasing)
+            animationSpec = tween(durationMillis = 300, easing = LinearOutSlowInEasing)
         ) { projectFiltration ->
             ProjectsContent(
                 projectsUiModel = projectsUiModel,

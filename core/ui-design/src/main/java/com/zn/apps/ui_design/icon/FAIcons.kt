@@ -33,6 +33,8 @@ object FAIcons {
     val check_mark = Icons.Default.Check
     val edit = Icons.Default.Edit
     val search = R.drawable.search
+    val filter = R.drawable.filter
+    val task = R.drawable.task_icon
 }
 
 /**

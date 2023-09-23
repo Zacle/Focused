@@ -1,5 +1,6 @@
 package com.zn.apps.domain.task
 
+import android.content.Context
 import com.zn.apps.domain.RelatedTasksUseCase
 import com.zn.apps.domain.util.filtering.Filtering
 import com.zn.apps.domain.util.grouping.GroupingStrategy
@@ -8,6 +9,7 @@ import com.zn.apps.model.data.task.RelatedTasksMetaDataResult
 import com.zn.apps.model.data.task.TaskResource
 
 internal class TasksFilteringGroupingFacade(
+    private val context: Context,
     private val taskResources: List<TaskResource>,
     private val filter: Filter,
     private val filterCompletedProject: Boolean
@@ -17,6 +19,7 @@ internal class TasksFilteringGroupingFacade(
         val filterCompletedProject = filterCompletedProject(taskResources)
         val filteringStrategy = Filtering.obtainStrategy(filter, filterCompletedProject)
         val groupingStrategy = GroupingStrategy.obtainStrategy(
+            context = context,
             grouping = filter.grouping,
             taskResources = filteringStrategy.filter(filter)
         )

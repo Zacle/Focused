@@ -3,6 +3,7 @@ package com.zn.apps.domain.project
 import com.zn.apps.common.MetadataResult
 import com.zn.apps.domain.UseCase
 import com.zn.apps.filter.Filter
+import com.zn.apps.model.data.project.Project
 import com.zn.apps.model.data.task.RelatedTasksMetaDataResult
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
@@ -10,11 +11,15 @@ import kotlinx.coroutines.flow.combine
 class GetProjectTasksWithMetadata(
     configuration: Configuration,
     private val getProjectMetadataUseCase: GetProjectMetadataUseCase,
-    private val getPopulatedProjectResourceUseCase: GetPopulatedProjectResourceUseCase
+    private val getPopulatedProjectResourceUseCase: GetPopulatedProjectResourceUseCase,
+    private val getProjectUseCase: GetProjectUseCase
 ): UseCase<GetProjectTasksWithMetadata.Request, GetProjectTasksWithMetadata.Response>(configuration) {
 
     override suspend fun process(request: Request): Flow<Response> =
         combine(
+            getProjectUseCase.process(
+                GetProjectUseCase.Request(request.projectId)
+            ),
             getProjectMetadataUseCase.process(
                 GetProjectMetadataUseCase.Request(request.projectId)
             ),
@@ -25,8 +30,9 @@ class GetProjectTasksWithMetadata(
                     filter = request.filter
                 )
             )
-        ) { metadataUseCaseResult, populatedProjectUseCaseResult ->
+        ) { projectResult, metadataUseCaseResult, populatedProjectUseCaseResult ->
             Response(
+                project = projectResult.project,
                 metadataResult = metadataUseCaseResult.metadataResult,
                 relatedTasksGrouped = populatedProjectUseCaseResult.relatedTasksGrouped
             )
@@ -39,6 +45,7 @@ class GetProjectTasksWithMetadata(
     ): UseCase.Request
 
     data class Response(
+        val project: Project,
         val metadataResult: MetadataResult,
         val relatedTasksGrouped: Map<String, RelatedTasksMetaDataResult>
     ): UseCase.Response

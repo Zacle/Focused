@@ -1,5 +1,6 @@
 package com.zn.apps.domain.util.grouping
 
+import android.content.Context
 import com.zn.apps.filter.Grouping
 import com.zn.apps.filter.Grouping.DeadlineTimeGrouping
 import com.zn.apps.filter.Grouping.DeadlineTypeGrouping
@@ -19,15 +20,20 @@ interface GroupingStrategy {
         /**
          * Given the [Grouping] return the strategy that will be used to filter tasks
          *
+         * @param context used to obtain the string resources
          * @param grouping the type of [Grouping] to be applied on tasks
          * @param taskResources the tasks that will be filtered
          */
-        fun obtainStrategy(grouping: Grouping, taskResources: List<TaskResource>): GroupingStrategy {
+        fun obtainStrategy(
+            context: Context,
+            grouping: Grouping,
+            taskResources: List<TaskResource>
+        ): GroupingStrategy {
             return when(grouping) {
-                is DeadlineTimeGrouping -> DeadlineTimeGroupingStrategy(taskResources)
+                is DeadlineTimeGrouping -> DeadlineTimeGroupingStrategy(context, taskResources)
                 is DeadlineTypeGrouping -> DeadlineTypeGroupingStrategy(taskResources)
-                is PriorityGrouping -> PriorityGroupingStrategy(taskResources)
-                is TagGrouping -> TagGroupingStrategy(taskResources)
+                is PriorityGrouping -> PriorityGroupingStrategy(context, taskResources)
+                is TagGrouping -> TagGroupingStrategy(context, taskResources)
             }
         }
     }

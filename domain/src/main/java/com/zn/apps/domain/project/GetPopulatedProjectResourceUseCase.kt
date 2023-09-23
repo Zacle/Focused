@@ -1,5 +1,6 @@
 package com.zn.apps.domain.project
 
+import android.content.Context
 import com.zn.apps.domain.UseCase
 import com.zn.apps.domain.repository.ProjectRepository
 import com.zn.apps.domain.task.TasksFilteringGroupingFacade
@@ -14,6 +15,7 @@ import kotlinx.coroutines.flow.mapLatest
 @OptIn(ExperimentalCoroutinesApi::class)
 class GetPopulatedProjectResourceUseCase(
     configuration: Configuration,
+    private val context: Context,
     private val projectRepository: ProjectRepository
 ): UseCase<GetPopulatedProjectResourceUseCase.Request, GetPopulatedProjectResourceUseCase.Response>(configuration) {
 
@@ -24,6 +26,7 @@ class GetPopulatedProjectResourceUseCase(
                 throw UseCaseException.ProjectNotFoundException(Throwable())
             } else {
                 val tasksFilteringGroupingFacade = TasksFilteringGroupingFacade(
+                    context = context,
                     taskResources = filterTasks(it.taskResources, isTaskCompleted),
                     filter = filter,
                     filterCompletedProject = false

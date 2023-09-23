@@ -41,7 +41,7 @@ fun IconMetadata(
     ) {
         Column(
             modifier = Modifier
-                .padding(12.dp),
+                .padding(8.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Row(
@@ -158,7 +158,7 @@ fun PercentageMetadata(
     ) {
         Column(
             modifier = Modifier
-                .padding(12.dp),
+                .padding(8.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Row(

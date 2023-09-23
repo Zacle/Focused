@@ -10,6 +10,7 @@ import com.zn.apps.focused.ui.navigation.Graph.MAIN_GRAPH_ROUTE
 import com.zn.apps.focused.ui.navigation.Graph.ROOT_GRAPH_ROUTE
 import com.zn.apps.focused.ui.navigation.graphs.mainGraph
 import com.zn.apps.focused.ui.screenspecs.projectScreen
+import com.zn.apps.focused.ui.screenspecs.projectWithTasksScreen
 import com.zn.apps.focused.ui.screenspecs.taskScreen
 
 @Composable
@@ -33,6 +34,7 @@ fun FANavHost(
         mainGraph(appState = appState)
         taskScreen(appState)
         projectScreen(appState)
+        projectWithTasksScreen(appState)
     }
 }
 

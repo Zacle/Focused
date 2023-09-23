@@ -78,7 +78,7 @@ data object ProjectsScreenSpec: BottomNavScreenSpec {
                         appState.navController.navigate(ProjectScreenSpec.buildRoute(it.projectId))
                     }
                     is ProjectsUiEvent.NavigateToRelatedTasks -> {
-                        // TODO navigate to related tasks
+                        appState.navController.navigate(ProjectWithTasksScreenSpec.buildRoute(it.projectId))
                     }
                 }
             }

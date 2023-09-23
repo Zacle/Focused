@@ -226,10 +226,10 @@ fun SelectProject(
         ) {
             DropDownTitle(text = stringResource(id = R.string.select_project))
             DropDownItem(
-                item = Tag(name = stringResource(id = R.string.no_project)),
+                item = Project(name = stringResource(id = R.string.no_project), color = 0),
                 onItemSelected = { onProjectIdSelected(null) },
                 onDropDownExpanded = { expanded = false },
-                text = stringResource(id = R.string.no_tag),
+                text = stringResource(id = R.string.no_project),
                 color = Color.Gray
             )
             projects.forEach { project ->

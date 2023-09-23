@@ -1,50 +1,29 @@
 package com.zn.apps.feature.tasks.list
 
 import android.annotation.SuppressLint
-import androidx.activity.compose.BackHandler
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
-import androidx.compose.animation.core.LinearOutSlowInEasing
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.add
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -53,7 +32,8 @@ import com.zn.apps.common.minutesToMilliseconds
 import com.zn.apps.feature.tasks.R
 import com.zn.apps.model.data.task.RelatedTasksMetaDataResult
 import com.zn.apps.model.data.task.Task
-import com.zn.apps.ui_common.InsertTaskBottomSheetContent
+import com.zn.apps.ui_common.TaskListSection
+import com.zn.apps.ui_common.TaskModalSheetSection
 import com.zn.apps.ui_common.delegate.TasksUiStateHolder
 import com.zn.apps.ui_design.component.DraggableTaskCard
 import com.zn.apps.ui_design.component.EmptyScreen
@@ -63,9 +43,7 @@ import com.zn.apps.ui_design.component.TagChips
 import com.zn.apps.ui_design.icon.FAIcons
 import com.zn.apps.ui_design.icon.Icon.DrawableResourceIcon
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 fun TasksRoute(
     tasksUiModel: TasksUiModel,
@@ -78,41 +56,17 @@ fun TasksRoute(
     upsertTask: (Task) -> Unit,
     onStartTaskPressed: (Task) -> Unit,
 ) {
-    val bottomSheetState = rememberModalBottomSheetState()
     var showModalBottomSheet by remember {
         mutableStateOf(false)
     }
 
-    BackHandler(bottomSheetState.isVisible) {
-        coroutineScope.launch {
-            bottomSheetState.hide()
-        }.invokeOnCompletion {
-            if (!bottomSheetState.isVisible) {
-                showModalBottomSheet = false
-            }
-        }
-    }
-
-    AnimatedVisibility(
-        visible = showModalBottomSheet,
-        enter = slideInVertically(
-            animationSpec = tween(durationMillis = 3000, easing = LinearOutSlowInEasing)
-        ),
-        exit = slideOutVertically()
-    ) {
-        ModalBottomSheet(
-            onDismissRequest = { showModalBottomSheet = false },
-            sheetState = bottomSheetState,
-            windowInsets = WindowInsets.ime.add(BottomSheetDefaults.windowInsets)
-        ) {
-            InsertTaskBottomSheetContent(
-                upsertTask = upsertTask,
-                projects = uiStateHolder.projects,
-                tags = uiStateHolder.tags,
-                shouldShowModalSheet = { showModalBottomSheet = it }
-            )
-        }
-    }
+    TaskModalSheetSection(
+        coroutineScope = coroutineScope,
+        upsertTask = upsertTask,
+        uiStateHolder = uiStateHolder,
+        showModalBottomSheet = showModalBottomSheet,
+        shouldShowModalSheet = { showModalBottomSheet = it }
+    )
 
     TasksScreen(
         tasksUiModel = tasksUiModel,
@@ -138,7 +92,7 @@ fun TasksScreen(
     shouldShowModalSheet: (Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
+    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
 
     Scaffold(
         containerColor = Color.Transparent,
@@ -298,66 +252,4 @@ fun TaskSection(
         onExpand = { viewModel.expand(task) },
         onCollapse = { viewModel.collapse() }
     )
-}
-
-@Composable
-fun TaskListSection(
-    sectionTitle: String,
-    tasksMetaDataResult: RelatedTasksMetaDataResult,
-    modifier: Modifier = Modifier,
-    onRelatedTasksSelected: (() -> Unit)? = null
-) {
-    Row(
-        modifier = modifier,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Box(modifier = Modifier.weight(1.0f)) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = sectionTitle,
-                    style = MaterialTheme.typography.bodyMedium,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    modifier = Modifier.padding(end = 8.dp)
-                )
-                val color = MaterialTheme.colorScheme.onSurface
-                Canvas(modifier = Modifier
-                    .size(4.dp)
-                ) {
-                    drawCircle(color = color)
-                }
-                var estimatedTime = ""
-                if (tasksMetaDataResult.estimatedTime.hours > 0) estimatedTime += tasksMetaDataResult.estimatedTime.hours.toString() + "h"
-                if (tasksMetaDataResult.estimatedTime.minutes > 0) estimatedTime += tasksMetaDataResult.estimatedTime.minutes.toString() + "m"
-                Text(
-                    text = estimatedTime,
-                    style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.tertiary,
-                    modifier = Modifier.padding(start = 8.dp)
-                )
-            }
-        }
-
-        if (onRelatedTasksSelected != null) {
-            TextButton(onClick = { onRelatedTasksSelected() }) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = stringResource(id = R.string.see_all),
-                        style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.secondary
-                    )
-                    Icon(
-                        imageVector = FAIcons.ArrowForward,
-                        contentDescription = stringResource(id = R.string.see_all),
-                        tint = MaterialTheme.colorScheme.secondary,
-                        modifier = Modifier.size(12.dp)
-                    )
-                }
-            }
-        }
-    }
 }

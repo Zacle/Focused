@@ -1,5 +1,6 @@
 package com.zn.apps.domain.task
 
+import android.content.Context
 import com.zn.apps.domain.UseCase
 import com.zn.apps.domain.repository.TaskRepository
 import com.zn.apps.filter.Filter
@@ -11,6 +12,7 @@ import kotlinx.coroutines.flow.mapLatest
 @OptIn(ExperimentalCoroutinesApi::class)
 class GetTasksUseCase(
     configuration: Configuration,
+    private val context: Context,
     private val taskRepository: TaskRepository
 ): UseCase<GetTasksUseCase.Request, GetTasksUseCase.Response>(configuration) {
 
@@ -18,6 +20,7 @@ class GetTasksUseCase(
         val (filter, taskCompleted, projectCompleted) = request
         return taskRepository.getTaskResources(taskCompleted).mapLatest {
             val tasksFilteringGroupingFacade = TasksFilteringGroupingFacade(
+                context = context,
                 taskResources = it,
                 filter = filter,
                 filterCompletedProject = projectCompleted
