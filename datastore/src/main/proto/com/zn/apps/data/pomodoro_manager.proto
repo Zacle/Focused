@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+option java_package = "com.zn.apps.datastore";
+option java_multiple_files = true;
+
+message PomodoroStateManager {
+  enum TimerState {
+    IDLE = 0;
+    PAUSED = 1;
+    RUNNING = 2;
+  }
+  enum PomodoroPhase {
+    POMODORO = 0;
+    SHORT_BREAK = 1;
+    LONG_BREAK = 2;
+  }
+  TimerState timer_state = 1;
+  PomodoroPhase current_phase = 2;
+  int64 time_left_in_millis = 3;
+  int64 target_time_in_millis = 4;
+  string task_id_running = 5;
+  int32 pomodoro_completed_so_far = 6;
+  int32 pomodoro_to_be_completed_before_long_break = 7;
+}

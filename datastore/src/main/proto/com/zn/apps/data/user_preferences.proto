@@ -5,4 +5,10 @@ option java_multiple_files = true;
 
 message UserPreferences {
   bool should_hide_onboarding = 1;
+
+  // Pomodoro preferences
+  int32 pomodoro_length = 2;
+  int32 short_break_length = 3;
+  int32 long_break_length = 4;
+  int32 number_of_pomodoro_before_long_break = 5;
 }
