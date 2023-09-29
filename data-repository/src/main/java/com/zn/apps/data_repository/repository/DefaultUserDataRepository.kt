@@ -15,4 +15,20 @@ class DefaultUserDataRepository(
     override suspend fun setShouldHideOnboarding(shouldHideOnboarding: Boolean) {
         focusedUserPreferencesDataSource.setShouldHideOnboarding(shouldHideOnboarding)
     }
+
+    override suspend fun setPomodoroLength(pomodoroLength: Int) {
+        focusedUserPreferencesDataSource.setPomodoroLength(pomodoroLength)
+    }
+
+    override suspend fun setShortBreakLength(shortBreakLength: Int) {
+        focusedUserPreferencesDataSource.setShortBreakLength(shortBreakLength)
+    }
+
+    override suspend fun setLongBreakLength(longBreakLength: Int) {
+        focusedUserPreferencesDataSource.setLongBreakLength(longBreakLength)
+    }
+
+    override suspend fun setNumberOfPomodoroBeforeLongBreak(numberOfPomodoroBeforeLongBreak: Int) {
+        focusedUserPreferencesDataSource.setNumberOfPomodoroBeforeLongBreak(numberOfPomodoroBeforeLongBreak)
+    }
 }

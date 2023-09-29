@@ -46,4 +46,36 @@ class FocusedUserPreferencesDataSource @Inject constructor(
             }
         }
     }
+
+    suspend fun setPomodoroLength(pomodoroLength: Int) {
+        userPreferences.updateData {
+            it.copy {
+                this.pomodoroLength = pomodoroLength
+            }
+        }
+    }
+
+    suspend fun setShortBreakLength(shortBreakLength: Int) {
+        userPreferences.updateData {
+            it.copy {
+                this.shortBreakLength = shortBreakLength
+            }
+        }
+    }
+
+    suspend fun setLongBreakLength(longBreakLength: Int) {
+        userPreferences.updateData {
+            it.copy {
+                this.longBreakLength = longBreakLength
+            }
+        }
+    }
+
+    suspend fun setNumberOfPomodoroBeforeLongBreak(numberOfPomodoroBeforeLongBreak: Int) {
+        userPreferences.updateData {
+            it.copy {
+                this.numberOfPomodoroBeforeLongBreak = numberOfPomodoroBeforeLongBreak
+            }
+        }
+    }
 }
