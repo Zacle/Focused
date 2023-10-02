@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="timer_notification_channel_name">Timer</string>
+    <string name="timer_completed_notification_channel_name">Timer Completed</string>
+    <string name="timer_notification_channel_description">
+        Display the timer status and info
+    </string>
+    <string name="timer_completed_notification_channel_description">
+        Timer has finished running
+    </string>
+    <string name="pomodoro_completed">Pomodoro finished</string>
+    <string name="pomodoro_completed_message">
+        Congratulations, you can take a rest.
+    </string>
+    <string name="break_over_title">Break finished</string>
+    <string name="break_over_description">
+        Break is over. Please get back to work
+    </string>
+</resources>

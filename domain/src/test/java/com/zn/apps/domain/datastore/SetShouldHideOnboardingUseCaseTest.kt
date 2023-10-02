@@ -1,6 +1,7 @@
 package com.zn.apps.domain.datastore
 
 import com.zn.apps.domain.UseCase
+import com.zn.apps.domain.datastore.user_data.SetShouldHideOnboardingUseCase
 import com.zn.apps.domain.repository.UserDataRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher

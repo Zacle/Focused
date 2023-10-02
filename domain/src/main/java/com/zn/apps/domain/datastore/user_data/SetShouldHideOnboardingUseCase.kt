@@ -1,4 +1,4 @@
-package com.zn.apps.domain.datastore
+package com.zn.apps.domain.datastore.user_data
 
 import com.zn.apps.domain.UseCase
 import com.zn.apps.domain.repository.UserDataRepository

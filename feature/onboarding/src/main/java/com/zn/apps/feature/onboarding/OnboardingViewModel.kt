@@ -1,7 +1,7 @@
 package com.zn.apps.feature.onboarding
 
 import androidx.lifecycle.viewModelScope
-import com.zn.apps.domain.datastore.SetShouldHideOnboardingUseCase
+import com.zn.apps.domain.datastore.user_data.SetShouldHideOnboardingUseCase
 import com.zn.apps.feature.onboarding.data.OnboardingPage
 import com.zn.apps.ui_common.state.BaseViewModel
 import com.zn.apps.ui_common.state.UiEvent

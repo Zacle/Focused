@@ -179,3 +179,16 @@ fun Long.millisecondsToMinutes(): Int = ((this / (1_000L * 60)) % 60).toInt()
 fun Long.millisecondsToSeconds(): Int = ((this / 1_000L) % 60).toInt()
 
 fun Long.millisecondsToHours(): Int = ((this / (1_000L * 60 * 60)) % 60).toInt()
+
+/**
+ * Format the milliseconds to display on the notification drawer
+ */
+fun formatMillisecondsToString(
+    milliseconds: Long
+): String {
+    val seconds = milliseconds.millisecondsToSeconds()
+    val minutes = milliseconds.millisecondsToMinutes()
+    val hours = milliseconds.millisecondsToHours()
+
+    return String.format("%02d:%02d:%02d", hours, minutes, seconds)
+}
