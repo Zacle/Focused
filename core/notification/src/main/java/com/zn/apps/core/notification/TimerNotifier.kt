@@ -34,7 +34,7 @@ class TimerNotifier @Inject constructor(
 
     private val notificationManager = NotificationManagerCompat.from(context)
 
-    override fun Context.createTimerNotification(
+    override fun Context.createBaseNotification(
         channelId: String,
         block: NotificationCompat.Builder.() -> Unit
     ): Notification {
@@ -62,7 +62,7 @@ class TimerNotifier @Inject constructor(
         ) {
             return
         }
-        val notification = createTimerNotification(TIMER_NOTIFICATION_CHANNEL_ID) {
+        val notification = createBaseNotification(TIMER_NOTIFICATION_CHANNEL_ID) {
             setContentTitle(getString(currentPhase.phaseName))
             setContentText(formatMillisecondsToString(timeLeftInMillis))
             priority = NotificationCompat.PRIORITY_DEFAULT
@@ -93,7 +93,7 @@ class TimerNotifier @Inject constructor(
             }
         }
         val timerCompletedNotification =
-            createTimerNotification(TIMER_COMPLETED_NOTIFICATION_CHANNEL_ID) {
+            createBaseNotification(TIMER_COMPLETED_NOTIFICATION_CHANNEL_ID) {
                 setContentTitle(getString(title))
                 setContentText(getString(text))
                 priority = NotificationCompat.PRIORITY_HIGH
@@ -103,7 +103,7 @@ class TimerNotifier @Inject constructor(
         notificationManager.notify(TIMER_COMPLETED_NOTIFICATION_ID, timerCompletedNotification)
     }
 
-    private fun Context.ensureNotificationChannelsExist() {
+    override fun Context.ensureNotificationChannelsExist() {
         if (VERSION.SDK_INT < VERSION_CODES.O) return
 
         val timerChannel = NotificationChannel(
@@ -126,6 +126,14 @@ class TimerNotifier @Inject constructor(
         NotificationManagerCompat.from(this).createNotificationChannels(
             listOf(timerChannel, timerCompletedChannel)
         )
+    }
+
+    fun removeTimerServiceNotification() {
+        notificationManager.cancel(TIMER_NOTIFICATION_ID)
+    }
+
+    fun removeTimerCompletedNotification() {
+        notificationManager.cancel(TIMER_COMPLETED_NOTIFICATION_ID)
     }
 
     private fun Context.taskPendingIntent(): PendingIntent? =

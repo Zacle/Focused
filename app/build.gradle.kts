@@ -66,6 +66,7 @@ dependencies {
     implementation(project(":core:model"))
     implementation(project(":core:common"))
     implementation(project(":core:di"))
+    implementation(project(":core:service"))
     implementation(project(":core:ui-design"))
     implementation(project(":core:ui-common"))
 
