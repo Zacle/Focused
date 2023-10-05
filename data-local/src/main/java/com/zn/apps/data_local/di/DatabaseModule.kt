@@ -9,6 +9,7 @@ import com.zn.apps.common.network.FocusedDispatchers.IO
 import com.zn.apps.data_local.database.FocusedDatabase
 import com.zn.apps.data_local.database.ioThread
 import com.zn.apps.data_local.database.project.ProjectDao
+import com.zn.apps.data_local.database.report.ReportDao
 import com.zn.apps.data_local.database.tag.TagDao
 import com.zn.apps.data_local.database.task.TaskDao
 import com.zn.apps.data_local.model.INITIAL_TAGS
@@ -71,4 +72,9 @@ object DatabaseModule {
     fun providesProjectDao(
         database: FocusedDatabase
     ): ProjectDao = database.projectDao()
+
+    @Provides
+    fun providesReportDao(
+        database: FocusedDatabase
+    ): ReportDao = database.reportDao()
 }

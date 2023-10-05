@@ -1,9 +1,11 @@
 package com.zn.apps.data_local.di
 
 import com.zn.apps.data_local.datasource.LocalProjectDataSource
+import com.zn.apps.data_local.datasource.LocalReportDataSource
 import com.zn.apps.data_local.datasource.LocalTagDataSource
 import com.zn.apps.data_local.datasource.LocalTaskDataSource
 import com.zn.apps.data_repository.data_source.local.ProjectDataSource
+import com.zn.apps.data_repository.data_source.local.ReportDataSource
 import com.zn.apps.data_repository.data_source.local.TagDataSource
 import com.zn.apps.data_repository.data_source.local.TaskDataSource
 import dagger.Binds
@@ -23,4 +25,7 @@ abstract class LocalDataSourceModule {
 
     @Binds
     abstract fun bindsProjectDataSource(localProjectDataSource: LocalProjectDataSource): ProjectDataSource
+
+    @Binds
+    abstract fun bindsReportDataSource(localReportDataSource: LocalReportDataSource): ReportDataSource
 }
