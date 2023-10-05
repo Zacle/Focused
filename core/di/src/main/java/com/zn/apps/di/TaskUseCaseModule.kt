@@ -3,11 +3,14 @@ package com.zn.apps.di
 import android.content.Context
 import com.zn.apps.domain.GetTasksWithTagsUseCase
 import com.zn.apps.domain.UseCase
+import com.zn.apps.domain.repository.ReportRepository
 import com.zn.apps.domain.repository.TaskRepository
 import com.zn.apps.domain.tag.GetTagsUseCase
 import com.zn.apps.domain.task.DeleteTaskUseCase
 import com.zn.apps.domain.task.GetTaskUseCase
+import com.zn.apps.domain.task.GetTasksMetadataUseCase
 import com.zn.apps.domain.task.GetTasksUseCase
+import com.zn.apps.domain.task.GetTasksWithMetadata
 import com.zn.apps.domain.task.UpsertTaskUseCase
 import dagger.Module
 import dagger.Provides
@@ -51,4 +54,18 @@ object TaskUseCaseModule {
         tasksUseCase: GetTasksUseCase,
         tagsUseCase: GetTagsUseCase
     ): GetTasksWithTagsUseCase = GetTasksWithTagsUseCase(configuration, tasksUseCase, tagsUseCase)
+
+    @Provides
+    fun providesGetTasksMetadataUseCase(
+        configuration: UseCase.Configuration,
+        taskRepository: TaskRepository,
+        repository: ReportRepository
+    ): GetTasksMetadataUseCase = GetTasksMetadataUseCase(configuration, taskRepository, repository)
+
+    @Provides
+    fun providesGetTasksWithMetadata(
+        configuration: UseCase.Configuration,
+        getTasksUseCase: GetTasksUseCase,
+        getTasksMetadataUseCase: GetTasksMetadataUseCase
+    ): GetTasksWithMetadata = GetTasksWithMetadata(configuration, getTasksUseCase, getTasksMetadataUseCase)
 }

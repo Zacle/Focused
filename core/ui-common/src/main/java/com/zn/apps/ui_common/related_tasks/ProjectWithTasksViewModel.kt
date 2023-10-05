@@ -35,7 +35,7 @@ const val PROJECT_ID_ARGUMENT = "projectId"
 @HiltViewModel
 class ProjectWithTasksViewModel @Inject constructor(
     private val getProjectTasksWithMetadata: GetProjectTasksWithMetadata,
-    private val converter: RelatedTasksUiConverter,
+    private val converter: RelatedProjectTasksUiConverter,
     tasksViewModelDelegate: TasksViewModelDelegate,
     savedStateHandle: SavedStateHandle
 ): BaseViewModel<RelatedTasksUiModel, UiState<RelatedTasksUiModel>, RelatedTasksUiAction, RelatedTasksUiEvent>(),

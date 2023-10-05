@@ -8,13 +8,13 @@ import com.zn.apps.ui_common.state.CommonResultConverter
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
-class RelatedTasksUiConverter @Inject constructor(
+class RelatedProjectTasksUiConverter @Inject constructor(
     @ApplicationContext private val context: Context
 ): CommonResultConverter<GetProjectTasksWithMetadata.Response, RelatedTasksUiModel>() {
 
     override fun convertSuccess(data: GetProjectTasksWithMetadata.Response): RelatedTasksUiModel =
         RelatedTasksUiModel(
-            project = data.project,
+            screenTitle = data.project.name,
             metadata = data.metadataResult,
             relatedTasksGrouped = data.relatedTasksGrouped
         )

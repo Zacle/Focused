@@ -127,7 +127,7 @@ fun RelatedTasksScreen(
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
         topBar = {
             FATopAppBar(
-                titleName = relatedTasksUiModel.project.name,
+                titleName = relatedTasksUiModel.screenTitle,
                 navigationIcon = Icon.ImageVectorIcon(FAIcons.ArrowBack),
                 onNavigationIconClicked = { upPressed() },
                 actions = {

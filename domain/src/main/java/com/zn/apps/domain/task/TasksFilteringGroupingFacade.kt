@@ -16,7 +16,7 @@ internal class TasksFilteringGroupingFacade(
 ) {
 
     fun execute(): Map<String, RelatedTasksMetaDataResult> {
-        val filterCompletedProject = filterCompletedProject(taskResources)
+        val filterCompletedProject = taskResources.filterCompletedProject(filterCompletedProject)
         val filteringStrategy = Filtering.obtainStrategy(filter, filterCompletedProject)
         val groupingStrategy = GroupingStrategy.obtainStrategy(
             context = context,
@@ -27,20 +27,6 @@ internal class TasksFilteringGroupingFacade(
         return computeGroupsMetadata(groupedTaskResources)
     }
 
-    /**
-     * Filter completed project first. We cannot display tasks belonging to a project that is
-     * already completed. Those tasks will be displayed only in the project screen
-     */
-    private fun filterCompletedProject(taskResources: List<TaskResource>): List<TaskResource> {
-        return if (filterCompletedProject) {
-            taskResources.filter { taskResource ->
-                !taskResource.projectCompleted
-            }
-        } else {
-            taskResources
-        }
-    }
-
     private fun computeGroupsMetadata(
         groupedTaskResources: Map<String, List<TaskResource>>
     ): Map<String, RelatedTasksMetaDataResult> {
@@ -49,5 +35,19 @@ internal class TasksFilteringGroupingFacade(
             relatedTaskResourcesGroupMetadata[key] = RelatedTasksUseCase()(value)
         }
         return relatedTaskResourcesGroupMetadata
+    }
+}
+
+/**
+ * Filter completed project first. We cannot display tasks belonging to a project that is
+ * already completed. Those tasks will be displayed only in the project screen
+ */
+fun List<TaskResource>.filterCompletedProject(completed: Boolean): List<TaskResource> {
+    return if (completed) {
+        this.filter { taskResource ->
+            !taskResource.projectCompleted
+        }
+    } else {
+        this
     }
 }
