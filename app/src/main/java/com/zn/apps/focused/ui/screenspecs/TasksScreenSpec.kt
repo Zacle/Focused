@@ -87,7 +87,7 @@ data object TasksScreenSpec: BottomNavScreenSpec {
                         appState.navController.navigate(TaskScreenSpec.buildRoute(it.taskId))
                     }
                     is TasksUiEvent.NavigateToRelatedTasks -> {
-                        // TODO navigate to related tasks
+                        appState.navController.navigate(DueDateTasksScreenSpec.buildRoute(it.deadlineType))
                     }
                 }
             }

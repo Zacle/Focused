@@ -1,5 +1,6 @@
 package com.zn.apps.data_local.database
 
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
@@ -20,8 +21,11 @@ import com.zn.apps.data_local.database.util.DateConverter
         TagEntity::class,
         ReportEntity::class
     ],
-    version = 1,
-    exportSchema = true
+    version = 2,
+    exportSchema = true,
+    autoMigrations = [
+        AutoMigration(from = 1, to = 2)
+    ]
 )
 @TypeConverters(DateConverter::class)
 abstract class FocusedDatabase: RoomDatabase() {

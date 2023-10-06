@@ -212,6 +212,10 @@ fun RelatedTasksContent(
                         ProjectTaskSection(
                             task = taskResource.task
                         )
+                    } else {
+                        RelatedTaskSection(
+                            task = taskResource.task
+                        )
                     }
                 }
             }
@@ -224,6 +228,56 @@ fun ProjectTaskSection(
     task: Task
 ) {
     val viewModel: ProjectWithTasksViewModel = hiltViewModel()
+    val uiStateHolder by viewModel.tasksUiStateHolder.collectAsStateWithLifecycle()
+
+    DraggableTaskCard(
+        task = task,
+        isTaskRunning = false,
+        showDeleteDialog = uiStateHolder.showDeleteTaskDialog,
+        showDueDateDialog = uiStateHolder.showDueDateDialog,
+        showPomodoroDialog = uiStateHolder.showPomodoroDialog,
+        isTaskRevealed = uiStateHolder.taskPressed?.id == task.id,
+        navigateToTask = {
+            viewModel.submitAction(RelatedTasksUiAction.NavigateToTask(task.id))
+        },
+        onCompleted = { viewModel.setTaskCompleted(task) },
+        onStartTask = { /* TODO */ },
+        onDeleteTaskPressed = {
+            viewModel.submitAction(RelatedTasksUiAction.DeleteTaskPressed)
+        },
+        onDeleteTaskDismissed = { viewModel.submitAction(RelatedTasksUiAction.DeleteTaskDismissed) },
+        onDeleteTaskConfirmed = { viewModel.submitAction(RelatedTasksUiAction.DeleteTaskConfirmed) },
+        onUpdateDueDatePressed = {
+            viewModel.submitAction(RelatedTasksUiAction.UpdateDueDatePressed)
+        },
+        onUpdateDueDateDismissed = { viewModel.submitAction(RelatedTasksUiAction.UpdateDueDateDismissed) },
+        onUpdateDueDateConfirmed = {
+            viewModel.submitAction(RelatedTasksUiAction.UpdateDueDateConfirmed(it))
+        },
+        onUpdatePomodoroPressed = {
+            viewModel.submitAction(RelatedTasksUiAction.UpdatePomodoroPressed)
+        },
+        onUpdatePomodoroDismissed = { viewModel.submitAction(RelatedTasksUiAction.UpdatePomodoroDismissed) },
+        onUpdatePomodoroConfirmed = {
+            viewModel.submitAction(
+                RelatedTasksUiAction.UpdatePomodoroConfirmed(
+                    pomodoro = task.pomodoro.copy(
+                        pomodoroNumber = it.pomodoroNumber,
+                        pomodoroLength = it.pomodoroLength.minutesToMilliseconds()
+                    )
+                )
+            )
+        },
+        onExpand = { viewModel.expand(task) },
+        onCollapse = { viewModel.collapse() }
+    )
+}
+
+@Composable
+fun RelatedTaskSection(
+    task: Task
+) {
+    val viewModel: DueDateTasksViewModel = hiltViewModel()
     val uiStateHolder by viewModel.tasksUiStateHolder.collectAsStateWithLifecycle()
 
     DraggableTaskCard(

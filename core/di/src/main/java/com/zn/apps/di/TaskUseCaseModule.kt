@@ -10,7 +10,7 @@ import com.zn.apps.domain.task.DeleteTaskUseCase
 import com.zn.apps.domain.task.GetTaskUseCase
 import com.zn.apps.domain.task.GetTasksMetadataUseCase
 import com.zn.apps.domain.task.GetTasksUseCase
-import com.zn.apps.domain.task.GetTasksWithMetadata
+import com.zn.apps.domain.task.GetTasksWithMetadataUseCase
 import com.zn.apps.domain.task.UpsertTaskUseCase
 import dagger.Module
 import dagger.Provides
@@ -67,5 +67,5 @@ object TaskUseCaseModule {
         configuration: UseCase.Configuration,
         getTasksUseCase: GetTasksUseCase,
         getTasksMetadataUseCase: GetTasksMetadataUseCase
-    ): GetTasksWithMetadata = GetTasksWithMetadata(configuration, getTasksUseCase, getTasksMetadataUseCase)
+    ): GetTasksWithMetadataUseCase = GetTasksWithMetadataUseCase(configuration, getTasksUseCase, getTasksMetadataUseCase)
 }

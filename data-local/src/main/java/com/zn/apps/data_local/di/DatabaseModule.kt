@@ -6,6 +6,7 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.zn.apps.common.network.Dispatcher
 import com.zn.apps.common.network.FocusedDispatchers.IO
+import com.zn.apps.data_local.database.DatabaseMigrations.MIGRATION_1_2
 import com.zn.apps.data_local.database.FocusedDatabase
 import com.zn.apps.data_local.database.ioThread
 import com.zn.apps.data_local.database.project.ProjectDao
@@ -56,6 +57,7 @@ object DatabaseModule {
                     }
                 }
             )
+            .addMigrations(MIGRATION_1_2)
             .build()
 
     @Provides

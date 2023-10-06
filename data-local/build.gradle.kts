@@ -16,6 +16,11 @@ android {
 
         testInstrumentationRunner = "com.zn.apps.data_local.database.HiltTestRunner"
         consumerProguardFiles("consumer-rules.pro")
+
+        ksp {
+            arg("room.schemaLocation", "$projectDir/schemas")
+        }
+
     }
 
     buildTypes {
@@ -72,4 +77,15 @@ dependencies {
     kaptAndroidTest(libs.hilt.android.compiler)
 
     coreLibraryDesugaring(libs.desugar.jdk.libs)
+}
+
+class RoomSchemaArgProvider(
+    @get:InputDirectory
+    @get:PathSensitive(PathSensitivity.RELATIVE)
+    val schemaDir: File
+) : CommandLineArgumentProvider {
+
+    override fun asArguments(): Iterable<String> {
+        return listOf("room.schemaLocation=${schemaDir.path}")
+    }
 }

@@ -27,6 +27,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.zn.apps.common.getDeadlineTypeIndexFromString
 import com.zn.apps.common.getDeadlineTypeValueFromString
 import com.zn.apps.common.minutesToMilliseconds
 import com.zn.apps.feature.tasks.R
@@ -186,7 +187,7 @@ fun TaskList(
                     sectionTitle = stringResource(id = getDeadlineTypeValueFromString(dueDate)),
                     tasksMetaDataResult = tasksMetaDataResult,
                     onRelatedTasksSelected = {
-                        onRelatedTasksSelected(getDeadlineTypeValueFromString(dueDate))
+                        onRelatedTasksSelected(getDeadlineTypeIndexFromString(dueDate))
                     }
                 )
             }

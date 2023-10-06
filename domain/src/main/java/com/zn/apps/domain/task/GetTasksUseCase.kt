@@ -25,7 +25,8 @@ class GetTasksUseCase(
                 filter = filter,
                 filterCompletedProject = projectCompleted
             )
-            Response(tasksFilteringGroupingFacade.execute())
+            val result = tasksFilteringGroupingFacade.execute()
+            Response(result)
         }
     }
 

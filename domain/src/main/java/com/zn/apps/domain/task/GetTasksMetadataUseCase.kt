@@ -33,7 +33,7 @@ class GetTasksMetadataUseCase(
         ) { taskResources, reportResources ->
             val filteringStrategy = Filtering.obtainStrategy(filter, taskResources.filterCompletedProject(true))
             val filteredTaskResources = filteringStrategy.filter(filter)
-            val metadataResult = computeMetadata(filteredTaskResources, reportResources, filter)
+            val metadataResult = computeMetadata(filteredTaskResources, reportResources, filter, interval)
             Response(metadataResult)
         }
     }
@@ -41,7 +41,8 @@ class GetTasksMetadataUseCase(
     private fun computeMetadata(
         taskResources: List<TaskResource>,
         reportResources: List<ReportResource>,
-        filter: Filter.DateFilter
+        filter: Filter.DateFilter,
+        interval: Pair<OffsetDateTime, OffsetDateTime>
     ): MetadataResult {
         var totalTime = 0L
         var estimatedTime = 0L
@@ -53,10 +54,15 @@ class GetTasksMetadataUseCase(
             totalTime += pomodoro.pomodoroNumber * pomodoro.pomodoroLength
             estimatedTime +=
                 if (!taskResource.task.completed) pomodoro.getEstimatedRemainingTime() else 0
-            if (taskResource.task.completed)
-                tasksCompleted += 1
-            else
+            if (!taskResource.task.completed)
                 tasksToBeCompleted += 1
+            else {
+                if (taskResource.task.completedTime != null) {
+                    val completedTime = taskResource.task.completedTime!!
+                    if (completedTime >= interval.first && completedTime <= interval.second)
+                        tasksCompleted += 1
+                }
+            }
         }
         reportResources.forEach { reportResource ->
             elapsedTime += reportResource.elapsedTime
@@ -76,10 +82,8 @@ class GetTasksMetadataUseCase(
     }
 
     private fun getInterval(): Pair<OffsetDateTime, OffsetDateTime> {
-        /** If the date filter is today, the start interval is any date in the past
-         * preferably last decades
-         */
-        val from = OffsetDateTime.now().withYear(1990)
+        /** If the date filter is today, the start interval is today at midnight */
+        val from = OffsetDateTime.now().withHour(0).withMinute(0).withSecond(0)
         /** the end interval is today at 23:59 **/
         val to = OffsetDateTime.now().withHour(23).withMinute(59)
         return Pair(from, to)

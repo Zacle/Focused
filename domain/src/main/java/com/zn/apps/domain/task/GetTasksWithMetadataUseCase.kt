@@ -7,11 +7,11 @@ import com.zn.apps.model.data.task.RelatedTasksMetaDataResult
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 
-class GetTasksWithMetadata(
+class GetTasksWithMetadataUseCase(
     configuration: Configuration,
     private val getTasksUseCase: GetTasksUseCase,
     private val getTasksMetadataUseCase: GetTasksMetadataUseCase
-): UseCase<GetTasksWithMetadata.Request, GetTasksWithMetadata.Response>(configuration) {
+): UseCase<GetTasksWithMetadataUseCase.Request, GetTasksWithMetadataUseCase.Response>(configuration) {
 
     override suspend fun process(request: Request): Flow<Response> =
         combine(

@@ -19,3 +19,10 @@ fun getDeadlineTypeValueFromString(dueDate: String): Int {
     }
     return 0
 }
+
+fun getDeadlineTypeIndexFromString(dueDate: String): Int {
+    DeadlineType.values().forEach {
+        if (it.name.lowercase() == dueDate.lowercase()) return it.ordinal
+    }
+    return 0
+}
