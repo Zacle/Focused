@@ -21,7 +21,9 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import java.time.OffsetDateTime
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class TimerManager @Inject constructor(
     private val countDownTimer: CountDownTimer,
     userDataRepository: UserDataRepository,

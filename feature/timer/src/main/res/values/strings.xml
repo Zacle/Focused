@@ -1,4 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="timer">Timer</string>
+    <string name="running_task">Running task</string>
+    <string name="resume">Resume</string>
+    <string name="skip_break">Skip break</string>
+    <string name="pause">Pause</string>
+    <string name="stop_timer">Stop timer</string>
+    <string name="start_break">Start break</string>
+    <string name="start_timer">Start timer</string>
+    <string name="stop_pomodoro">Stop Pomodoro</string>
+    <string name="stop_pomodoro_text">
+        Would you like to stop the pomodoro?
+    </string>
+    <string name="skip_break_title">Skip Break</string>
+    <string name="skip_break_text">
+        Would you like to skip break?
+    </string>
 </resources>

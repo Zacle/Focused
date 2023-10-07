@@ -34,13 +34,13 @@ class TimerNotifier @Inject constructor(
 
     private val notificationManager = NotificationManagerCompat.from(context)
 
-    override fun Context.createBaseNotification(
+    override fun createBaseNotification(
         channelId: String,
         block: NotificationCompat.Builder.() -> Unit
     ): Notification {
         ensureNotificationChannelsExist()
         return NotificationCompat.Builder(
-            this,
+            context,
             channelId
         )
             .setSmallIcon(FAIcons.TimerDestination)
@@ -103,27 +103,27 @@ class TimerNotifier @Inject constructor(
         notificationManager.notify(TIMER_COMPLETED_NOTIFICATION_ID, timerCompletedNotification)
     }
 
-    override fun Context.ensureNotificationChannelsExist() {
+    override fun ensureNotificationChannelsExist() {
         if (VERSION.SDK_INT < VERSION_CODES.O) return
 
         val timerChannel = NotificationChannel(
             TIMER_NOTIFICATION_CHANNEL_ID,
-            getString(R.string.timer_notification_channel_name),
+            context.getString(R.string.timer_notification_channel_name),
             NotificationManager.IMPORTANCE_DEFAULT
         ).apply {
-            description = getString(R.string.timer_notification_channel_description)
+            description = context.getString(R.string.timer_notification_channel_description)
         }
 
         val timerCompletedChannel = NotificationChannel(
             TIMER_COMPLETED_NOTIFICATION_CHANNEL_ID,
-            getString(R.string.timer_completed_notification_channel_name),
+            context.getString(R.string.timer_completed_notification_channel_name),
             NotificationManager.IMPORTANCE_HIGH
         ).apply {
-            description = getString(R.string.timer_completed_notification_channel_description)
+            description = context.getString(R.string.timer_completed_notification_channel_description)
         }
 
         // Register channels with the system
-        NotificationManagerCompat.from(this).createNotificationChannels(
+        NotificationManagerCompat.from(context).createNotificationChannels(
             listOf(timerChannel, timerCompletedChannel)
         )
     }
@@ -136,14 +136,14 @@ class TimerNotifier @Inject constructor(
         notificationManager.cancel(TIMER_COMPLETED_NOTIFICATION_ID)
     }
 
-    private fun Context.taskPendingIntent(): PendingIntent? =
+    private fun taskPendingIntent(): PendingIntent? =
         PendingIntent.getActivity(
-            this,
+            context,
             CLICK_REQUEST_CODE,
             Intent().apply {
                 action = Intent.ACTION_VIEW
                 component = ComponentName(
-                    packageName,
+                    context.packageName,
                     TARGET_ACTIVITY_NAME
                 )
             },
