@@ -1,5 +1,8 @@
 package com.zn.apps.focused.ui.screenspecs
 
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.material3.DrawerValue
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -64,7 +67,15 @@ data object TasksScreenSpec: BottomNavScreenSpec {
                     upsertTask = { task ->
                         viewModel.upsertTask(task)
                     },
-                    onStartTaskPressed = {}
+                    onStartTaskPressed = {},
+                    onDrawerPressed = {
+                        appState.coroutineScope.launch {
+                            appState.drawerState.animateTo(
+                                targetValue = DrawerValue.Open,
+                                anim = tween(600, easing = FastOutSlowInEasing)
+                            )
+                        }
+                    }
                 )
             }
         }

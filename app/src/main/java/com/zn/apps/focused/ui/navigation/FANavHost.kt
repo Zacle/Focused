@@ -8,6 +8,7 @@ import com.zn.apps.feature.onboarding.navigation.onboardingScreen
 import com.zn.apps.focused.ui.FocusedAppState
 import com.zn.apps.focused.ui.navigation.Graph.MAIN_GRAPH_ROUTE
 import com.zn.apps.focused.ui.navigation.Graph.ROOT_GRAPH_ROUTE
+import com.zn.apps.focused.ui.navigation.graphs.drawerNavGraph
 import com.zn.apps.focused.ui.navigation.graphs.mainGraph
 import com.zn.apps.focused.ui.screenspecs.dueDateTasksScreen
 import com.zn.apps.focused.ui.screenspecs.projectScreen
@@ -33,6 +34,7 @@ fun FANavHost(
             navController.navigate(MAIN_GRAPH_ROUTE)
         }
         mainGraph(appState = appState)
+        drawerNavGraph(appState)
         taskScreen(appState)
         projectScreen(appState)
         projectWithTasksScreen(appState)
@@ -43,4 +45,5 @@ fun FANavHost(
 object Graph {
     const val ROOT_GRAPH_ROUTE = "root_graph"
     const val MAIN_GRAPH_ROUTE = "main_graph"
+    const val NAV_DRAWER_GRAPH_ROUTE = "nav_drawer_graph"
 }

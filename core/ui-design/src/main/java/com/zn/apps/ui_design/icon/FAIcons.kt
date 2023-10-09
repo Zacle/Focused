@@ -2,6 +2,7 @@ package com.zn.apps.ui_design.icon
 
 import androidx.annotation.DrawableRes
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Check
@@ -35,6 +36,8 @@ object FAIcons {
     val search = R.drawable.search
     val filter = R.drawable.filter
     val task = R.drawable.task_icon
+    val option_more = R.drawable.option_more
+    val add = Icons.Default.Add
 }
 
 /**

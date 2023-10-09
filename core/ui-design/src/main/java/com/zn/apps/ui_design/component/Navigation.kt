@@ -1,13 +1,17 @@
 package com.zn.apps.ui_design.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
+import androidx.compose.material3.NavigationDrawerItem
+import androidx.compose.material3.NavigationDrawerItemDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
@@ -53,6 +57,44 @@ fun RowScope.FANavigationBarItem(
             selectedTextColor = FANavigationDefaults.navigationContentColor(),
             unselectedTextColor = FANavigationDefaults.navigationContentColor(),
             indicatorColor = FANavigationDefaults.navigationIndicatorColor()
+        )
+    )
+}
+
+/**
+ * Focused App navigation drawer item with icon and label content slots. Wraps Material 3
+ * [NavigationDrawerItem]
+ *
+ * @param label - text label for this item
+ * @param selected - whether this item is selected
+ * @param onClick - called when this item is clicked
+ * @param modifier - the Modifier to be applied to this item
+ * @param icon - optional icon for this item, typically an Icon
+ * @param badge - optional badge to show on this item from the end side
+ */
+@Composable
+fun FANavigationDrawerItem(
+    label: @Composable () -> Unit,
+    selected: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    icon: @Composable() (() -> Unit)? = null,
+    badge: @Composable() (() -> Unit)? = null,
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() }
+) {
+    NavigationDrawerItem(
+        label = label,
+        selected = selected,
+        onClick = onClick,
+        modifier = modifier,
+        icon = icon,
+        badge = badge,
+        interactionSource = interactionSource,
+        colors = NavigationDrawerItemDefaults.colors(
+            selectedTextColor = FANavigationDefaults.navigationSelectedItemColor(),
+            unselectedTextColor = FANavigationDefaults.navigationContentColor(),
+            selectedIconColor = FANavigationDefaults.navigationSelectedItemColor(),
+            unselectedIconColor = FANavigationDefaults.navigationContentColor()
         )
     )
 }

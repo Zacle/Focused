@@ -9,4 +9,6 @@
     <string name="pomodoro_updated">Pomodoro updated</string>
     <string name="project_deleted">Project deleted</string>
     <string name="project_not_deleted">Project couldn\'t be deleted</string>
+    <string name="tag_updated">Tag updated</string>
+    <string name="tag_deleted">Tag deleted</string>
 </resources>

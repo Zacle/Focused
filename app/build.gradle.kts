@@ -60,6 +60,7 @@ dependencies {
     implementation(project(":feature:onboarding"))
     implementation(project(":feature:projects"))
     implementation(project(":feature:report"))
+    implementation(project(":feature:tags"))
     implementation(project(":feature:tasks"))
     implementation(project(":feature:timer"))
 

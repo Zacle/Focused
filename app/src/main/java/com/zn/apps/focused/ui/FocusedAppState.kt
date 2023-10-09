@@ -14,6 +14,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.zn.apps.focused.ui.screenspecs.BottomNavScreenSpec
+import com.zn.apps.focused.ui.screenspecs.NavigationDrawerScreenSpec
 import kotlinx.coroutines.CoroutineScope
 
 @Composable
@@ -49,6 +50,11 @@ class FocusedAppState(
      */
     val topLevelDestinations = BottomNavScreenSpec.screens
     private val bottomBarRoutes = topLevelDestinations.map { it.route }
+
+    /**
+     * Navigation Drawer destinations
+     */
+    val navigationDrawerDestinations = NavigationDrawerScreenSpec.screens
 
     val currentDestination: NavDestination?
         @Composable get() = navController

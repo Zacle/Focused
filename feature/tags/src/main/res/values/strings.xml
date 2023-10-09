@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tags">Tags</string>
+    <string name="search_tag">Search tag</string>
+    <string name="search_tag_hint">Search or create tags</string>
+    <string name="enter_tag_name">Enter tag name</string>
+    <string name="tag_option">More option</string>
+    <string name="crate_tag">Create Tag</string>
+    <string name="tag_name_error">Tag name should be at least 3 characters</string>
+    <string name="cancel">Cancel</string>
+    <string name="done">Done</string>
+    <string name="update_tag">Update Tag</string>
+    <string name="delete_tag">Delete Tag</string>
+    <string name="delete_tag_text">Would you like to delete the tag?</string>
+</resources>

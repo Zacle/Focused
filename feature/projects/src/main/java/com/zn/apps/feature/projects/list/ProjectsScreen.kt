@@ -62,6 +62,7 @@ fun ProjectsRoute(
     upsertProject: (Project) -> Unit,
     onProjectPressed: (String) -> Unit,
     navigateToEditProject: (String) -> Unit,
+    onDrawerPressed: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val bottomSheetState = rememberModalBottomSheetState()
@@ -106,6 +107,7 @@ fun ProjectsRoute(
         onProjectPressed = onProjectPressed,
         navigateToEditProject = navigateToEditProject,
         shouldShowModalSheet = { showModalBottomSheet = it },
+        onDrawerPressed = onDrawerPressed,
         modifier = modifier
     )
 }
@@ -119,6 +121,7 @@ fun ProjectsScreen(
     onProjectPressed: (String) -> Unit,
     navigateToEditProject: (String) -> Unit,
     shouldShowModalSheet: (Boolean) -> Unit,
+    onDrawerPressed: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Scaffold(
@@ -129,7 +132,7 @@ fun ProjectsScreen(
             FATopAppBar(
                 titleName = stringResource(id = R.string.projects),
                 navigationIcon = Icon.DrawableResourceIcon(FAIcons.menu),
-                onNavigationIconClicked = {},
+                onNavigationIconClicked = onDrawerPressed,
                 actions = {
                     IconButton(onClick = { /*TODO*/ }) {
                         Icon(

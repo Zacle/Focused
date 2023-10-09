@@ -67,6 +67,7 @@ fun TimerRoute(
     onSkipBreakPressed: () -> Unit,
     onSkipBreakDismissed: () -> Unit,
     onSkipBreakConfirmed: () -> Unit,
+    onDrawerPressed: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Scaffold(
@@ -76,7 +77,7 @@ fun TimerRoute(
             FATopAppBar(
                 titleName = stringResource(id = R.string.timer),
                 navigationIcon = Icon.DrawableResourceIcon(FAIcons.menu),
-                onNavigationIconClicked = {}
+                onNavigationIconClicked = onDrawerPressed
             ) {
                 Spacer(modifier = Modifier.height(24.dp))
             }

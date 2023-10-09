@@ -1,11 +1,13 @@
 package com.zn.apps.focused.ui
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -15,20 +17,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
 import com.zn.apps.feature.onboarding.navigation.onboardingRoute
 import com.zn.apps.focused.ui.navigation.FANavHost
 import com.zn.apps.focused.ui.navigation.Graph
 import com.zn.apps.focused.ui.screenspecs.BottomNavScreenSpec
+import com.zn.apps.focused.ui.screenspecs.NavigationDrawerScreenSpec
 import com.zn.apps.ui_design.component.FANavigationBar
 import com.zn.apps.ui_design.component.FANavigationBarItem
+import com.zn.apps.ui_design.component.FANavigationDrawerItem
 import com.zn.apps.ui_design.component.FocusedAppBackground
 import com.zn.apps.ui_design.component.FocusedAppGradientBackground
 import com.zn.apps.ui_design.icon.Icon.DrawableResourceIcon
 import com.zn.apps.ui_design.icon.Icon.ImageVectorIcon
 import com.zn.apps.ui_design.theme.GradientColors
 import com.zn.apps.ui_design.theme.LocalGradientColors
+import kotlinx.coroutines.launch
 
 @Composable
 fun FocusedApp(
@@ -49,7 +55,19 @@ fun FocusedApp(
             ModalNavigationDrawer(
                 drawerState = appState.drawerState,
                 gesturesEnabled = appState.shouldShowBottomBar,
-                drawerContent = { /*TODO*/ }
+                drawerContent = {
+                    ModalDrawerSheet(
+                        drawerContainerColor = MaterialTheme.colorScheme.background,
+                        drawerContentColor = MaterialTheme.colorScheme.onBackground
+                    ) {
+                        Spacer(modifier = Modifier.size(16.dp))
+                        FANavigationDrawer(
+                            appState = appState,
+                            destinations = appState.navigationDrawerDestinations,
+                            currentDestination = appState.currentDestination
+                        )
+                    }
+                }
             ) {
                 MainScaffold(
                     appState = appState,
@@ -57,6 +75,54 @@ fun FocusedApp(
                 )
             }
         }
+    }
+}
+
+@Composable
+fun FANavigationDrawer(
+    appState: FocusedAppState,
+    destinations: List<NavigationDrawerScreenSpec>,
+    currentDestination: NavDestination?
+) {
+    destinations.forEach { destination ->
+        val selected = currentDestination?.route == destination.route
+        FANavigationDrawerItem(
+            label = {
+                Text(
+                    text = stringResource(destination.label),
+                    style = MaterialTheme.typography.bodyMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onBackground
+                )
+            },
+            selected = selected,
+            onClick = {
+                appState.coroutineScope.launch {
+                    appState.drawerState.close()
+                }
+                appState.navController.navigate(destination.route)
+            },
+            icon = {
+                when(destination.icon) {
+                    is DrawableResourceIcon -> {
+                        Icon(
+                            painter = painterResource(id = (destination.icon as DrawableResourceIcon).id),
+                            contentDescription = null,
+                            modifier = Modifier.size(24.dp),
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+                    }
+                    is ImageVectorIcon -> {
+                        Icon(
+                            imageVector = (destination.icon as ImageVectorIcon).imageVector,
+                            contentDescription = null,
+                            modifier = Modifier.size(24.dp),
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+                    }
+                }
+            }
+        )
     }
 }
 

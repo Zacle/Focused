@@ -56,6 +56,7 @@ fun TasksRoute(
     onTaskCompleted: (Task) -> Unit,
     upsertTask: (Task) -> Unit,
     onStartTaskPressed: (Task) -> Unit,
+    onDrawerPressed: () -> Unit
 ) {
     var showModalBottomSheet by remember {
         mutableStateOf(false)
@@ -76,7 +77,8 @@ fun TasksRoute(
         onRelatedTasksSelected = onRelatedTasksSelected,
         onTaskCompleted = onTaskCompleted,
         onStartTaskPressed = onStartTaskPressed,
-        shouldShowModalSheet = { showModalBottomSheet = it }
+        shouldShowModalSheet = { showModalBottomSheet = it },
+        onDrawerPressed = onDrawerPressed
     )
 }
 
@@ -91,6 +93,7 @@ fun TasksScreen(
     onTaskCompleted: (Task) -> Unit,
     onStartTaskPressed: (Task) -> Unit,
     shouldShowModalSheet: (Boolean) -> Unit,
+    onDrawerPressed: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
@@ -102,7 +105,7 @@ fun TasksScreen(
         topBar = {
             FATopAppBar(
                 titleName = stringResource(id = R.string.tasks),
-                onNavigationIconClicked = {},
+                onNavigationIconClicked = onDrawerPressed,
                 navigationIcon = DrawableResourceIcon(FAIcons.menu),
                 scrollBehavior = scrollBehavior
             ) {
