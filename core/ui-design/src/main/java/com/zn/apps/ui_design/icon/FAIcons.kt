@@ -32,12 +32,14 @@ object FAIcons {
     val tag = R.drawable.tag
     val task_name = R.drawable.task_name
     val check_mark = Icons.Default.Check
+    val completed_tasks = R.drawable.completed_tasks
     val edit = Icons.Default.Edit
     val search = R.drawable.search
     val filter = R.drawable.filter
     val task = R.drawable.task_icon
     val option_more = R.drawable.option_more
     val add = Icons.Default.Add
+    val timeline_icon = R.drawable.timeline_icon
 }
 
 /**

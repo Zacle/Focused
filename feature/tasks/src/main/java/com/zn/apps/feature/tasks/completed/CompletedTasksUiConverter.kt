@@ -1,4 +1,4 @@
-package com.zn.apps.feature.tasks.list
+package com.zn.apps.feature.tasks.completed
 
 import android.content.Context
 import com.zn.apps.domain.GetTasksWithTagsUseCase
@@ -8,12 +8,12 @@ import com.zn.apps.ui_common.state.CommonResultConverter
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
-class TasksUiConverter @Inject constructor(
+class CompletedTasksUiConverter @Inject constructor(
     @ApplicationContext private val context: Context
-): CommonResultConverter<GetTasksWithTagsUseCase.Response, TasksUiModel>() {
+): CommonResultConverter<GetTasksWithTagsUseCase.Response, CompletedTasksUiModel>() {
 
-    override fun convertSuccess(data: GetTasksWithTagsUseCase.Response): TasksUiModel =
-        TasksUiModel(
+    override fun convertSuccess(data: GetTasksWithTagsUseCase.Response): CompletedTasksUiModel =
+        CompletedTasksUiModel(
             groupedTasks = data.relatedTasksGrouped,
             tags = data.tags
         )

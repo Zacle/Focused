@@ -4,6 +4,8 @@ import com.zn.apps.model.R
 
 
 sealed interface Grouping {
+    /** Group by completed time **/
+    data object DeadlineCompletedTimeGrouping: Grouping
 
     /** Group by [DeadlineTime] */
     data object DeadlineTimeGrouping: Grouping

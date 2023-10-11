@@ -2,6 +2,7 @@ package com.zn.apps.domain.util.grouping
 
 import android.content.Context
 import com.zn.apps.filter.Grouping
+import com.zn.apps.filter.Grouping.DeadlineCompletedTimeGrouping
 import com.zn.apps.filter.Grouping.DeadlineTimeGrouping
 import com.zn.apps.filter.Grouping.DeadlineTypeGrouping
 import com.zn.apps.filter.Grouping.PriorityGrouping
@@ -34,6 +35,7 @@ interface GroupingStrategy {
                 is DeadlineTypeGrouping -> DeadlineTypeGroupingStrategy(taskResources)
                 is PriorityGrouping -> PriorityGroupingStrategy(context, taskResources)
                 is TagGrouping -> TagGroupingStrategy(context, taskResources)
+                is DeadlineCompletedTimeGrouping -> DeadlineCompletedTimeGroupingStrategy(context, taskResources)
             }
         }
     }

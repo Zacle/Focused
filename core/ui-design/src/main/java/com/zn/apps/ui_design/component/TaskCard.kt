@@ -48,6 +48,7 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
@@ -184,7 +185,8 @@ fun TaskCard(
                     fontWeight = FontWeight.Bold,
                     style = MaterialTheme.typography.bodySmall,
                     maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
+                    overflow = TextOverflow.Ellipsis,
+                    textDecoration = if (task.completed) TextDecoration.LineThrough else null
                 )
                 if (task.pomodoro.pomodoroNumber > 0) {
                     Row(
@@ -222,17 +224,19 @@ fun TaskCard(
                     DisplayTime(date = task.dueDate!!)
                 }
             }
-            IconButton(
-                onClick = { onStartTask() }
-            ) {
-                Icon(
-                    painter = painterResource(
-                        id = if (isTaskRunning) FAIcons.pomodoro else FAIcons.play_circle
-                    ),
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.secondary,
-                    modifier = Modifier.size(20.dp)
-                )
+            if (!task.completed) {
+                IconButton(
+                    onClick = { onStartTask() }
+                ) {
+                    Icon(
+                        painter = painterResource(
+                            id = if (isTaskRunning) FAIcons.pomodoro else FAIcons.play_circle
+                        ),
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.secondary,
+                        modifier = Modifier.size(20.dp)
+                    )
+                }
             }
         }
     }
