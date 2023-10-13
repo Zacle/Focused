@@ -4,8 +4,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -87,21 +85,19 @@ fun TimelineNode(
                 }
             }
     ) {
-        LazyColumn(
+        Column(
             modifier = Modifier
                 .padding(
                     start = contentStartOffset,
                     bottom = if (isNodeLast) 0.dp else spaceBetweenNodes
                 )
         ) {
-            item {
-                TimelineHeader(
-                    title = title,
-                    subtitle = subtitle
-                )
-            }
+            TimelineHeader(
+                title = title,
+                subtitle = subtitle
+            )
 
-            itemsIndexed(completedTasks) { index, taskResource ->
+            completedTasks.forEachIndexed { index, taskResource ->
                 TaskCard(
                     task = taskResource.task,
                     isTaskRunning = false,

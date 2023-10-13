@@ -15,7 +15,8 @@ sealed interface ScreenSpec {
             ProjectsScreenSpec,
             ReportScreenSpec,
             TaskScreenSpec,
-            TagsScreenSpec
+            TagsScreenSpec,
+            CompletedTasksScreenSpec
         ).associateBy { it.route }
     }
 

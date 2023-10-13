@@ -6,6 +6,7 @@ import com.zn.apps.domain.task.UpsertTaskUseCase
 import com.zn.apps.feature.tasks.completed.CompletedTasksUiAction.Load
 import com.zn.apps.feature.tasks.completed.CompletedTasksUiAction.NavigateToTask
 import com.zn.apps.feature.tasks.completed.CompletedTasksUiAction.SetTaskUnCompleted
+import com.zn.apps.feature.tasks.completed.CompletedTasksUiAction.TagPressed
 import com.zn.apps.filter.Filter
 import com.zn.apps.filter.Grouping
 import com.zn.apps.model.data.task.Task
@@ -41,6 +42,7 @@ class CompletedTasksViewModel @Inject constructor(
     override fun handleAction(action: CompletedTasksUiAction) {
         when(action) {
             Load -> loadCompletedTasksWithTags()
+            is TagPressed -> selectedTag.value = action.tagId
             is SetTaskUnCompleted -> setTaskUnCompleted(action.task)
             is NavigateToTask -> {
                 submitSingleEvent(CompletedTasksUiEvent.NavigateToTask(action.taskId))
@@ -71,7 +73,7 @@ class CompletedTasksViewModel @Inject constructor(
                                 filterId = tagId,
                                 grouping = Grouping.DeadlineCompletedTimeGrouping
                             ),
-                            taskCompleted = false
+                            taskCompleted = true
                         )
                     )
                 }

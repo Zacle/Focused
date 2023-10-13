@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="tasks">Tasks</string>
+    <string name="completed_tasks">Completed Tasks</string>
     <string name="see_all">See all</string>
     <string name="no_tasks">No tasks on the list.</string>
+    <string name="no_tasks_completed">No tasks completed so far.</string>
     <string name="click_to_add_task">
         Please click on the floating icon to add a task.
     </string>
@@ -14,4 +16,10 @@
     <string name="due_date">Due date</string>
     <string name="no_date">No Date</string>
     <string name="update_task">Update</string>
+    <string name="focus">Focus</string>
+    <string name="completed">Completed</string>
+    <plurals name="task_completed">
+        <item quantity="one">%d task</item>
+        <item quantity="other">%d tasks</item>
+    </plurals>
 </resources>

@@ -53,7 +53,7 @@ class TasksViewModel @Inject constructor(
         when (action) {
             Load -> loadTasksWithTags()
             is TagPressed -> selectedTag.value = action.tagId
-            is TaskCompleted -> { submitSingleEvent(TasksUiEvent.DueDateUpdated) }
+            is TaskCompleted -> setTaskCompleted(action.task)
             is UpdateDueDatePressed -> updateDueDatePressed()
             UpdateDueDateDismissed -> updateDueDateDismissed()
             is UpdatedDueDateConfirmed -> {

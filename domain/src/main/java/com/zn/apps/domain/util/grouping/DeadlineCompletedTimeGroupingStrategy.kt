@@ -15,7 +15,7 @@ class DeadlineCompletedTimeGroupingStrategy(
     override fun group(): Map<String, List<TaskResource>> {
         val dateGroup = mutableMapOf<String, MutableList<TaskResource>>()
         taskResources.sortedByDescending { it.task.completedTime }.forEach { taskResource ->
-            val date = getDeadlineTimeName(context, taskResource.task.dueDate)
+            val date = getDeadlineTimeName(context, taskResource.task.completedTime)
             dateGroup.getOrPut(date) { mutableListOf() }.add(taskResource)
         }
         return dateGroup
