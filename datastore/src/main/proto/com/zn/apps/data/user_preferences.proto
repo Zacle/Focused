@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+import "com/zn/apps/data/theme_appearance_proto.proto";
+
 option java_package = "com.zn.apps.datastore";
 option java_multiple_files = true;
 
@@ -11,4 +13,9 @@ message UserPreferences {
   int32 short_break_length = 3;
   int32 long_break_length = 4;
   int32 number_of_pomodoro_before_long_break = 5;
+  bool disable_break = 6;
+  bool auto_start_next_pomodoro = 7;
+  bool auto_start_break = 8;
+
+  ThemeAppearanceProto theme_appearance = 9;
 }

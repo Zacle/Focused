@@ -8,6 +8,7 @@ import com.zn.apps.common.network.Dispatcher
 import com.zn.apps.common.network.FocusedDispatchers.IO
 import com.zn.apps.common.network.di.ApplicationScope
 import com.zn.apps.datastore.FocusedUserPreferencesDataSource
+import com.zn.apps.datastore.PomodoroPreferencesDataSource
 import com.zn.apps.datastore.PomodoroStateDataSource
 import com.zn.apps.datastore.PomodoroStateManager
 import com.zn.apps.datastore.PomodoroStateManagerSerializer
@@ -67,4 +68,10 @@ object DataStoreModule {
     fun providesPomodoroStateDataSource(
         pomodoroStateManager: DataStore<PomodoroStateManager>
     ): PomodoroStateDataSource = PomodoroStateDataSource(pomodoroStateManager)
+
+    @Provides
+    @Singleton
+    fun providesPomodoroPreferencesDataSource(
+        userPreferences: DataStore<UserPreferences>
+    ): PomodoroPreferencesDataSource = PomodoroPreferencesDataSource(userPreferences)
 }

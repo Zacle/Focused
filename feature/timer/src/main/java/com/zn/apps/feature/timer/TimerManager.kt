@@ -4,8 +4,8 @@ import com.zn.apps.common.minutesToMilliseconds
 import com.zn.apps.common.network.di.ApplicationScope
 import com.zn.apps.core.notification.TimerNotifier
 import com.zn.apps.domain.report.InsertReportUseCase
+import com.zn.apps.domain.repository.PomodoroPreferencesRepository
 import com.zn.apps.domain.repository.PomodoroStateRepository
-import com.zn.apps.domain.repository.UserDataRepository
 import com.zn.apps.domain.task.GetTaskUseCase
 import com.zn.apps.domain.task.UpsertTaskUseCase
 import com.zn.apps.feature.timer.service.TimerServiceManager
@@ -26,7 +26,7 @@ import javax.inject.Singleton
 @Singleton
 class TimerManager @Inject constructor(
     private val countDownTimer: CountDownTimer,
-    userDataRepository: UserDataRepository,
+    pomodoroPreferencesRepository: PomodoroPreferencesRepository,
     private val pomodoroStateRepository: PomodoroStateRepository,
     private val notifier: TimerNotifier,
     private val timerServiceManager: TimerServiceManager,
@@ -35,7 +35,7 @@ class TimerManager @Inject constructor(
     private val insertReportUseCase: InsertReportUseCase,
     @ApplicationScope private val scope: CoroutineScope
 ) {
-    private val pomodoroPreferences = userDataRepository.userData
+    private val pomodoroPreferences = pomodoroPreferencesRepository.pomodoroPreferences
     val pomodoroTimerState = pomodoroStateRepository.pomodoroState
 
     init {

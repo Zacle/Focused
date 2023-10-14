@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+
+option java_package = "com.zn.apps.datastore";
+option java_multiple_files = true;
+
+enum ThemeAppearanceProto {
+  THEME_APPEARANCE_SYSTEM = 0;
+  THEME_APPEARANCE_DARK = 1;
+  THEME_APPEARANCE_LIGHT = 2;
+}
