@@ -100,7 +100,7 @@ fun TaskCard(
     val interactionSource = remember { MutableInteractionSource() }
 
     var completed by remember {
-        mutableStateOf(false)
+        mutableStateOf(task.completed)
     }
 
     val border =

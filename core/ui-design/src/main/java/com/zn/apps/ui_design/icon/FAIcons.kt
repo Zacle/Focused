@@ -40,6 +40,10 @@ object FAIcons {
     val option_more = R.drawable.option_more
     val add = Icons.Default.Add
     val timeline_icon = R.drawable.timeline_icon
+    val settings = R.drawable.settings
+    val customize_settings = R.drawable.customize_settings
+    val help_settings = R.drawable.help_settings
+    val sound_settings = R.drawable.sound_settings
 }
 
 /**
