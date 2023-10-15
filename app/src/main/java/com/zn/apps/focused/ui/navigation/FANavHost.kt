@@ -11,6 +11,7 @@ import com.zn.apps.focused.ui.navigation.Graph.ROOT_GRAPH_ROUTE
 import com.zn.apps.focused.ui.navigation.graphs.drawerNavGraph
 import com.zn.apps.focused.ui.navigation.graphs.mainGraph
 import com.zn.apps.focused.ui.screenspecs.dueDateTasksScreen
+import com.zn.apps.focused.ui.screenspecs.pomodoroSettingsScreen
 import com.zn.apps.focused.ui.screenspecs.projectScreen
 import com.zn.apps.focused.ui.screenspecs.projectWithTasksScreen
 import com.zn.apps.focused.ui.screenspecs.taskScreen
@@ -39,6 +40,7 @@ fun FANavHost(
         projectScreen(appState)
         projectWithTasksScreen(appState)
         dueDateTasksScreen(appState)
+        pomodoroSettingsScreen(appState)
     }
 }
 

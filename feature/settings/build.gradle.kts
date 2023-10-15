@@ -75,6 +75,7 @@ dependencies {
     kapt(libs.hilt.compiler)
 
     implementation(libs.timber)
+    implementation(libs.number.picker)
 
     testImplementation(libs.junit4)
     androidTestImplementation(libs.androidx.test.junit)

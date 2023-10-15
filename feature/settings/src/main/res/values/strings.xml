@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="settings">Settings</string>
-    <string name="pomodoro_settings">Pomodoro</string>
+    <string name="pomodoro">Pomodoro</string>
     <string name="pomodoro_settings_description">
         Pomodoro, Long break, Short break
     </string>
@@ -9,4 +9,19 @@
     <string name="customize_settings_description">
         Strict mode, Theme, Language
     </string>
+    <plurals name="minutes">
+        <item quantity="one">Minute</item>
+        <item quantity="other">Minutes</item>
+    </plurals>
+    <string name="minute">Minutes</string>
+
+    <!-- Pomodoro settings -->
+    <string name="pomodoro_settings">Pomodoro Settings</string>
+    <string name="pomodoro_length">Pomodoro Length</string>
+    <string name="long_break_length">Long Break Length</string>
+    <string name="short_break_length">Short Break Length</string>
+    <string name="long_break_after">Long Break After</string>
+    <string name="disable_break">Disable Break</string>
+    <string name="auto_start_next_pomodoro">Auto Start Next Pomodoro</string>
+    <string name="auto_start_break">Auto Start Break</string>
 </resources>

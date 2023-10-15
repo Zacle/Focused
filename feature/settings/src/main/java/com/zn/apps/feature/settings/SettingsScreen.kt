@@ -48,7 +48,7 @@ fun SettingsRoute(
         modifier = modifier
     ) { innerPadding ->
         SettingsCard(
-            onPomodoroSettingsPressed = {},
+            onPomodoroSettingsPressed = onPomodoroSettingsPressed,
             onCustomizeSettingsPressed = {},
             modifier = modifier
                 .padding(innerPadding)
@@ -76,7 +76,7 @@ fun SettingsCard(
         Spacer(modifier = Modifier.height(12.dp))
         Column {
             SettingsRow(
-                title = stringResource(id = R.string.pomodoro_settings),
+                title = stringResource(id = R.string.pomodoro),
                 subtitle = stringResource(id = R.string.pomodoro_settings_description),
                 leadingIcon = Icon.DrawableResourceIcon(FAIcons.TimerDestination),
                 trailingIcon = Icon.ImageVectorIcon(FAIcons.KeyboardArrowRight),

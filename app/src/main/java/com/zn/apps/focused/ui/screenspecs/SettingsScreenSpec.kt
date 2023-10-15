@@ -20,7 +20,9 @@ data object SettingsScreenSpec: NavigationDrawerScreenSpec {
     override fun Content(appState: FocusedAppState, navBackStackEntry: NavBackStackEntry) {
         SettingsRoute(
             onUpPressed = { appState.navController.navigateUp() },
-            onPomodoroSettingsPressed = {},
+            onPomodoroSettingsPressed = {
+                appState.navigateToPomodoroSettings()
+            },
             onCustomizeSettingsPressed = {}
         )
     }

@@ -15,6 +15,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.zn.apps.focused.ui.screenspecs.BottomNavScreenSpec
 import com.zn.apps.focused.ui.screenspecs.NavigationDrawerScreenSpec
+import com.zn.apps.focused.ui.screenspecs.PomodoroSettingsScreenSpec
 import kotlinx.coroutines.CoroutineScope
 
 @Composable
@@ -90,5 +91,9 @@ class FocusedAppState(
                 restoreState = true
             }
         }
+    }
+
+    fun navigateToPomodoroSettings() {
+        navController.navigate(PomodoroSettingsScreenSpec.route)
     }
 }
