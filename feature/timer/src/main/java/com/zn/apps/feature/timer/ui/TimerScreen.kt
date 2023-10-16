@@ -19,7 +19,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CircularProgressIndicator
@@ -118,8 +117,7 @@ fun TimerScreen(
 ) {
     Column(
         modifier = modifier
-            .fillMaxSize()
-            .navigationBarsPadding(),
+            .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.height(24.dp))
@@ -132,7 +130,7 @@ fun TimerScreen(
                 onCompleteTask = onCompleteTask
             )
         }
-        Spacer(modifier = Modifier.size(32.dp))
+        Spacer(modifier = Modifier.size(16.dp))
         TimerStateButton(
             pomodoroState = pomodoroState,
             onStartTimer = onStartTimer,

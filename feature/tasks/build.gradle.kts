@@ -52,6 +52,7 @@ dependencies {
     implementation(project(":core:model"))
     implementation(project(":core:ui-common"))
     implementation(project(":core:ui-design"))
+    implementation(project(":core:timer"))
     implementation(project(":domain"))
 
     // Compose

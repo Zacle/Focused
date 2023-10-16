@@ -9,6 +9,7 @@ import java.time.OffsetDateTime
 sealed class RelatedTasksUiAction: UiAction {
     data object Load: RelatedTasksUiAction()
     data class SetGrouping(val grouping: Grouping): RelatedTasksUiAction()
+    data class StartRunningTaskPressed(val task: Task): RelatedTasksUiAction()
     data class TaskCompleted(val task: Task): RelatedTasksUiAction()
     data object UpdateDueDatePressed: RelatedTasksUiAction()
     data class UpdateDueDateConfirmed(val offsetDateTime: OffsetDateTime?): RelatedTasksUiAction()

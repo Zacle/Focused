@@ -45,10 +45,11 @@ android {
 
 dependencies {
 
-    implementation(project(":core:model"))
     implementation(project(":core:common"))
-    implementation(project(":core:ui-design"))
     implementation(project(":core:di"))
+    implementation(project(":core:model"))
+    implementation(project(":core:ui-design"))
+    implementation(project(":core:timer"))
     implementation(project(":domain"))
 
     // Compose

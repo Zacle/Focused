@@ -77,8 +77,17 @@ data object ProjectWithTasksScreenSpec: ScreenSpec {
                     RelatedTasksUiEvent.PomodoroUpdated -> {
                         showSnackbar(appState, context.getString(R.string.pomodoro_updated))
                     }
+                    RelatedTasksUiEvent.TaskIsAlreadyRunning -> {
+                        showSnackbar(
+                            appState,
+                            context.getString(R.string.task_already_running)
+                        )
+                    }
                     is RelatedTasksUiEvent.NavigateToTask -> {
                         appState.navController.navigate(TaskScreenSpec.buildRoute(it.taskId))
+                    }
+                    is RelatedTasksUiEvent.NavigateToTimer -> {
+                        appState.navController.navigate(TimerScreenSpec.buildRoute(it.taskId))
                     }
                 }
             }

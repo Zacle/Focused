@@ -71,6 +71,7 @@ dependencies {
     implementation(project(":core:service"))
     implementation(project(":core:ui-design"))
     implementation(project(":core:ui-common"))
+    implementation(project(":core:timer"))
 
     implementation(project(":data-repository"))
     implementation(project(":domain"))

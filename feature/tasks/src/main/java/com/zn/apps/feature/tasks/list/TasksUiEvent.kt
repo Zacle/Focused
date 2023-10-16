@@ -7,6 +7,8 @@ sealed class TasksUiEvent: UiEvent {
     data object TaskDeleted: TasksUiEvent()
     data object DueDateUpdated: TasksUiEvent()
     data object PomodoroUpdated: TasksUiEvent()
+    data object TaskIsAlreadyRunning: TasksUiEvent()
     data class NavigateToTask(val taskId: String): TasksUiEvent()
     data class NavigateToRelatedTasks(val deadlineType: Int): TasksUiEvent()
+    data class NavigateToTimer(val taskId: String): TasksUiEvent()
 }

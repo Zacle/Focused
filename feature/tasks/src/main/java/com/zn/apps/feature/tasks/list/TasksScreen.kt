@@ -31,6 +31,7 @@ import com.zn.apps.common.getDeadlineTypeIndexFromString
 import com.zn.apps.common.getDeadlineTypeValueFromString
 import com.zn.apps.common.minutesToMilliseconds
 import com.zn.apps.feature.tasks.R
+import com.zn.apps.model.data.pomodoro.PomodoroState
 import com.zn.apps.model.data.task.RelatedTasksMetaDataResult
 import com.zn.apps.model.data.task.Task
 import com.zn.apps.ui_common.TaskListSection
@@ -214,10 +215,11 @@ fun TaskSection(
 ) {
     val viewModel: TasksViewModel = hiltViewModel()
     val uiStateHolder by viewModel.tasksUiStateHolder.collectAsStateWithLifecycle()
+    val pomodoroState by viewModel.pomodoroState.collectAsStateWithLifecycle(initialValue = PomodoroState.initialState)
 
     DraggableTaskCard(
         task = task,
-        isTaskRunning = false,
+        isTaskRunning = pomodoroState.taskIdRunning == task.id,
         showDeleteDialog = uiStateHolder.showDeleteTaskDialog,
         showDueDateDialog = uiStateHolder.showDueDateDialog,
         showPomodoroDialog = uiStateHolder.showPomodoroDialog,

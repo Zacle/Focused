@@ -68,7 +68,7 @@ data object TasksScreenSpec: BottomNavScreenSpec {
                         viewModel.upsertTask(task)
                     },
                     onStartTaskPressed = { task ->
-                        appState.navController.navigate(TimerScreenSpec.buildRoute(task.id))
+                        viewModel.submitAction(TasksUiAction.StartRunningTaskPressed(task))
                     },
                     onDrawerPressed = {
                         appState.coroutineScope.launch {
@@ -95,6 +95,12 @@ data object TasksScreenSpec: BottomNavScreenSpec {
                     }
                     TasksUiEvent.PomodoroUpdated -> {
                         showSnackbar(appState, context.getString(R.string.pomodoro_updated))
+                    }
+                    TasksUiEvent.TaskIsAlreadyRunning -> {
+                        showSnackbar(appState, context.getString(R.string.task_already_running))
+                    }
+                    is TasksUiEvent.NavigateToTimer -> {
+                        appState.navigateToTopLevelDestination(TimerScreenSpec.buildRoute(it.taskId))
                     }
                     is TasksUiEvent.NavigateToTask -> {
                         appState.navController.navigate(TaskScreenSpec.buildRoute(it.taskId))

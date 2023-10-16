@@ -226,7 +226,8 @@ fun TaskCard(
             }
             if (!task.completed) {
                 IconButton(
-                    onClick = { onStartTask() }
+                    onClick = { onStartTask() },
+                    enabled = !isTaskRunning
                 ) {
                     Icon(
                         painter = painterResource(

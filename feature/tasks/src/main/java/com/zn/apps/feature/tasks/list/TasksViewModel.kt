@@ -1,6 +1,7 @@
 package com.zn.apps.feature.tasks.list
 
 import androidx.lifecycle.viewModelScope
+import com.zn.apps.core.timer.TimerManager
 import com.zn.apps.domain.GetTasksWithTagsUseCase
 import com.zn.apps.feature.tasks.list.TasksUiAction.DeleteTaskConfirmed
 import com.zn.apps.feature.tasks.list.TasksUiAction.DeleteTaskDismissed
@@ -19,6 +20,7 @@ import com.zn.apps.feature.tasks.list.TasksUiAction.UpdatePomodoroPressed
 import com.zn.apps.feature.tasks.list.TasksUiAction.UpdatedDueDateConfirmed
 import com.zn.apps.filter.Filter
 import com.zn.apps.filter.Grouping
+import com.zn.apps.model.data.pomodoro.TimerState
 import com.zn.apps.model.data.task.Task
 import com.zn.apps.ui_common.delegate.TasksViewModelDelegate
 import com.zn.apps.ui_common.state.BaseViewModel
@@ -27,6 +29,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -36,6 +39,7 @@ class TasksViewModel @Inject constructor(
     private val getTasksWithTagsUseCase: GetTasksWithTagsUseCase,
     private val tasksViewModelDelegate: TasksViewModelDelegate,
     private val converter: TasksUiConverter,
+    private val timerManager: TimerManager
 ): BaseViewModel<TasksUiModel, UiState<TasksUiModel>, TasksUiAction, TasksUiEvent>(),
     TasksViewModelDelegate by tasksViewModelDelegate {
 
@@ -44,6 +48,8 @@ class TasksViewModel @Inject constructor(
      */
     var selectedTag = MutableStateFlow("")
         private set
+
+    val pomodoroState = timerManager.pomodoroTimerState
 
     override fun initState(): UiState<TasksUiModel> = UiState.Loading
 
@@ -83,7 +89,15 @@ class TasksViewModel @Inject constructor(
     }
 
     private fun startRunningTask(task: Task) {
-
+        viewModelScope.launch {
+            val timerState = pomodoroState.first().timerState
+            if (timerState == TimerState.RUNNING) {
+                submitSingleEvent(TasksUiEvent.TaskIsAlreadyRunning)
+            } else {
+                timerManager.updatePomodoroStateManagerAndStartTimer(task)
+                submitSingleEvent(TasksUiEvent.NavigateToTimer(task.id))
+            }
+        }
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)

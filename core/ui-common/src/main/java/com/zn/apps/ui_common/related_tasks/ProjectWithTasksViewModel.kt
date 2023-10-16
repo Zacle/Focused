@@ -2,10 +2,13 @@ package com.zn.apps.ui_common.related_tasks
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import com.zn.apps.core.timer.TimerManager
 import com.zn.apps.domain.project.GetProjectTasksWithMetadata
 import com.zn.apps.filter.Filter
 import com.zn.apps.filter.Grouping
 import com.zn.apps.filter.Grouping.TagGrouping
+import com.zn.apps.model.data.pomodoro.TimerState
+import com.zn.apps.model.data.task.Task
 import com.zn.apps.ui_common.delegate.TasksViewModelDelegate
 import com.zn.apps.ui_common.related_tasks.RelatedTasksUiAction.DeleteTaskConfirmed
 import com.zn.apps.ui_common.related_tasks.RelatedTasksUiAction.DeleteTaskDismissed
@@ -13,6 +16,7 @@ import com.zn.apps.ui_common.related_tasks.RelatedTasksUiAction.DeleteTaskPresse
 import com.zn.apps.ui_common.related_tasks.RelatedTasksUiAction.Load
 import com.zn.apps.ui_common.related_tasks.RelatedTasksUiAction.NavigateToTask
 import com.zn.apps.ui_common.related_tasks.RelatedTasksUiAction.SetGrouping
+import com.zn.apps.ui_common.related_tasks.RelatedTasksUiAction.StartRunningTaskPressed
 import com.zn.apps.ui_common.related_tasks.RelatedTasksUiAction.TaskCompleted
 import com.zn.apps.ui_common.related_tasks.RelatedTasksUiAction.UpdateDueDateConfirmed
 import com.zn.apps.ui_common.related_tasks.RelatedTasksUiAction.UpdateDueDateDismissed
@@ -26,6 +30,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -36,6 +41,7 @@ const val PROJECT_ID_ARGUMENT = "projectId"
 class ProjectWithTasksViewModel @Inject constructor(
     private val getProjectTasksWithMetadata: GetProjectTasksWithMetadata,
     private val converter: RelatedProjectTasksUiConverter,
+    private val timerManager: TimerManager,
     tasksViewModelDelegate: TasksViewModelDelegate,
     savedStateHandle: SavedStateHandle
 ): BaseViewModel<RelatedTasksUiModel, UiState<RelatedTasksUiModel>, RelatedTasksUiAction, RelatedTasksUiEvent>(),
@@ -50,6 +56,8 @@ class ProjectWithTasksViewModel @Inject constructor(
     var groupingType = MutableStateFlow<Grouping>(TagGrouping)
         private set
 
+    val pomodoroState = timerManager.pomodoroTimerState
+
     override fun initState(): UiState<RelatedTasksUiModel> = UiState.Loading
 
     init {
@@ -61,6 +69,9 @@ class ProjectWithTasksViewModel @Inject constructor(
             Load -> loadMetadataAndTasks()
             is SetGrouping -> groupingType.value = action.grouping
             is TaskCompleted -> setTaskCompleted(action.task)
+            is StartRunningTaskPressed -> {
+                startRunningTask(action.task)
+            }
             UpdateDueDatePressed -> updateDueDatePressed()
             UpdateDueDateDismissed -> updateDueDateDismissed()
             is UpdateDueDateConfirmed -> {
@@ -81,6 +92,18 @@ class ProjectWithTasksViewModel @Inject constructor(
             }
             is NavigateToTask -> {
                 submitSingleEvent(RelatedTasksUiEvent.NavigateToTask(action.taskId))
+            }
+        }
+    }
+
+    private fun startRunningTask(task: Task) {
+        viewModelScope.launch {
+            val timerState = pomodoroState.first().timerState
+            if (timerState == TimerState.RUNNING) {
+                submitSingleEvent(RelatedTasksUiEvent.TaskIsAlreadyRunning)
+            } else {
+                timerManager.updatePomodoroStateManagerAndStartTimer(task)
+                submitSingleEvent(RelatedTasksUiEvent.NavigateToTimer(task.id))
             }
         }
     }

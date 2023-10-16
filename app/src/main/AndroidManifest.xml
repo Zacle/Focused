@@ -27,7 +27,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name="com.zn.apps.feature.timer.service.TimerService"/>
+        <service android:name="com.zn.apps.core.timer.service.TimerService"/>
     </application>
 
 </manifest>

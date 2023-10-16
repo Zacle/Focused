@@ -37,6 +37,7 @@ import com.zn.apps.common.MetadataResult
 import com.zn.apps.common.MetadataType
 import com.zn.apps.common.minutesToMilliseconds
 import com.zn.apps.filter.Grouping
+import com.zn.apps.model.data.pomodoro.PomodoroState
 import com.zn.apps.model.data.task.Task
 import com.zn.apps.ui_common.TaskListSection
 import com.zn.apps.ui_common.TaskModalSheetSection
@@ -229,10 +230,11 @@ fun ProjectTaskSection(
 ) {
     val viewModel: ProjectWithTasksViewModel = hiltViewModel()
     val uiStateHolder by viewModel.tasksUiStateHolder.collectAsStateWithLifecycle()
+    val pomodoroState by viewModel.pomodoroState.collectAsStateWithLifecycle(initialValue = PomodoroState.initialState)
 
     DraggableTaskCard(
         task = task,
-        isTaskRunning = false,
+        isTaskRunning = pomodoroState.taskIdRunning == task.id,
         showDeleteDialog = uiStateHolder.showDeleteTaskDialog,
         showDueDateDialog = uiStateHolder.showDueDateDialog,
         showPomodoroDialog = uiStateHolder.showPomodoroDialog,
@@ -241,7 +243,7 @@ fun ProjectTaskSection(
             viewModel.submitAction(RelatedTasksUiAction.NavigateToTask(task.id))
         },
         onCompleted = { viewModel.setTaskCompleted(task) },
-        onStartTask = { /* TODO */ },
+        onStartTask = { viewModel.submitAction(RelatedTasksUiAction.StartRunningTaskPressed(task)) },
         onDeleteTaskPressed = {
             viewModel.submitAction(RelatedTasksUiAction.DeleteTaskPressed)
         },
@@ -279,10 +281,11 @@ fun RelatedTaskSection(
 ) {
     val viewModel: DueDateTasksViewModel = hiltViewModel()
     val uiStateHolder by viewModel.tasksUiStateHolder.collectAsStateWithLifecycle()
+    val pomodoroState by viewModel.pomodoroState.collectAsStateWithLifecycle(initialValue = PomodoroState.initialState)
 
     DraggableTaskCard(
         task = task,
-        isTaskRunning = false,
+        isTaskRunning = pomodoroState.taskIdRunning == task.id,
         showDeleteDialog = uiStateHolder.showDeleteTaskDialog,
         showDueDateDialog = uiStateHolder.showDueDateDialog,
         showPomodoroDialog = uiStateHolder.showPomodoroDialog,
@@ -291,7 +294,7 @@ fun RelatedTaskSection(
             viewModel.submitAction(RelatedTasksUiAction.NavigateToTask(task.id))
         },
         onCompleted = { viewModel.setTaskCompleted(task) },
-        onStartTask = { /* TODO */ },
+        onStartTask = { viewModel.submitAction(RelatedTasksUiAction.StartRunningTaskPressed(task)) },
         onDeleteTaskPressed = {
             viewModel.submitAction(RelatedTasksUiAction.DeleteTaskPressed)
         },
