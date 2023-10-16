@@ -1,14 +1,14 @@
-package com.zn.apps.feature.timer
+package com.zn.apps.core.timer
 
 import com.zn.apps.common.minutesToMilliseconds
 import com.zn.apps.common.network.di.ApplicationScope
 import com.zn.apps.core.notification.TimerNotifier
+import com.zn.apps.core.timer.service.TimerServiceManager
 import com.zn.apps.domain.report.InsertReportUseCase
 import com.zn.apps.domain.repository.PomodoroPreferencesRepository
 import com.zn.apps.domain.repository.PomodoroStateRepository
 import com.zn.apps.domain.task.GetTaskUseCase
 import com.zn.apps.domain.task.UpsertTaskUseCase
-import com.zn.apps.feature.timer.service.TimerServiceManager
 import com.zn.apps.model.data.pomodoro.PomodoroPhase
 import com.zn.apps.model.data.pomodoro.PomodoroState
 import com.zn.apps.model.data.pomodoro.TimerState

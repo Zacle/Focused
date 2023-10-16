@@ -1,4 +1,4 @@
-package com.zn.apps.feature.timer.service
+package com.zn.apps.core.timer.service
 
 import android.content.Context
 import android.content.Intent

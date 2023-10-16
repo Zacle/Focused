@@ -1,4 +1,4 @@
-package com.zn.apps.feature.timer
+package com.zn.apps.core.timer
 
 import com.zn.apps.common.network.di.ApplicationScope
 import kotlinx.coroutines.CoroutineScope

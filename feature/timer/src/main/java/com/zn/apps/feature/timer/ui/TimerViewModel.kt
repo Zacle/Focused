@@ -2,9 +2,9 @@ package com.zn.apps.feature.timer.ui
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import com.zn.apps.core.timer.TimerManager
 import com.zn.apps.domain.task.GetTaskUseCase
 import com.zn.apps.domain.task.UpsertTaskUseCase
-import com.zn.apps.feature.timer.TimerManager
 import com.zn.apps.feature.timer.ui.TimerUiAction.Load
 import com.zn.apps.feature.timer.ui.TimerUiAction.PauseTimer
 import com.zn.apps.feature.timer.ui.TimerUiAction.SkipBreakConfirmed

@@ -67,7 +67,9 @@ data object TasksScreenSpec: BottomNavScreenSpec {
                     upsertTask = { task ->
                         viewModel.upsertTask(task)
                     },
-                    onStartTaskPressed = {},
+                    onStartTaskPressed = { task ->
+                        appState.navController.navigate(TimerScreenSpec.buildRoute(task.id))
+                    },
                     onDrawerPressed = {
                         appState.coroutineScope.launch {
                             appState.drawerState.animateTo(

@@ -1,10 +1,10 @@
-package com.zn.apps.feature.timer.di
+package com.zn.apps.core.timer.di
 
 import com.zn.apps.common.network.di.ApplicationScope
-import com.zn.apps.feature.timer.CoroutineCountDownTimer
-import com.zn.apps.feature.timer.CountDownTimer
-import com.zn.apps.feature.timer.ElapsedRealTime
-import com.zn.apps.feature.timer.ElapsedTime
+import com.zn.apps.core.timer.CoroutineCountDownTimer
+import com.zn.apps.core.timer.CountDownTimer
+import com.zn.apps.core.timer.ElapsedRealTime
+import com.zn.apps.core.timer.ElapsedTime
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

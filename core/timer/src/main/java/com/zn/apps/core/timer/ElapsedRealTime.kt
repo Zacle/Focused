@@ -1,4 +1,4 @@
-package com.zn.apps.feature.timer
+package com.zn.apps.core.timer
 
 import android.os.SystemClock
 import javax.inject.Inject

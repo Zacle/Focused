@@ -8,6 +8,7 @@ import java.time.OffsetDateTime
 sealed class TasksUiAction: UiAction {
     data object Load: TasksUiAction()
     data class TagPressed(val tagId: String): TasksUiAction()
+    data class StartRunningTaskPressed(val task: Task): TasksUiAction()
     data class TaskCompleted(val task: Task): TasksUiAction()
     data object UpdateDueDatePressed: TasksUiAction()
     data class UpdatedDueDateConfirmed(val offsetDateTime: OffsetDateTime?): TasksUiAction()

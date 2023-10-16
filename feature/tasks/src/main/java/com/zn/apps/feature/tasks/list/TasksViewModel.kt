@@ -8,6 +8,7 @@ import com.zn.apps.feature.tasks.list.TasksUiAction.DeleteTaskPressed
 import com.zn.apps.feature.tasks.list.TasksUiAction.Load
 import com.zn.apps.feature.tasks.list.TasksUiAction.NavigateToRelatedTasks
 import com.zn.apps.feature.tasks.list.TasksUiAction.NavigateToTask
+import com.zn.apps.feature.tasks.list.TasksUiAction.StartRunningTaskPressed
 import com.zn.apps.feature.tasks.list.TasksUiAction.TagPressed
 import com.zn.apps.feature.tasks.list.TasksUiAction.TaskCompleted
 import com.zn.apps.feature.tasks.list.TasksUiAction.UpdateDueDateDismissed
@@ -18,6 +19,7 @@ import com.zn.apps.feature.tasks.list.TasksUiAction.UpdatePomodoroPressed
 import com.zn.apps.feature.tasks.list.TasksUiAction.UpdatedDueDateConfirmed
 import com.zn.apps.filter.Filter
 import com.zn.apps.filter.Grouping
+import com.zn.apps.model.data.task.Task
 import com.zn.apps.ui_common.delegate.TasksViewModelDelegate
 import com.zn.apps.ui_common.state.BaseViewModel
 import com.zn.apps.ui_common.state.UiState
@@ -33,7 +35,7 @@ import javax.inject.Inject
 class TasksViewModel @Inject constructor(
     private val getTasksWithTagsUseCase: GetTasksWithTagsUseCase,
     private val tasksViewModelDelegate: TasksViewModelDelegate,
-    private val converter: TasksUiConverter
+    private val converter: TasksUiConverter,
 ): BaseViewModel<TasksUiModel, UiState<TasksUiModel>, TasksUiAction, TasksUiEvent>(),
     TasksViewModelDelegate by tasksViewModelDelegate {
 
@@ -53,6 +55,7 @@ class TasksViewModel @Inject constructor(
         when (action) {
             Load -> loadTasksWithTags()
             is TagPressed -> selectedTag.value = action.tagId
+            is StartRunningTaskPressed -> startRunningTask(action.task)
             is TaskCompleted -> setTaskCompleted(action.task)
             is UpdateDueDatePressed -> updateDueDatePressed()
             UpdateDueDateDismissed -> updateDueDateDismissed()
@@ -77,6 +80,10 @@ class TasksViewModel @Inject constructor(
                 submitSingleEvent(TasksUiEvent.NavigateToRelatedTasks(action.deadlineType))
             }
         }
+    }
+
+    private fun startRunningTask(task: Task) {
+
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)

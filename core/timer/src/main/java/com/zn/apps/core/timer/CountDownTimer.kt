@@ -1,4 +1,4 @@
-package com.zn.apps.feature.timer
+package com.zn.apps.core.timer
 
 interface CountDownTimer {
     fun startTimer(

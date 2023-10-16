@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.zn.apps.di"
+    namespace = "com.zn.apps.core.timer"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
@@ -27,6 +27,8 @@ android {
         }
     }
     compileOptions {
+        isCoreLibraryDesugaringEnabled = true
+
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
@@ -37,16 +39,19 @@ android {
 
 dependencies {
 
-    implementation(project(":core:model"))
     implementation(project(":core:common"))
+    implementation(project(":core:model"))
+    implementation(project(":core:notification"))
+    implementation(project(":core:service"))
     implementation(project(":data-repository"))
     implementation(project(":domain"))
-    implementation(project(":data-local"))
-    implementation(project(":datastore"))
+
+    implementation(libs.kotlinx.coroutines.android)
+    testImplementation(libs.junit4)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.mockito.kotlin)
 
     // Hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
-
-    coreLibraryDesugaring(libs.desugar.jdk.libs)
 }

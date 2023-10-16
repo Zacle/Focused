@@ -18,6 +18,7 @@
             <option value="$PROJECT_DIR$/core/model" />
             <option value="$PROJECT_DIR$/core/notification" />
             <option value="$PROJECT_DIR$/core/service" />
+            <option value="$PROJECT_DIR$/core/timer" />
             <option value="$PROJECT_DIR$/core/ui-common" />
             <option value="$PROJECT_DIR$/core/ui-design" />
             <option value="$PROJECT_DIR$/data-local" />
