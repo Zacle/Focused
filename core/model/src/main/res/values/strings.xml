@@ -37,4 +37,9 @@
     <string name="long_break">Long break</string>
     <string name="short_break">Short break</string>
 
+    <!-- Report -->
+    <string name="daily">Daily</string>
+    <string name="weekly">Weekly</string>
+    <string name="monthly">Monthly</string>
+
 </resources>
