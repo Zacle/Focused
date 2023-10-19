@@ -20,6 +20,11 @@ interface TaskRepository {
     fun getTaskResources(completed: Boolean): Flow<List<TaskResource>>
 
     /**
+     * Get all tasks resources between the given dates
+     */
+    fun getTaskResources(from: String, to: String): Flow<List<TaskResource>>
+
+    /**
      * Get the task resource that matches the task id
      *
      * @param taskId

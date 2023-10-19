@@ -22,6 +22,14 @@ interface TaskDao {
     fun getTasks(completed: Boolean): Flow<List<PopulatedTaskEntity>>
 
     @Transaction
+    @Query(
+        "SELECT * " +
+        "FROM task " +
+        "WHERE completed_time BETWEEN :from AND :to"
+    )
+    fun getTasks(from: String, to: String): Flow<List<PopulatedTaskEntity>>
+
+    @Transaction
     @Query("SELECT * FROM task WHERE id = :taskId")
     fun getTask(taskId: String): Flow<PopulatedTaskEntity?>
 

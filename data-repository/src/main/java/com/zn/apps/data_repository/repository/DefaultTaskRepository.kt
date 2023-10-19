@@ -10,17 +10,15 @@ class DefaultTaskRepository(
     private val datasource: TaskDataSource
 ): TaskRepository {
 
-    override fun getTasks(): Flow<List<TaskResource>> {
-        return datasource.getTasks()
-    }
+    override fun getTasks(): Flow<List<TaskResource>> = datasource.getTasks()
 
-    override fun getTaskResources(completed: Boolean): Flow<List<TaskResource>> {
-        return datasource.getTasks(completed)
-    }
+    override fun getTaskResources(completed: Boolean): Flow<List<TaskResource>> =
+        datasource.getTasks(completed)
 
-    override fun getTaskResource(taskId: String): Flow<TaskResource?> {
-        return datasource.getTask(taskId)
-    }
+    override fun getTaskResources(from: String, to: String): Flow<List<TaskResource>> =
+        datasource.getTasks(from, to)
+
+    override fun getTaskResource(taskId: String): Flow<TaskResource?> = datasource.getTask(taskId)
 
     override suspend fun upsertTask(task: Task) {
         datasource.upsertTask(task)

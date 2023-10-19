@@ -21,6 +21,11 @@ interface TaskDataSource {
     fun getTasks(completed: Boolean): Flow<List<TaskResource>>
 
     /**
+     * Get all tasks between the given dates
+     */
+    fun getTasks(from: String, to: String): Flow<List<TaskResource>>
+
+    /**
      * Get a task that match the given id
      *
      * @param taskId
