@@ -1,7 +1,7 @@
-package com.zn.apps.domain.report
+package com.zn.apps.domain.task
 
 import com.zn.apps.domain.UseCase
-import com.zn.apps.domain.repository.ReportRepository
+import com.zn.apps.domain.repository.TaskRepository
 import com.zn.apps.domain.util.formatToString
 import com.zn.apps.domain.util.report.CalendarReport
 import com.zn.apps.model.data.report.CalendarReportType
@@ -10,10 +10,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import java.time.OffsetDateTime
 
-class GetPomodoroHistogramStatsUseCase(
+class GetTaskHistogramStatsUseCase(
     configuration: Configuration,
-    private val reportRepository: ReportRepository
-): UseCase<GetPomodoroHistogramStatsUseCase.Request, GetPomodoroHistogramStatsUseCase.Response>(configuration) {
+    private val taskRepository: TaskRepository
+): UseCase<GetTaskHistogramStatsUseCase.Request, GetTaskHistogramStatsUseCase.Response>(configuration) {
 
     override suspend fun process(request: Request): Flow<Response> {
         val (calendarReportType, dateTime) = request
@@ -22,11 +22,11 @@ class GetPomodoroHistogramStatsUseCase(
             currentDay = dateTime
         )
         val reportInterval = calendarReport.getReportInterval()
-        return reportRepository.getReportResources(
+        return taskRepository.getTaskResources(
             from = reportInterval.startTime.formatToString(),
             to = reportInterval.endTime.formatToString()
-        ).map { reportResources ->
-            Response(calendarReport.getPomodoroStats(reportResources))
+        ).map { taskResources ->
+            Response(calendarReport.getTaskStats(taskResources))
         }
     }
 

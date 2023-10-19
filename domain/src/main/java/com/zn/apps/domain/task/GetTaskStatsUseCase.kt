@@ -1,4 +1,4 @@
-package com.zn.apps.domain.report
+package com.zn.apps.domain.task
 
 import com.zn.apps.domain.UseCase
 import com.zn.apps.model.data.report.CalendarReportType
@@ -7,28 +7,28 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import java.time.OffsetDateTime
 
-class GetPomodoroStatsUseCase(
+class GetTaskStatsUseCase(
     configuration: Configuration,
-    private val getPomodoroStatsOverviewUseCase: GetPomodoroStatsOverviewUseCase,
-    private val getPomodoroHistogramStatsUseCase: GetPomodoroHistogramStatsUseCase
-): UseCase<GetPomodoroStatsUseCase.Request, GetPomodoroStatsUseCase.Response>(configuration) {
+    private val getTasksStatsOverviewUseCase: GetTasksStatsOverviewUseCase,
+    private val getTaskHistogramStatsUseCase: GetTaskHistogramStatsUseCase
+): UseCase<GetTaskStatsUseCase.Request, GetTaskStatsUseCase.Response>(configuration) {
 
     override suspend fun process(request: Request): Flow<Response> =
         combine(
-            getPomodoroStatsOverviewUseCase.process(
-                GetPomodoroStatsOverviewUseCase.Request
+            getTasksStatsOverviewUseCase.process(
+                GetTasksStatsOverviewUseCase.Request
             ),
-            getPomodoroHistogramStatsUseCase.process(
-                GetPomodoroHistogramStatsUseCase.Request(
+            getTaskHistogramStatsUseCase.process(
+                GetTaskHistogramStatsUseCase.Request(
                     calendarReportType = request.calendarReportType,
                     dateTime = request.dateTime
                 )
             )
-        ) { pomodoroStatsOverviewResponse, pomodoroHistogramStatsResponse ->
+        ) { taskStatsOverviewResponse, taskHistogramStatsResponse ->
             Response(
-                totalHours = pomodoroStatsOverviewResponse.totalHours,
-                totalCompleted = pomodoroStatsOverviewResponse.pomodoroCompleted,
-                statsReport = pomodoroHistogramStatsResponse.statsReport
+                totalHours = taskStatsOverviewResponse.totalHoursSpent,
+                totalCompleted = taskStatsOverviewResponse.tasksCompleted,
+                statsReport = taskHistogramStatsResponse.statsReport
             )
         }
 
