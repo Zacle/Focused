@@ -7,8 +7,11 @@ import com.zn.apps.domain.repository.ReportRepository
 import com.zn.apps.domain.repository.TaskRepository
 import com.zn.apps.domain.tag.GetTagsUseCase
 import com.zn.apps.domain.task.DeleteTaskUseCase
+import com.zn.apps.domain.task.GetTaskHistogramStatsUseCase
+import com.zn.apps.domain.task.GetTaskStatsUseCase
 import com.zn.apps.domain.task.GetTaskUseCase
 import com.zn.apps.domain.task.GetTasksMetadataUseCase
+import com.zn.apps.domain.task.GetTasksStatsOverviewUseCase
 import com.zn.apps.domain.task.GetTasksUseCase
 import com.zn.apps.domain.task.GetTasksWithMetadataUseCase
 import com.zn.apps.domain.task.UpsertTaskUseCase
@@ -67,5 +70,28 @@ object TaskUseCaseModule {
         configuration: UseCase.Configuration,
         getTasksUseCase: GetTasksUseCase,
         getTasksMetadataUseCase: GetTasksMetadataUseCase
-    ): GetTasksWithMetadataUseCase = GetTasksWithMetadataUseCase(configuration, getTasksUseCase, getTasksMetadataUseCase)
+    ): GetTasksWithMetadataUseCase =
+        GetTasksWithMetadataUseCase(configuration, getTasksUseCase, getTasksMetadataUseCase)
+
+    @Provides
+    fun providesGetTasksStatsOverviewUseCase(
+        configuration: UseCase.Configuration,
+        reportRepository: ReportRepository,
+        taskRepository: TaskRepository
+    ): GetTasksStatsOverviewUseCase =
+        GetTasksStatsOverviewUseCase(configuration, reportRepository, taskRepository)
+
+    @Provides
+    fun providesGetTaskHistogramStatsUseCase(
+        configuration: UseCase.Configuration,
+        taskRepository: TaskRepository
+    ): GetTaskHistogramStatsUseCase = GetTaskHistogramStatsUseCase(configuration, taskRepository)
+
+    @Provides
+    fun providesGetTaskStatsUseCase(
+        configuration: UseCase.Configuration,
+        getTasksStatsOverviewUseCase: GetTasksStatsOverviewUseCase,
+        getTaskHistogramStatsUseCase: GetTaskHistogramStatsUseCase
+    ): GetTaskStatsUseCase =
+        GetTaskStatsUseCase(configuration, getTasksStatsOverviewUseCase, getTaskHistogramStatsUseCase)
 }
