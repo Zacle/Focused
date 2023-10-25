@@ -7,18 +7,20 @@ import com.zn.apps.model.data.report.StatsReport
 import com.zn.apps.model.data.task.TaskResource
 import java.time.LocalDate
 import java.time.OffsetDateTime
-import java.time.temporal.TemporalAdjusters
 
 class MonthlyReport(override val currentDay: OffsetDateTime): CalendarReport(currentDay) {
 
     override fun getReportInterval(): ReportInterval {
         val startTime = currentDay
-            .with(TemporalAdjusters.firstDayOfMonth())
+            .withDayOfMonth(1)
             .withHour(0)
             .withMinute(0)
             .withSecond(1)
+        val monthLength = LocalDate
+            .of(currentDay.year, currentDay.month, currentDay.dayOfMonth)
+            .lengthOfMonth()
         val endTime = currentDay
-            .with(TemporalAdjusters.lastDayOfMonth())
+            .withDayOfMonth(monthLength)
             .withHour(23)
             .withMinute(59)
             .withSecond(59)

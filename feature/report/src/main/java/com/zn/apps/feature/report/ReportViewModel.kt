@@ -28,6 +28,7 @@ import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import timber.log.Timber
 import java.time.OffsetDateTime
 import javax.inject.Inject
 
@@ -38,8 +39,7 @@ class ReportViewModel @Inject constructor(
     private val taskStatsUseCase: GetTaskStatsUseCase
 ): BaseViewModel<Unit, UiState<Unit>, ReportUiAction, UiEvent>() {
 
-    private var pomodoroTimeStateHolder = MutableStateFlow(PomodoroTimeStateHolder())
-    private var taskTimeStateHolder = MutableStateFlow(TaskTimeStateHolder())
+    private var timeStateHolder = MutableStateFlow(TimeStateHolder())
 
     val pomodoroChartEntryModelProducer: ChartEntryModelProducer = ChartEntryModelProducer()
     val taskChartEntryModelProducer: ChartEntryModelProducer = ChartEntryModelProducer()
@@ -54,7 +54,7 @@ class ReportViewModel @Inject constructor(
      * Once the data has been fetched, we then set them the the chart entries to be displayed on
      * the chart
      */
-    val pomodoroReportData: StateFlow<PomodoroReportData> = pomodoroTimeStateHolder
+    val pomodoroReportData: StateFlow<PomodoroReportData> = timeStateHolder
         .onEach { stateHolder ->
             uiStateHolder.update {
                 it.copy(
@@ -62,9 +62,10 @@ class ReportViewModel @Inject constructor(
                         calendarReportType = stateHolder.calendarReportType,
                         currentDateTime = stateHolder.currentDateTime
                     ),
-                    pomodoroTimeStateHolder = stateHolder
+                    timeStateHolder = stateHolder
                 )
             }
+            Timber.d("${uiStateHolder.value.reportInterval}")
         }
         .flatMapLatest { stateHolder ->
             pomodoroStatsUseCase.execute(
@@ -101,7 +102,7 @@ class ReportViewModel @Inject constructor(
      * Once the data has been fetched, we then set them the the chart entries to be displayed on
      * the chart
      */
-    val taskReportData: StateFlow<TaskReportData> = taskTimeStateHolder
+    val taskReportData: StateFlow<TaskReportData> = timeStateHolder
         .onEach { stateHolder ->
             uiStateHolder.update {
                 it.copy(
@@ -109,7 +110,7 @@ class ReportViewModel @Inject constructor(
                         calendarReportType = stateHolder.calendarReportType,
                         currentDateTime = stateHolder.currentDateTime
                     ),
-                    taskTimeStateHolder = stateHolder
+                    timeStateHolder = stateHolder
                 )
             }
         }
@@ -153,100 +154,54 @@ class ReportViewModel @Inject constructor(
     }
 
     private fun previousPressed() {
-        if (uiStateHolder.value.reportType == ReportType.POMODORO) {
-            when(pomodoroTimeStateHolder.value.calendarReportType) {
-                CalendarReportType.DAILY -> {
-                    val currentDate = pomodoroTimeStateHolder.value.currentDateTime
-                    pomodoroTimeStateHolder.update {
-                        it.copy(currentDateTime = currentDate.minusDays(1))
-                    }
-                }
-                CalendarReportType.WEEKLY -> {
-                    val currentDate = pomodoroTimeStateHolder.value.currentDateTime
-                    pomodoroTimeStateHolder.update {
-                        it.copy(currentDateTime = currentDate.minusWeeks(1))
-                    }
-                }
-                CalendarReportType.MONTHLY -> {
-                    val currentDate = pomodoroTimeStateHolder.value.currentDateTime
-                    pomodoroTimeStateHolder.update {
-                        it.copy(currentDateTime = currentDate.minusMonths(1))
-                    }
+        when(timeStateHolder.value.calendarReportType) {
+            CalendarReportType.DAILY -> {
+                val currentDate = timeStateHolder.value.currentDateTime
+                timeStateHolder.update {
+                    it.copy(currentDateTime = currentDate.minusDays(1))
                 }
             }
-        } else {
-            when(taskTimeStateHolder.value.calendarReportType) {
-                CalendarReportType.DAILY -> {
-                    val currentDate = taskTimeStateHolder.value.currentDateTime
-                    taskTimeStateHolder.update {
-                        it.copy(currentDateTime = currentDate.minusDays(1))
-                    }
+            CalendarReportType.WEEKLY -> {
+                val currentDate = timeStateHolder.value.currentDateTime
+                timeStateHolder.update {
+                    it.copy(currentDateTime = currentDate.minusDays(7))
                 }
-                CalendarReportType.WEEKLY -> {
-                    val currentDate = taskTimeStateHolder.value.currentDateTime
-                    taskTimeStateHolder.update {
-                        it.copy(currentDateTime = currentDate.minusWeeks(1))
-                    }
-                }
-                CalendarReportType.MONTHLY -> {
-                    val currentDate = taskTimeStateHolder.value.currentDateTime
-                    taskTimeStateHolder.update {
-                        it.copy(currentDateTime = currentDate.minusMonths(1))
-                    }
+            }
+            CalendarReportType.MONTHLY -> {
+                val currentDate = timeStateHolder.value.currentDateTime
+                timeStateHolder.update {
+                    it.copy(
+                        currentDateTime = currentDate
+                            .minusMonths(1)
+                            .withDayOfMonth(1)
+                    )
                 }
             }
         }
     }
 
     private fun nextPressed() {
-        if (uiStateHolder.value.reportType == ReportType.POMODORO) {
-            when(pomodoroTimeStateHolder.value.calendarReportType) {
-                CalendarReportType.DAILY -> {
-                    val currentDate = pomodoroTimeStateHolder.value.currentDateTime
-                    pomodoroTimeStateHolder.update {
-                        it.copy(currentDateTime = currentDate.plusDays(1))
-                    }
-                }
-                CalendarReportType.WEEKLY -> {
-                    val currentDate = pomodoroTimeStateHolder.value.currentDateTime
-                    pomodoroTimeStateHolder.update {
-                        it.copy(currentDateTime = currentDate.plusDays(7))
-                    }
-                }
-                CalendarReportType.MONTHLY -> {
-                    val currentDate = pomodoroTimeStateHolder.value.currentDateTime
-                    pomodoroTimeStateHolder.update {
-                        it.copy(
-                            currentDateTime = currentDate
-                                .plusMonths(1)
-                                .withDayOfMonth(1)
-                        )
-                    }
+        when(timeStateHolder.value.calendarReportType) {
+            CalendarReportType.DAILY -> {
+                val currentDate = timeStateHolder.value.currentDateTime
+                timeStateHolder.update {
+                    it.copy(currentDateTime = currentDate.plusDays(1))
                 }
             }
-        } else {
-            when(taskTimeStateHolder.value.calendarReportType) {
-                CalendarReportType.DAILY -> {
-                    val currentDate = taskTimeStateHolder.value.currentDateTime
-                    taskTimeStateHolder.update {
-                        it.copy(currentDateTime = currentDate.plusDays(1))
-                    }
+            CalendarReportType.WEEKLY -> {
+                val currentDate = timeStateHolder.value.currentDateTime
+                timeStateHolder.update {
+                    it.copy(currentDateTime = currentDate.plusDays(7))
                 }
-                CalendarReportType.WEEKLY -> {
-                    val currentDate = taskTimeStateHolder.value.currentDateTime
-                    taskTimeStateHolder.update {
-                        it.copy(currentDateTime = currentDate.plusDays(7))
-                    }
-                }
-                CalendarReportType.MONTHLY -> {
-                    val currentDate = taskTimeStateHolder.value.currentDateTime
-                    taskTimeStateHolder.update {
-                        it.copy(
-                            currentDateTime = currentDate
-                                .plusMonths(1)
-                                .withDayOfMonth(1)
-                        )
-                    }
+            }
+            CalendarReportType.MONTHLY -> {
+                val currentDate = timeStateHolder.value.currentDateTime
+                timeStateHolder.update {
+                    it.copy(
+                        currentDateTime = currentDate
+                            .plusMonths(1)
+                            .withDayOfMonth(1)
+                    )
                 }
             }
         }
@@ -265,33 +220,16 @@ class ReportViewModel @Inject constructor(
     }
 
     private fun setCalendarReportType(calendarReportType: CalendarReportType) {
-        when(uiStateHolder.value.reportType) {
-            ReportType.POMODORO -> {
-                pomodoroTimeStateHolder.update {
-                    it.copy(
-                        calendarReportType = calendarReportType,
-                        currentDateTime = OffsetDateTime.now()
-                    )
-                }
-            }
-            ReportType.TASK -> {
-                taskTimeStateHolder.update {
-                    it.copy(
-                        calendarReportType = calendarReportType,
-                        currentDateTime = OffsetDateTime.now()
-                    )
-                }
-            }
+        timeStateHolder.update {
+            it.copy(
+                calendarReportType = calendarReportType,
+                currentDateTime = OffsetDateTime.now()
+            )
         }
     }
 }
 
-data class PomodoroTimeStateHolder(
-    val calendarReportType: CalendarReportType = CalendarReportType.WEEKLY,
-    val currentDateTime: OffsetDateTime = OffsetDateTime.now()
-)
-
-data class TaskTimeStateHolder(
+data class TimeStateHolder(
     val calendarReportType: CalendarReportType = CalendarReportType.WEEKLY,
     val currentDateTime: OffsetDateTime = OffsetDateTime.now()
 )
@@ -302,8 +240,7 @@ data class UiStateHolder(
         startTime = OffsetDateTime.now(),
         endTime = OffsetDateTime.now()
     ),
-    val pomodoroTimeStateHolder: PomodoroTimeStateHolder = PomodoroTimeStateHolder(),
-    val taskTimeStateHolder: TaskTimeStateHolder = TaskTimeStateHolder()
+    val timeStateHolder: TimeStateHolder = TimeStateHolder()
 )
 
 data class PomodoroReportData(

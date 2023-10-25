@@ -42,7 +42,7 @@ fun formatDateForUiInterval(
     locale: Locale = Locale.getDefault()
 ): String {
 
-    val date = Date.from(dateTime.toInstant())
+    val date = Date.from(dateTime.withHour(8).toInstant())
     val currentDateTime = OffsetDateTime.now()
 
     val pattern = if (currentDateTime.year == dateTime.year)

@@ -5,6 +5,7 @@ import com.zn.apps.model.data.report.ReportInterval
 import com.zn.apps.model.data.report.ReportResource
 import com.zn.apps.model.data.report.StatsReport
 import com.zn.apps.model.data.task.TaskResource
+import timber.log.Timber
 import java.time.DayOfWeek
 import java.time.OffsetDateTime
 import java.time.temporal.TemporalAdjusters
@@ -20,9 +21,9 @@ class WeeklyReport(override val currentDay: OffsetDateTime): CalendarReport(curr
             .withHour(0)
             .withMinute(0)
             .withSecond(1)
-        val endDayOfWeek: DayOfWeek = firstDayOfWeek.plus(6)
-        val endTime = currentDay
-            .with(TemporalAdjusters.previousOrSame(endDayOfWeek))
+        Timber.d("$startTime")
+        val endTime = startTime
+            .plusDays(6)
             .withHour(23)
             .withMinute(59)
             .withSecond(59)

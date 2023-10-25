@@ -142,7 +142,7 @@ fun ReportScreen(
         item {
             if (uiStateHolder.reportType == ReportType.POMODORO) {
                 FocusTimeChart(
-                    calendarReportType = uiStateHolder.pomodoroTimeStateHolder.calendarReportType,
+                    calendarReportType = uiStateHolder.timeStateHolder.calendarReportType,
                     startDayInterval = uiStateHolder.reportInterval.startTime,
                     endDayInterval = uiStateHolder.reportInterval.endTime,
                     chartEntryModelProducer = pomodoroChartEntryModelProducer,
@@ -160,7 +160,7 @@ fun ReportScreen(
             } else {
                 FocusTimeChart(
                     chartEntryModelProducer = taskChartEntryModelProducer,
-                    calendarReportType = uiStateHolder.taskTimeStateHolder.calendarReportType,
+                    calendarReportType = uiStateHolder.timeStateHolder.calendarReportType,
                     startDayInterval = uiStateHolder.reportInterval.startTime,
                     endDayInterval = uiStateHolder.reportInterval.endTime,
                     focusHours = taskReportData.statsReport.focusHours,
