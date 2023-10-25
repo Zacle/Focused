@@ -35,3 +35,29 @@ fun formatDateForUi(
         DeadlineTime.OTHER -> pattern.format(date)
     }
 }
+
+@Composable
+fun formatDateForUiInterval(
+    dateTime: OffsetDateTime,
+    locale: Locale = Locale.getDefault()
+): String {
+
+    val date = Date.from(dateTime.toInstant())
+    val currentDateTime = OffsetDateTime.now()
+
+    val pattern = if (currentDateTime.year == dateTime.year)
+        SimpleDateFormat("MMM d", locale)
+    else {
+        SimpleDateFormat("MMM d, yyyy", locale)
+    }
+
+    return when(DeadlineTimeHelper.getDeadlineTime(dateTime)) {
+        DeadlineTime.YESTERDAY -> stringResource(id = R.string.yesterday)
+        DeadlineTime.TODAY -> stringResource(id = R.string.today)
+        DeadlineTime.TOMORROW -> stringResource(id = R.string.tomorrow)
+        DeadlineTime.THIS_DAY ->
+            "${stringResource(id = R.string.this_day)} " +
+                    SimpleDateFormat("EEEE", locale).format(date)
+        DeadlineTime.OTHER -> pattern.format(date)
+    }
+}

@@ -48,17 +48,23 @@ fun ProjectsAppBarFilter(
             FilterType(
                 text = stringResource(id = R.string.all),
                 selected = selected == ProjectFilterType.ALL,
-                onSelected = { onFilterSelected(ProjectFilterType.ALL) }
+                onSelected = { onFilterSelected(ProjectFilterType.ALL) },
+                modifier = Modifier
+                    .weight(1f)
             )
             FilterType(
                 text = stringResource(id = R.string.ongoing),
                 selected = selected == ProjectFilterType.ONGOING,
-                onSelected = { onFilterSelected(ProjectFilterType.ONGOING) }
+                onSelected = { onFilterSelected(ProjectFilterType.ONGOING) },
+                modifier = Modifier
+                    .weight(1f)
             )
             FilterType(
                 text = stringResource(id = R.string.completed),
                 selected = selected == ProjectFilterType.COMPLETED,
-                onSelected = { onFilterSelected(ProjectFilterType.COMPLETED) }
+                onSelected = { onFilterSelected(ProjectFilterType.COMPLETED) },
+                modifier = Modifier
+                    .weight(1f)
             )
         }
     }
@@ -68,7 +74,8 @@ fun ProjectsAppBarFilter(
 fun FilterType(
     text: String,
     selected: Boolean,
-    onSelected: () -> Unit
+    onSelected: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val backgroundColor by animateColorAsState(
         targetValue = if (selected) MaterialTheme.colorScheme.primary else Color.Transparent,
@@ -81,9 +88,10 @@ fun FilterType(
     )
 
     Box(
-        modifier = Modifier
+        modifier = modifier
             .background(color = backgroundColor, shape = MaterialTheme.shapes.medium)
             .clickable { onSelected() },
+        contentAlignment = Alignment.Center
     ) {
         Text(
             text = text,

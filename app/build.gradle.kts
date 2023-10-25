@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId = "com.zn.apps.focused"
-        minSdk = libs.versions.minSdk.get().toInt()
+        minSdkVersion(libs.versions.minSdk.get().toInt())
         targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
@@ -111,6 +111,9 @@ dependencies {
     // Coroutines
     implementation(libs.kotlinx.coroutines.android)
     testImplementation(libs.kotlinx.coroutines.test)
+
+    // Chart
+    implementation(libs.vico.compose.m3)
 
     // Hilt
     implementation(libs.hilt.android)

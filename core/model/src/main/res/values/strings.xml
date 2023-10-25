@@ -5,6 +5,9 @@
     <string name="due_date">Due date</string>
     <string name="no_date">No date</string>
 
+    <!-- Task -->
+    <string name="task">Task</string>
+
     <!-- Priority -->
     <string name="high_priority">High</string>
     <string name="medium_priority">Medium</string>

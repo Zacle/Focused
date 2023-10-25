@@ -8,6 +8,7 @@ import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.zn.apps.ui_design.R
@@ -19,6 +20,7 @@ object FAIcons {
     val TimerDestination = R.drawable.timer
     val ArrowForward = Icons.Default.ArrowForward
     val KeyboardArrowRight = Icons.Default.KeyboardArrowRight
+    val KeyboardArrowLeft = Icons.Default.KeyboardArrowLeft
     val ArrowBack = Icons.Default.ArrowBack
     val KeyboardArrowDown = Icons.Default.KeyboardArrowDown
     val pomodoro = R.drawable.pomodoro

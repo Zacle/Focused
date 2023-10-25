@@ -40,7 +40,10 @@ fun CalendarReportTypeChips(
     endDayInterval: OffsetDateTime,
     focusHours: Int,
     focusDays: Int,
-    completedPomodoro: Int,
+    totalCompleted: Int,
+    focusHoursDescription: String,
+    focusDaysDescription: String,
+    totalCompletedDescription: String,
     onNextPressed: () -> Unit,
     onPreviousPressed: () -> Unit,
     onSelected: (CalendarReportType) -> Unit,
@@ -87,21 +90,21 @@ fun CalendarReportTypeChips(
         Row {
             FocusTimeChartSummary(
                 totalDone = focusHours,
-                description = stringResource(id = R.string.focus_hours),
+                description = focusHoursDescription,
                 modifier = Modifier
                     .weight(1f)
             )
             if (selected != DAILY) {
                 FocusTimeChartSummary(
                     totalDone = focusDays,
-                    description = stringResource(id = R.string.focus_days),
+                    description = focusDaysDescription,
                     modifier = Modifier
                         .weight(1f)
                 )
             }
             FocusTimeChartSummary(
-                totalDone = completedPomodoro,
-                description = stringResource(id = R.string.completed_pomodoro),
+                totalDone = totalCompleted,
+                description = totalCompletedDescription,
                 modifier = Modifier
                     .weight(1f)
             )
@@ -134,7 +137,7 @@ fun ReportChip(
     ) {
         Text(
             text = text,
-            style = MaterialTheme.typography.bodySmall,
+            style = MaterialTheme.typography.bodyMedium,
             color = contentColor,
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
         )
@@ -164,7 +167,7 @@ fun IntervalTimeRow(
         if (calendarReportType == DAILY) {
             Text(
                 text = formatDateForUiInterval(dateTime = startDayInterval),
-                style = MaterialTheme.typography.bodySmall,
+                style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .weight(1f)
@@ -174,7 +177,7 @@ fun IntervalTimeRow(
                 text = 
                     formatDateForUiInterval(dateTime = startDayInterval) + " - " +
                     formatDateForUiInterval(dateTime = endDayInterval),
-                style = MaterialTheme.typography.bodySmall,
+                style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .weight(1f)
@@ -227,7 +230,10 @@ fun CalendarReportTypeChipsPreview() {
                 onSelected = {},
                 focusDays = 5,
                 focusHours = 11,
-                completedPomodoro = 8
+                totalCompleted = 8,
+                focusHoursDescription = "Focus Hours",
+                focusDaysDescription = "Focus Days",
+                totalCompletedDescription = "Completed pomodoro"
             )
         }
     }

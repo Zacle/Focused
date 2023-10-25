@@ -1,4 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="report">Reports</string>
+    <string name="overview">Overview</string>
+    <string name="total_focus_hours">Total focus hours</string>
+    <string name="total_completed_pomodoro">
+        Total completed pomodoro
+    </string>
+    <string name="total_completed_tasks">
+        Total completed tasks
+    </string>
+    <string name="focus_time_chart">Focus Time Chart</string>
+    <string name="focus_hours">Focus Hours</string>
+    <string name="focus_days">Focus Days</string>
+    <string name="completed_pomodoro">Completed pomodoro</string>
+    <string name="completed_tasks">Completed tasks</string>
 </resources>
