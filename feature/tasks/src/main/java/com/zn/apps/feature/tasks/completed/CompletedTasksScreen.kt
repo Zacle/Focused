@@ -4,20 +4,19 @@ import android.annotation.SuppressLint
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.pluralStringResource
@@ -26,9 +25,11 @@ import androidx.compose.ui.unit.dp
 import com.zn.apps.feature.tasks.R
 import com.zn.apps.model.data.task.RelatedTasksMetaDataResult
 import com.zn.apps.model.data.task.Task
+import com.zn.apps.model.data.task.TaskResource
 import com.zn.apps.ui_design.component.EmptyScreen
 import com.zn.apps.ui_design.component.FATopAppBar
 import com.zn.apps.ui_design.component.TagChips
+import com.zn.apps.ui_design.component.TaskCard
 import com.zn.apps.ui_design.icon.FAIcons
 import com.zn.apps.ui_design.icon.Icon
 
@@ -105,6 +106,7 @@ fun CompletedTasksContent(
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun CompletedTaskList(
     completedTasksMetadata: Map<String, RelatedTasksMetaDataResult>,
@@ -112,37 +114,74 @@ fun CompletedTaskList(
     onSetTaskUnCompleted: (Task) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    var counter by remember {
-        mutableIntStateOf(0)
-    }
     LazyColumn(
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp),
         verticalArrangement = Arrangement.Center
     ) {
-        completedTasksMetadata.forEach { (header, metadataResult) ->
-            counter += 1
+        completedTasksMetadata.onEachIndexed { groupIndex, (header, metadataResult) ->
             item {
-                var estimatedTime = ""
-                estimatedTime += metadataResult.elapsedTime.hours.toString() + "h"
-                estimatedTime += metadataResult.elapsedTime.minutes.toString() + "m"
-                TimelineNode(
-                    title = header,
-                    subtitle = stringResource(id = R.string.focus) + ": $estimatedTime, " +
-                            stringResource(id = R.string.completed) + ": " +
-                            pluralStringResource(id = R.plurals.task_completed, metadataResult.tasks.size, metadataResult.tasks.size),
-                    circleParameters = CircleParametersDefaults.circleParameters(
-                        backgroundColor = MaterialTheme.colorScheme.primary
+                Timeline(
+                    groupIndex = groupIndex,
+                    elementIndex = HEADER_INDEX,
+                    timeLineCircleParameters = TimeLineCircleParametersDefault.circleParameters(
+                        backgroundColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.7f),
+                        circleColor = MaterialTheme.colorScheme.onPrimary
                     ),
-                    completedTasks = metadataResult.tasks,
-                    onTaskPressed = onTaskPressed,
-                    onSetTaskUnCompleted = onSetTaskUnCompleted,
-                    lineParameters = LineParametersDefaults.linearGradient(
-                        startColor = MaterialTheme.colorScheme.primary,
-                        endColor = MaterialTheme.colorScheme.secondary
+                    lineParameters = LineParametersDefault.lineParameters(
+                        lineColor = MaterialTheme.colorScheme.tertiary
                     ),
-                    isNodeLast = counter == completedTasksMetadata.size - 1
+                    timeLinePadding = TimeLinePaddingDefault.paddingParameters(),
+                    isHeader = true,
+                    header = {
+                        var estimatedTime = ""
+                        estimatedTime += metadataResult.elapsedTime.hours.toString() + "h"
+                        estimatedTime += metadataResult.elapsedTime.minutes.toString() + "m"
+                        TimelineHeader(
+                            title = header,
+                            subtitle = stringResource(id = R.string.focus) + ": $estimatedTime, " +
+                                    stringResource(id = R.string.completed) + ": " +
+                                    pluralStringResource(id = R.plurals.task_completed, metadataResult.tasks.size, metadataResult.tasks.size)
+                        )
+                    },
+                    content = {}
+                )
+            }
+            itemsIndexed(metadataResult.tasks, key = { _, item -> item.task.id }) { elementIndex, taskResource: TaskResource ->
+                Timeline(
+                    groupIndex = groupIndex,
+                    elementIndex = elementIndex,
+                    timeLineCircleParameters = TimeLineCircleParametersDefault.circleParameters(
+                        backgroundColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.7f),
+                        circleColor = MaterialTheme.colorScheme.onPrimary
+                    ),
+                    lineParameters = LineParametersDefault.lineParameters(
+                        lineColor = MaterialTheme.colorScheme.tertiary
+                    ),
+                    timeLinePadding = TimeLinePaddingDefault.paddingParameters(),
+                    isHeader = false,
+                    header = {},
+                    content = {
+                        TaskCard(
+                            task = taskResource.task,
+                            isTaskRunning = false,
+                            cardOffset = 0f,
+                            navigateToTask = {
+                                onTaskPressed(it)
+                            },
+                            onCompleted = {
+                                onSetTaskUnCompleted(it)
+                            },
+                            onStartTask = {},
+                            onExpand = {},
+                            onCollapse = {},
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .size(70.dp)
+                                .padding(bottom = 4.dp, end = 16.dp)
+                        )
+                    }
                 )
             }
         }

@@ -1,46 +1,59 @@
 package com.zn.apps.feature.tasks.completed
 
-import androidx.compose.ui.graphics.Brush
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.zn.apps.ui_design.icon.FAIcons
 
-data class CircleParameters(
+data class TimeLineCircleParameters(
     val radius: Dp,
     val backgroundColor: Color,
+    val circleIcon: Int,
+    val circleColor: Color,
+    val circleSize: Dp
 )
 
-data class LineParameters(
-    val strokeWidth: Dp,
-    val brush: Brush
-)
+object TimeLineCircleParametersDefault {
+    private val defaultCircleRadius = 16.dp
+    private val defaultCircleIcon = FAIcons.timeline_icon
+    private val defaultCircleSize = 8.dp
 
-object CircleParametersDefaults {
-
-    private val defaultCircleRadius = 8.dp
 
     fun circleParameters(
         radius: Dp = defaultCircleRadius,
         backgroundColor: Color = Color.Cyan,
-    ) = CircleParameters(radius, backgroundColor)
+        circleIcon: Int = defaultCircleIcon,
+        circleColor: Color = Color.White,
+        circleSize: Dp = defaultCircleSize
+    ) = TimeLineCircleParameters(radius, backgroundColor, circleIcon, circleColor, circleSize)
 }
 
-object LineParametersDefaults {
+data class LineParameters(
+    val lineWidth: Dp,
+    val lineColor: Color
+)
 
-    private val defaultStrokeWidth = 3.dp
+object LineParametersDefault {
+    private val defaultLineWidth = 2.dp
 
-    fun linearGradient(
-        strokeWidth: Dp = defaultStrokeWidth,
-        startColor: Color,
-        endColor: Color,
-        startY: Float = 0.0f,
-        endY: Float = Float.POSITIVE_INFINITY
-    ): LineParameters {
-        val brush = Brush.verticalGradient(
-            colors = listOf(startColor, endColor),
-            startY = startY,
-            endY = endY
-        )
-        return LineParameters(strokeWidth, brush)
-    }
+    fun lineParameters(
+        lineWidth: Dp = defaultLineWidth,
+        lineColor: Color = Color.Cyan
+    ) = LineParameters(lineWidth, lineColor)
+}
+
+data class TimeLinePadding(
+    val outerPadding: PaddingValues,
+    val contentStartPadding: Dp
+)
+
+object TimeLinePaddingDefault {
+    private val defaultOuterPadding = PaddingValues(16.dp)
+    private val defaultContentStartPadding = 8.dp
+
+    fun paddingParameters(
+        outerPadding: PaddingValues = defaultOuterPadding,
+        contentStartPadding: Dp = defaultContentStartPadding
+    ) = TimeLinePadding(outerPadding, contentStartPadding)
 }

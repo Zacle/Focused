@@ -17,6 +17,7 @@ androidxTestJunit = "1.1.5"
 androidxTestRunner = "1.5.2"
 androidxWindowManager = "1.1.0"
 compileSdk = "34"
+constraintLayout = "1.0.1"
 coreLibraryDesugaring = "2.0.3"
 coroutines = "1.7.1"
 hilt = "2.47"
@@ -70,6 +71,7 @@ androidx-test-espresso-core = { module = "androidx.test.espresso:espresso-core",
 androidx-test-rule = { module = "androidx.test:rules", version.ref = "androidxTestCore" }
 androidx-test-runner = { module = "androidx.test:runner", version.ref = "androidxTestRunner" }
 androidx-window-manager = { module = "androidx.window:window", version.ref = "androidxWindowManager" }
+constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "constraintLayout" }
 desugar-jdk-libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "coreLibraryDesugaring" }
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }

@@ -76,6 +76,7 @@ dependencies {
     kapt(libs.hilt.compiler)
 
     implementation(libs.timber)
+    implementation(libs.constraintlayout)
 
     testImplementation(libs.junit4)
     androidTestImplementation(libs.androidx.test.junit)
