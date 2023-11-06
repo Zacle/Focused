@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -106,7 +105,6 @@ fun CompletedTasksContent(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun CompletedTaskList(
     completedTasksMetadata: Map<String, RelatedTasksMetaDataResult>,
