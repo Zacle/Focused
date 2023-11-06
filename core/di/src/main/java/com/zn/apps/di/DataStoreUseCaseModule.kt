@@ -2,9 +2,11 @@ package com.zn.apps.di
 
 import com.zn.apps.domain.UseCase
 import com.zn.apps.domain.datastore.GetPomodoroPreferencesUseCase
+import com.zn.apps.domain.datastore.GetReminderPreferencesUseCase
 import com.zn.apps.domain.datastore.GetUserDataUseCase
 import com.zn.apps.domain.datastore.user_data.SetShouldHideOnboardingUseCase
 import com.zn.apps.domain.repository.PomodoroPreferencesRepository
+import com.zn.apps.domain.repository.ReminderPreferencesRepository
 import com.zn.apps.domain.repository.UserDataRepository
 import dagger.Module
 import dagger.Provides
@@ -35,4 +37,11 @@ object DataStoreUseCaseModule {
         pomodoroPreferencesRepository: PomodoroPreferencesRepository
     ): GetPomodoroPreferencesUseCase =
         GetPomodoroPreferencesUseCase(configuration, pomodoroPreferencesRepository)
+
+    @Provides
+    fun providesGetReminderPreferencesUseCase(
+        configuration: UseCase.Configuration,
+        reminderPreferencesRepository: ReminderPreferencesRepository
+    ): GetReminderPreferencesUseCase =
+        GetReminderPreferencesUseCase(configuration, reminderPreferencesRepository)
 }

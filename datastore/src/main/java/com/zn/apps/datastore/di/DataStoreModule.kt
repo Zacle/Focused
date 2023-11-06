@@ -12,6 +12,7 @@ import com.zn.apps.datastore.PomodoroPreferencesDataSource
 import com.zn.apps.datastore.PomodoroStateDataSource
 import com.zn.apps.datastore.PomodoroStateManager
 import com.zn.apps.datastore.PomodoroStateManagerSerializer
+import com.zn.apps.datastore.ReminderPreferencesDataSource
 import com.zn.apps.datastore.UserPreferences
 import com.zn.apps.datastore.UserPreferencesSerializer
 import dagger.Module
@@ -74,4 +75,10 @@ object DataStoreModule {
     fun providesPomodoroPreferencesDataSource(
         userPreferences: DataStore<UserPreferences>
     ): PomodoroPreferencesDataSource = PomodoroPreferencesDataSource(userPreferences)
+
+    @Provides
+    @Singleton
+    fun providesReminderPreferencesDataSource(
+        userPreferences: DataStore<UserPreferences>
+    ): ReminderPreferencesDataSource = ReminderPreferencesDataSource(userPreferences)
 }

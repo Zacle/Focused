@@ -7,6 +7,7 @@ import com.zn.apps.data_repository.data_source.local.TaskDataSource
 import com.zn.apps.data_repository.repository.DefaultPomodoroPreferencesRepository
 import com.zn.apps.data_repository.repository.DefaultPomodoroStateRepository
 import com.zn.apps.data_repository.repository.DefaultProjectRepository
+import com.zn.apps.data_repository.repository.DefaultReminderPreferencesRepository
 import com.zn.apps.data_repository.repository.DefaultReportRepository
 import com.zn.apps.data_repository.repository.DefaultTagRepository
 import com.zn.apps.data_repository.repository.DefaultTaskRepository
@@ -14,9 +15,11 @@ import com.zn.apps.data_repository.repository.DefaultUserDataRepository
 import com.zn.apps.datastore.FocusedUserPreferencesDataSource
 import com.zn.apps.datastore.PomodoroPreferencesDataSource
 import com.zn.apps.datastore.PomodoroStateDataSource
+import com.zn.apps.datastore.ReminderPreferencesDataSource
 import com.zn.apps.domain.repository.PomodoroPreferencesRepository
 import com.zn.apps.domain.repository.PomodoroStateRepository
 import com.zn.apps.domain.repository.ProjectRepository
+import com.zn.apps.domain.repository.ReminderPreferencesRepository
 import com.zn.apps.domain.repository.ReportRepository
 import com.zn.apps.domain.repository.TagRepository
 import com.zn.apps.domain.repository.TaskRepository
@@ -65,4 +68,9 @@ object RepositoryModule {
     fun providesPomodoroPreferencesRepository(
         pomodoroPreferencesDataSource: PomodoroPreferencesDataSource
     ): PomodoroPreferencesRepository = DefaultPomodoroPreferencesRepository(pomodoroPreferencesDataSource)
+
+    @Provides
+    fun providesReminderPreferencesRepository(
+        reminderPreferencesDataSource: ReminderPreferencesDataSource
+    ): ReminderPreferencesRepository = DefaultReminderPreferencesRepository(reminderPreferencesDataSource)
 }
