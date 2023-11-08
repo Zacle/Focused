@@ -17,7 +17,7 @@ class DefaultAlarmRepository(
         alarmDataSource.upsertAlarm(alarmItem)
     }
 
-    override suspend fun deleteAlarm(alarmItem: AlarmItem) {
-        alarmDataSource.deleteAlarm(alarmItem)
+    override suspend fun deleteAlarm(taskId: String) {
+        alarmDataSource.deleteAlarm(taskId)
     }
 }

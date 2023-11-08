@@ -2,7 +2,6 @@ package com.zn.apps.data_local.database.alarm
 
 import android.database.sqlite.SQLiteConstraintException
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -27,8 +26,8 @@ interface AlarmDao {
     @Update
     suspend fun updateAlarm(alarm: AlarmItemEntity)
 
-    @Delete
-    suspend fun deleteAlarm(alarm: AlarmItemEntity)
+    @Query("DELETE FROM alarm WHERE task_id = :taskId")
+    suspend fun deleteAlarm(taskId: String)
 
     suspend fun upsertAlarm(alarm: AlarmItemEntity) {
         try {

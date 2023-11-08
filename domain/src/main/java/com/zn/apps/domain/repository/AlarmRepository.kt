@@ -20,7 +20,7 @@ interface AlarmRepository {
     suspend fun upsertAlarm(alarmItem: AlarmItem)
 
     /**
-     * Delete alarm
+     * Delete alarm using the task's id
      */
-    suspend fun deleteAlarm(alarmItem: AlarmItem)
+    suspend fun deleteAlarm(taskId: String)
 }

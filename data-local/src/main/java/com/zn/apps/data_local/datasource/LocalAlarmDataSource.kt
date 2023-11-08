@@ -48,7 +48,7 @@ class LocalAlarmDataSource @Inject constructor(
         alarmDao.upsertAlarm(alarmItem.asEntity())
     }
 
-    override suspend fun deleteAlarm(alarmItem: AlarmItem) {
-        alarmDao.deleteAlarm(alarmItem.asEntity())
+    override suspend fun deleteAlarm(taskId: String) {
+        alarmDao.deleteAlarm(taskId)
     }
 }

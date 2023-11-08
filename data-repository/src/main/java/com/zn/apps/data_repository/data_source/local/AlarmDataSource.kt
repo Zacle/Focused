@@ -22,5 +22,5 @@ interface AlarmDataSource {
     /**
      * Delete alarm
      */
-    suspend fun deleteAlarm(alarmItem: AlarmItem)
+    suspend fun deleteAlarm(taskId: String)
 }
