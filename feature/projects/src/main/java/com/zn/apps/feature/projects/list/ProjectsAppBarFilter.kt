@@ -48,23 +48,17 @@ fun ProjectsAppBarFilter(
             FilterType(
                 text = stringResource(id = R.string.all),
                 selected = selected == ProjectFilterType.ALL,
-                onSelected = { onFilterSelected(ProjectFilterType.ALL) },
-                modifier = Modifier
-                    .weight(1f)
+                onSelected = { onFilterSelected(ProjectFilterType.ALL) }
             )
             FilterType(
                 text = stringResource(id = R.string.ongoing),
                 selected = selected == ProjectFilterType.ONGOING,
-                onSelected = { onFilterSelected(ProjectFilterType.ONGOING) },
-                modifier = Modifier
-                    .weight(1f)
+                onSelected = { onFilterSelected(ProjectFilterType.ONGOING) }
             )
             FilterType(
                 text = stringResource(id = R.string.completed),
                 selected = selected == ProjectFilterType.COMPLETED,
-                onSelected = { onFilterSelected(ProjectFilterType.COMPLETED) },
-                modifier = Modifier
-                    .weight(1f)
+                onSelected = { onFilterSelected(ProjectFilterType.COMPLETED) }
             )
         }
     }

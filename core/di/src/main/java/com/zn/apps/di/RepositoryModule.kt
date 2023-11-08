@@ -1,9 +1,11 @@
 package com.zn.apps.di
 
+import com.zn.apps.data_repository.data_source.local.AlarmDataSource
 import com.zn.apps.data_repository.data_source.local.ProjectDataSource
 import com.zn.apps.data_repository.data_source.local.ReportDataSource
 import com.zn.apps.data_repository.data_source.local.TagDataSource
 import com.zn.apps.data_repository.data_source.local.TaskDataSource
+import com.zn.apps.data_repository.repository.DefaultAlarmRepository
 import com.zn.apps.data_repository.repository.DefaultPomodoroPreferencesRepository
 import com.zn.apps.data_repository.repository.DefaultPomodoroStateRepository
 import com.zn.apps.data_repository.repository.DefaultProjectRepository
@@ -16,6 +18,7 @@ import com.zn.apps.datastore.FocusedUserPreferencesDataSource
 import com.zn.apps.datastore.PomodoroPreferencesDataSource
 import com.zn.apps.datastore.PomodoroStateDataSource
 import com.zn.apps.datastore.ReminderPreferencesDataSource
+import com.zn.apps.domain.repository.AlarmRepository
 import com.zn.apps.domain.repository.PomodoroPreferencesRepository
 import com.zn.apps.domain.repository.PomodoroStateRepository
 import com.zn.apps.domain.repository.ProjectRepository
@@ -73,4 +76,9 @@ object RepositoryModule {
     fun providesReminderPreferencesRepository(
         reminderPreferencesDataSource: ReminderPreferencesDataSource
     ): ReminderPreferencesRepository = DefaultReminderPreferencesRepository(reminderPreferencesDataSource)
+
+    @Provides
+    fun providesAlarmRepository(
+        alarmDataSource: AlarmDataSource
+    ): AlarmRepository = DefaultAlarmRepository(alarmDataSource)
 }
