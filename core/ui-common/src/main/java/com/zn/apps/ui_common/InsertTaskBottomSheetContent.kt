@@ -48,11 +48,12 @@ import java.time.OffsetDateTime
 fun InsertTaskBottomSheetContent(
     upsertTask: (Task) -> Unit,
     projects: List<Project>,
+    taskReminder: Int,
     tags: List<Tag>,
     shouldShowModalSheet: (Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val (formState, formStateSetter) = remember { mutableStateOf(FormState()) }
+    val (formState, formStateSetter) = remember { mutableStateOf(FormState(remindBefore = taskReminder)) }
     var showPomodoroDialog by remember { mutableStateOf(false) }
     var showDueDateDialog by remember { mutableStateOf(false) }
 
@@ -74,14 +75,18 @@ fun InsertTaskBottomSheetContent(
     if (showDueDateDialog) {
         DeadlineSelectionDialog(
             dateTime = formState.dueDate,
-            onDateTimeSelected = {
+            onDateTimeWithReminderSet = { dueDate, remindBefore, isReminderSet ->
                 formStateSetter(
                     formState.copy(
-                        dueDate = it
+                        dueDate = dueDate,
+                        remindBefore = remindBefore,
+                        isReminderSet = isReminderSet
                     )
                 )
             },
-            onDismissRequest = { showDueDateDialog = it }
+            onDismissRequest = { showDueDateDialog = it },
+            isReminderSet = formState.dueDate != null,
+            remindBeforeValue = taskReminder
         )
     }
 
@@ -191,7 +196,9 @@ fun InsertTaskBottomSheetContent(
                             priority = formState.priority,
                             projectId = formState.selectedProjectId,
                             tagId = formState.selectedTagId,
-                            dueDate = formState.dueDate
+                            dueDate = formState.dueDate,
+                            remindTaskAt = formState.remindBefore,
+                            shouldRemindTask = formState.isReminderSet
                         )
                         upsertTask(task)
                         shouldShowModalSheet(false)
@@ -222,5 +229,7 @@ data class FormState(
     var priority: TaskPriority = TaskPriority.NONE,
     var pomodoroNumber: Int = 0,
     var pomodoroLength: Int = 0,
-    var dueDate: OffsetDateTime? = null
+    var dueDate: OffsetDateTime? = null,
+    var remindBefore: Int = 0,
+    var isReminderSet: Boolean = false
 )

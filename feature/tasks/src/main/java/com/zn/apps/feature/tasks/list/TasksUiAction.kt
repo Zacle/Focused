@@ -11,7 +11,11 @@ sealed class TasksUiAction: UiAction {
     data class StartRunningTaskPressed(val task: Task): TasksUiAction()
     data class TaskCompleted(val task: Task): TasksUiAction()
     data object UpdateDueDatePressed: TasksUiAction()
-    data class UpdatedDueDateConfirmed(val offsetDateTime: OffsetDateTime?): TasksUiAction()
+    data class UpdatedDueDateConfirmed(
+        val offsetDateTime: OffsetDateTime?,
+        val remindTaskAt: Int,
+        val isReminderSet: Boolean
+    ): TasksUiAction()
     data object UpdateDueDateDismissed: TasksUiAction()
     data object UpdatePomodoroPressed: TasksUiAction()
     data class UpdatePomodoroConfirmed(val pomodoro: Pomodoro): TasksUiAction()

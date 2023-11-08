@@ -42,6 +42,7 @@ import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -60,6 +61,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.zn.apps.common.DeadlineType
 import com.zn.apps.ui_design.R
+import com.zn.apps.ui_design.component.FocusedAppBackground
 import com.zn.apps.ui_design.component.ThemePreviews
 import com.zn.apps.ui_design.icon.FAIcons
 import com.zn.apps.ui_design.theme.FocusedAppTheme
@@ -79,7 +81,9 @@ private val DatePickerHeadlinePadding = PaddingValues(start = 24.dp, end = 12.dp
 @Composable
 fun DeadlineSelectionDialog(
     dateTime: OffsetDateTime? = null,
-    onDateTimeSelected: (OffsetDateTime?) -> Unit,
+    remindBeforeValue: Int,
+    isReminderSet: Boolean,
+    onDateTimeWithReminderSet: (OffsetDateTime?, Int, Boolean) -> Unit,
     onDismissRequest: (Boolean) -> Unit
 ) {
     var date by remember {
@@ -91,7 +95,16 @@ fun DeadlineSelectionDialog(
     var timeType: DeadlineType? by remember {
         mutableStateOf(null)
     }
+    var reminderTimeValue by remember {
+        mutableIntStateOf(remindBeforeValue)
+    }
+    var shouldRemind by remember {
+        mutableStateOf(isReminderSet)
+    }
     var showTimeDialog by remember {
+        mutableStateOf(false)
+    }
+    var showReminderDialog by remember {
         mutableStateOf(false)
     }
     val datePickerState = rememberDatePickerState(
@@ -120,6 +133,16 @@ fun DeadlineSelectionDialog(
                 )
             )
         }
+    }
+
+    if (showReminderDialog) {
+        ReminderDialog(
+            remindBefore = reminderTimeValue,
+            isReminderSet = shouldRemind,
+            onReminderTimeSet = { reminderTimeValue = it },
+            setReminder = { shouldRemind = it },
+            setShowDialog = { showReminderDialog = false }
+        )
     }
 
     DatePickerDialog(
@@ -228,44 +251,13 @@ fun DeadlineSelectionDialog(
                     text = stringResource(id = R.string.next_week)
                 )
             }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 30.dp, vertical = 4.dp)
-                    .clickable(
-                        indication = null,
-                        interactionSource = remember { MutableInteractionSource() }
-                    ) { showTimeDialog = true },
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Row(
-                    modifier = Modifier
-                        .weight(1.0f),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Icon(
-                        painter = painterResource(id = FAIcons.add_time),
-                        contentDescription = stringResource(id = R.string.time),
-                        tint = MaterialTheme.colorScheme.secondary.copy(alpha = 0.5f),
-                        modifier = Modifier.size(20.dp)
-                    )
-                    Text(
-                        text = stringResource(id = R.string.time),
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.onSurface,
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                }
-                Row {
-                    Text(
-                        text = getLocaleTime(LocalContext.current, time),
-                        style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.onSurface,
-                        textAlign = TextAlign.End
-                    )
-                }
-            }
+            ChooseTaskTimeAndReminder(
+                time = time,
+                showTimeDialog = { showTimeDialog = true },
+                showReminderDialog = { showReminderDialog = true },
+                isDateSet = date != null,
+                reminderTime = time.minusMinutes(reminderTimeValue.toLong())
+            )
             Spacer(modifier = Modifier.height(16.dp))
 
             DialogDoneOrCancel(
@@ -277,7 +269,117 @@ fun DeadlineSelectionDialog(
                         ZoneOffset.systemDefault().rules.getOffset(Instant.now())
                     )
                 },
-                onSave = onDateTimeSelected
+                onSave = {
+                    onDateTimeWithReminderSet(it, reminderTimeValue, shouldRemind)
+                }
+            )
+        }
+    }
+}
+
+@Composable
+fun ChooseTaskTimeAndReminder(
+    time: LocalTime,
+    showTimeDialog: () -> Unit,
+    showReminderDialog: () -> Unit,
+    modifier: Modifier = Modifier,
+    reminderTime: LocalTime? = null,
+    isDateSet: Boolean = false
+) {
+    Column {
+        Row(
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(horizontal = 30.dp, vertical = 4.dp)
+                .clickable(
+                    indication = null,
+                    interactionSource = remember { MutableInteractionSource() }
+                ) { showTimeDialog() },
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Row(
+                modifier = Modifier
+                    .weight(1.0f),
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    painter = painterResource(id = FAIcons.add_time),
+                    contentDescription = stringResource(id = R.string.time),
+                    tint = MaterialTheme.colorScheme.secondary.copy(alpha = 0.5f),
+                    modifier = Modifier.size(20.dp)
+                )
+                Text(
+                    text = stringResource(id = R.string.time),
+                    fontWeight = FontWeight.Medium,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    style = MaterialTheme.typography.bodyMedium
+                )
+            }
+            Row {
+                Text(
+                    text = getLocaleTime(LocalContext.current, time),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    textAlign = TextAlign.End
+                )
+            }
+        }
+        Row(
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(horizontal = 30.dp, vertical = 4.dp)
+                .clickable(
+                    enabled = isDateSet,
+                    indication = null,
+                    interactionSource = remember { MutableInteractionSource() }
+                ) { showReminderDialog() },
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Row(
+                modifier = Modifier
+                    .weight(1.0f),
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    painter = painterResource(id = FAIcons.notification),
+                    contentDescription = stringResource(id = R.string.reminder),
+                    tint = MaterialTheme.colorScheme.secondary.copy(alpha = 0.5f),
+                    modifier = Modifier.size(20.dp)
+                )
+                Text(
+                    text = stringResource(id = R.string.reminder),
+                    fontWeight = FontWeight.Medium,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    style = MaterialTheme.typography.bodyMedium
+                )
+            }
+            Row {
+                Text(
+                    text = reminderTime?.let { getLocaleTime(LocalContext.current, time) } ?: stringResource(
+                        id = R.string.no_time
+                    ),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    textAlign = TextAlign.End
+                )
+            }
+        }
+    }
+}
+
+@ThemePreviews
+@Composable
+fun ChooseTaskTimeAndReminderPreview() {
+    FocusedAppTheme {
+        FocusedAppBackground {
+            val substract = 5
+            ChooseTaskTimeAndReminder(
+                time = LocalTime.now(),
+                showTimeDialog = {},
+                showReminderDialog = {},
+                reminderTime = LocalTime.now().minusMinutes(substract.toLong())
             )
         }
     }
@@ -410,7 +512,9 @@ fun DefaultDueDate(
 fun DeadlineSelectionDialogPreview() {
     FocusedAppTheme {
         DeadlineSelectionDialog(
-            onDateTimeSelected = {},
+            remindBeforeValue = 5,
+            isReminderSet = true,
+            onDateTimeWithReminderSet = { _, _, _ -> },
             onDismissRequest = {},
             dateTime = OffsetDateTime.now().plusDays(2)
         )
@@ -422,7 +526,9 @@ fun DeadlineSelectionDialogPreview() {
 fun DeadlineSelectionDialogPhonePreview() {
     FocusedAppTheme {
         DeadlineSelectionDialog(
-            onDateTimeSelected = {},
+            remindBeforeValue = 5,
+            isReminderSet = true,
+            onDateTimeWithReminderSet = { _, _, _ -> },
             onDismissRequest = {}
         )
     }

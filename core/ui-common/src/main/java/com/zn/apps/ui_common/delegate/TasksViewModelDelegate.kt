@@ -36,7 +36,11 @@ interface TasksViewModelDelegate {
      *
      * @return [Result] if the update was successful or unsuccessful to notify the user
      */
-    fun updateDueDateConfirmed(offsetDateTime: OffsetDateTime?)
+    fun updateDueDateConfirmed(
+        offsetDateTime: OffsetDateTime?,
+        remindTaskAt: Int,
+        isReminderSet: Boolean
+    )
 
     /** flag the task that we intend to update the pomodoro */
     fun updatePomodoroPressed()
@@ -145,7 +149,11 @@ class DefaultTasksViewModelDelegate @Inject constructor(
         }
     }
 
-    override fun updateDueDateConfirmed(offsetDateTime: OffsetDateTime?) {
+    override fun updateDueDateConfirmed(
+        offsetDateTime: OffsetDateTime?,
+        remindTaskAt: Int,
+        isReminderSet: Boolean
+    ) {
         val task = tasksUiStateHolder.value.taskPressed
         if (task != null) {
             upsert(task.copy(dueDate = offsetDateTime))

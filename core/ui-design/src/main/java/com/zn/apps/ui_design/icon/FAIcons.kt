@@ -46,6 +46,7 @@ object FAIcons {
     val customize_settings = R.drawable.customize_settings
     val help_settings = R.drawable.help_settings
     val sound_settings = R.drawable.sound_settings
+    val notification = R.drawable.notification
 }
 
 /**

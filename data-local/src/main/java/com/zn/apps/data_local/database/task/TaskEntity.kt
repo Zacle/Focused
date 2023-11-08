@@ -12,6 +12,7 @@ import com.zn.apps.data_local.database.project.ProjectEntity
 import com.zn.apps.data_local.database.tag.TagEntity
 import com.zn.apps.model.data.task.Pomodoro
 import com.zn.apps.model.data.task.TaskPriority
+import com.zn.apps.model.datastore.DEFAULT_TASK_REMINDER_MINUTES
 import java.time.OffsetDateTime
 
 @Entity(
@@ -45,6 +46,10 @@ data class TaskEntity(
     val projectId: String? = null,
     @ColumnInfo(name = "tag_id")
     val tagId: String? = null,
+    @ColumnInfo(name = "remind_task_at", defaultValue = DEFAULT_TASK_REMINDER_MINUTES.toString())
+    val remindTaskAt: Int = DEFAULT_TASK_REMINDER_MINUTES,
+    @ColumnInfo(name = "should_remind_task", defaultValue = false.toString())
+    val shouldRemindTask: Boolean = false,
     @ColumnInfo(name = "due_date")
     val dueDate: OffsetDateTime? = null,
     @ColumnInfo(name = "completed_time")

@@ -1,16 +1,19 @@
 package com.zn.apps.ui_design.component.dialog
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.zn.apps.ui_design.R
@@ -22,36 +25,38 @@ fun <T> DialogDoneOrCancel(
     onSave: (T) -> Unit
 ) {
     Row(
-        modifier = Modifier.padding(end = 8.dp, bottom = 12.dp),
+        modifier = Modifier.padding(end = 8.dp, bottom = 2.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.End
     ) {
-        Row {
-            Spacer(modifier = Modifier.weight(1.0f))
-            Row {
-                TextButton(
-                    onClick = {
-                        onDismissRequest(false)
-                    }
-                ) {
-                    Text(
-                        text = stringResource(id = R.string.cancel),
-                        style = MaterialTheme.typography.labelLarge,
-                        color = MaterialTheme.colorScheme.error
-                    )
+        Spacer(modifier = Modifier.weight(1.0f))
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            TextButton(
+                onClick = {
+                    onDismissRequest(false)
                 }
-                Button(
-                    onClick = {
-                        onSave(value)
-                        onDismissRequest(false)
-                    }
-                ) {
-                    Text(
-                        text = stringResource(id = R.string.done),
-                        style = MaterialTheme.typography.labelLarge,
-                        color = MaterialTheme.colorScheme.onPrimary
-                    )
-                }
+            ) {
+                Text(
+                    text = stringResource(id = R.string.cancel),
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.error
+                )
+            }
+            Box(
+                modifier = Modifier
+                    .clickable { onSave(value) }
+                    .clip(MaterialTheme.shapes.large)
+                    .background(MaterialTheme.colorScheme.primary)
+                    .padding(horizontal = 12.dp, vertical = 4.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = stringResource(id = R.string.done),
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.onPrimary
+                )
             }
         }
     }

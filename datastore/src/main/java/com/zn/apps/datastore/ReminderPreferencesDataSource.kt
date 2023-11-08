@@ -1,6 +1,8 @@
 package com.zn.apps.datastore
 
 import androidx.datastore.core.DataStore
+import com.zn.apps.model.datastore.DEFAULT_SNOOZE_MINUTES
+import com.zn.apps.model.datastore.DEFAULT_TASK_REMINDER_MINUTES
 import com.zn.apps.model.datastore.ReminderPreferences
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -11,10 +13,18 @@ class ReminderPreferencesDataSource @Inject constructor(
     val reminderPreferences = userPreferences.data
         .map { userPreferences ->
             ReminderPreferences(
-                taskReminder = userPreferences.taskReminder,
+                taskReminder =
+                    if (userPreferences.taskReminder == 0)
+                        DEFAULT_TASK_REMINDER_MINUTES
+                    else
+                        userPreferences.taskReminder,
                 todoReminder = userPreferences.todoReminder,
                 snoozeTaskReminder = userPreferences.snoozeTaskReminder,
-                snoozeAfter = userPreferences.snoozeAfter
+                snoozeAfter =
+                    if (userPreferences.snoozeAfter == 0)
+                        DEFAULT_SNOOZE_MINUTES
+                    else
+                        userPreferences.snoozeAfter
             )
         }
 

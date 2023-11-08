@@ -15,6 +15,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.zn.apps.focused.R
 import com.zn.apps.focused.ui.FocusedAppState
+import com.zn.apps.model.datastore.ReminderPreferences
 import com.zn.apps.ui_common.related_tasks.DEADLINE_TYPE_ARGUMENT
 import com.zn.apps.ui_common.related_tasks.DueDateTasksViewModel
 import com.zn.apps.ui_common.related_tasks.RelatedTasksRoute
@@ -44,6 +45,9 @@ data object DueDateTasksScreenSpec: ScreenSpec {
 
         val groupingType by viewModel.groupingType.collectAsStateWithLifecycle()
         val uiStateHolder by viewModel.tasksUiStateHolder.collectAsStateWithLifecycle()
+        val reminderPreferences by viewModel.reminderPreferences.collectAsStateWithLifecycle(
+            initialValue = ReminderPreferences.initPreferences
+        )
 
         viewModel.uiStateFlow.collectAsStateWithLifecycle().value.let { state ->
             CommonScreen(state = state) { relatedTasksUiModel ->
@@ -51,6 +55,7 @@ data object DueDateTasksScreenSpec: ScreenSpec {
                     relatedTasksUiModel = relatedTasksUiModel.copy(
                         screenTitle = stringResource(id = viewModel.deadlineType.value)
                     ),
+                    defaultTaskReminder = reminderPreferences.taskReminder,
                     uiStateHolder = uiStateHolder,
                     selectedGroupingType = groupingType,
                     isProjectTasks = false,

@@ -10,6 +10,8 @@ data class Task(
     val priority: TaskPriority = TaskPriority.NONE,
     val projectId: String? = null,
     val tagId: String? = null,
+    val remindTaskAt: Int = 0,
+    val shouldRemindTask: Boolean = false,
     val dueDate: OffsetDateTime? = null,
     val completedTime: OffsetDateTime? = null,
     val completed: Boolean = false

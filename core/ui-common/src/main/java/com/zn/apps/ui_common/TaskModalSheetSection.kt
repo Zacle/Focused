@@ -22,6 +22,7 @@ import kotlinx.coroutines.launch
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 fun TaskModalSheetSection(
+    defaultTaskReminder: Int,
     coroutineScope: CoroutineScope,
     upsertTask: (Task) -> Unit,
     shouldShowModalSheet: (Boolean) -> Unit,
@@ -56,7 +57,8 @@ fun TaskModalSheetSection(
                 upsertTask = upsertTask,
                 projects = uiStateHolder.projects,
                 tags = uiStateHolder.tags,
-                shouldShowModalSheet = { shouldShowModalSheet(it) }
+                shouldShowModalSheet = { shouldShowModalSheet(it) },
+                taskReminder = defaultTaskReminder
             )
         }
     }

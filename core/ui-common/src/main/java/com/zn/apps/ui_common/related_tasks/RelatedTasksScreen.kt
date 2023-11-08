@@ -59,6 +59,7 @@ import kotlinx.coroutines.CoroutineScope
 @Composable
 fun RelatedTasksRoute(
     relatedTasksUiModel: RelatedTasksUiModel,
+    defaultTaskReminder: Int,
     uiStateHolder: TasksUiStateHolder,
     selectedGroupingType: Grouping,
     isProjectTasks: Boolean,
@@ -94,9 +95,10 @@ fun RelatedTasksRoute(
     TaskModalSheetSection(
         coroutineScope = coroutineScope,
         upsertTask = upsertTask,
+        shouldShowModalSheet = { showModalBottomSheet = it },
         uiStateHolder = uiStateHolder,
         showModalBottomSheet = showModalBottomSheet,
-        shouldShowModalSheet = { showModalBottomSheet = it }
+        defaultTaskReminder = defaultTaskReminder
     )
 
     RelatedTasksScreen(
@@ -253,8 +255,10 @@ fun ProjectTaskSection(
             viewModel.submitAction(RelatedTasksUiAction.UpdateDueDatePressed)
         },
         onUpdateDueDateDismissed = { viewModel.submitAction(RelatedTasksUiAction.UpdateDueDateDismissed) },
-        onUpdateDueDateConfirmed = {
-            viewModel.submitAction(RelatedTasksUiAction.UpdateDueDateConfirmed(it))
+        onUpdateDueDateConfirmed = { dueDate, remindBefore, isReminderSet ->
+            viewModel.submitAction(
+                RelatedTasksUiAction.UpdateDueDateConfirmed(dueDate, remindBefore, isReminderSet)
+            )
         },
         onUpdatePomodoroPressed = {
             viewModel.submitAction(RelatedTasksUiAction.UpdatePomodoroPressed)
@@ -304,8 +308,10 @@ fun RelatedTaskSection(
             viewModel.submitAction(RelatedTasksUiAction.UpdateDueDatePressed)
         },
         onUpdateDueDateDismissed = { viewModel.submitAction(RelatedTasksUiAction.UpdateDueDateDismissed) },
-        onUpdateDueDateConfirmed = {
-            viewModel.submitAction(RelatedTasksUiAction.UpdateDueDateConfirmed(it))
+        onUpdateDueDateConfirmed = { dueDate, remindBefore, isReminderSet ->
+            viewModel.submitAction(
+                RelatedTasksUiAction.UpdateDueDateConfirmed(dueDate, remindBefore, isReminderSet)
+            )
         },
         onUpdatePomodoroPressed = {
             viewModel.submitAction(RelatedTasksUiAction.UpdatePomodoroPressed)

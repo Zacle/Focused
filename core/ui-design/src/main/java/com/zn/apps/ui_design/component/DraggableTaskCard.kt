@@ -59,7 +59,7 @@ fun DraggableTaskCard(
     onDeleteTaskConfirmed: () -> Unit,
     onUpdateDueDatePressed: () -> Unit,
     onUpdateDueDateDismissed: () -> Unit,
-    onUpdateDueDateConfirmed: (OffsetDateTime?) -> Unit,
+    onUpdateDueDateConfirmed: (OffsetDateTime?, Int, Boolean) -> Unit,
     onUpdatePomodoroPressed: () -> Unit,
     onUpdatePomodoroDismissed: () -> Unit,
     onUpdatePomodoroConfirmed: (UiPomodoroState) -> Unit,
@@ -112,8 +112,12 @@ fun DraggableTaskCard(
         if (showDueDateDialog) {
             DeadlineSelectionDialog(
                 dateTime = task.dueDate,
-                onDateTimeSelected = { onUpdateDueDateConfirmed(it) },
-                onDismissRequest = { onUpdateDueDateDismissed() }
+                onDateTimeWithReminderSet = { dueDate, remindBefore, isReminderSet ->
+                    onUpdateDueDateConfirmed(dueDate, remindBefore, isReminderSet)
+                },
+                onDismissRequest = { onUpdateDueDateDismissed() },
+                remindBeforeValue = task.remindTaskAt,
+                isReminderSet = task.shouldRemindTask
             )
         }
         if (showPomodoroDialog) {
@@ -252,7 +256,7 @@ fun DraggableTaskCardPreview() {
             onDeleteTaskConfirmed = {  },
             onUpdateDueDatePressed = {  },
             onUpdateDueDateDismissed = {  },
-            onUpdateDueDateConfirmed = {},
+            onUpdateDueDateConfirmed = { _, _, _ -> },
             onUpdatePomodoroPressed = {  },
             onUpdatePomodoroDismissed = {  },
             onUpdatePomodoroConfirmed = {},

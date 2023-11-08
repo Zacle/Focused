@@ -4,6 +4,8 @@ import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.zn.apps.data_local.database.alarm.AlarmDao
+import com.zn.apps.data_local.database.alarm.AlarmItemEntity
 import com.zn.apps.data_local.database.project.ProjectDao
 import com.zn.apps.data_local.database.project.ProjectEntity
 import com.zn.apps.data_local.database.report.ReportDao
@@ -19,12 +21,14 @@ import com.zn.apps.data_local.database.util.DateConverter
         TaskEntity::class,
         ProjectEntity::class,
         TagEntity::class,
-        ReportEntity::class
+        ReportEntity::class,
+        AlarmItemEntity::class
     ],
-    version = 2,
+    version = 3,
     exportSchema = true,
     autoMigrations = [
-        AutoMigration(from = 1, to = 2)
+        AutoMigration(from = 1, to = 2),
+        AutoMigration(from = 2, to = 3)
     ]
 )
 @TypeConverters(DateConverter::class)
@@ -36,4 +40,6 @@ abstract class FocusedDatabase: RoomDatabase() {
     abstract fun projectDao(): ProjectDao
 
     abstract fun reportDao(): ReportDao
+
+    abstract fun alarmDao(): AlarmDao
 }

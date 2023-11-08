@@ -3,6 +3,7 @@ package com.zn.apps.feature.tasks.list
 import androidx.lifecycle.viewModelScope
 import com.zn.apps.core.timer.TimerManager
 import com.zn.apps.domain.GetTasksWithTagsUseCase
+import com.zn.apps.domain.repository.ReminderPreferencesRepository
 import com.zn.apps.feature.tasks.list.TasksUiAction.DeleteTaskConfirmed
 import com.zn.apps.feature.tasks.list.TasksUiAction.DeleteTaskDismissed
 import com.zn.apps.feature.tasks.list.TasksUiAction.DeleteTaskPressed
@@ -39,7 +40,8 @@ class TasksViewModel @Inject constructor(
     private val getTasksWithTagsUseCase: GetTasksWithTagsUseCase,
     private val tasksViewModelDelegate: TasksViewModelDelegate,
     private val converter: TasksUiConverter,
-    private val timerManager: TimerManager
+    private val timerManager: TimerManager,
+    reminderPreferencesRepository: ReminderPreferencesRepository
 ): BaseViewModel<TasksUiModel, UiState<TasksUiModel>, TasksUiAction, TasksUiEvent>(),
     TasksViewModelDelegate by tasksViewModelDelegate {
 
@@ -50,6 +52,8 @@ class TasksViewModel @Inject constructor(
         private set
 
     val pomodoroState = timerManager.pomodoroTimerState
+
+    val reminderPreferences = reminderPreferencesRepository.reminderPreferences
 
     override fun initState(): UiState<TasksUiModel> = UiState.Loading
 
@@ -66,7 +70,7 @@ class TasksViewModel @Inject constructor(
             is UpdateDueDatePressed -> updateDueDatePressed()
             UpdateDueDateDismissed -> updateDueDateDismissed()
             is UpdatedDueDateConfirmed -> {
-                updateDueDateConfirmed(action.offsetDateTime)
+                updateDueDateConfirmed(action.offsetDateTime, action.remindTaskAt, action.isReminderSet)
                 submitSingleEvent(TasksUiEvent.DueDateUpdated)
             }
             is UpdatePomodoroPressed -> updatePomodoroPressed()

@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.zn.apps.core.timer.TimerManager
 import com.zn.apps.domain.project.GetProjectTasksWithMetadata
+import com.zn.apps.domain.repository.ReminderPreferencesRepository
 import com.zn.apps.filter.Filter
 import com.zn.apps.filter.Grouping
 import com.zn.apps.filter.Grouping.TagGrouping
@@ -43,6 +44,7 @@ class ProjectWithTasksViewModel @Inject constructor(
     private val converter: RelatedProjectTasksUiConverter,
     private val timerManager: TimerManager,
     tasksViewModelDelegate: TasksViewModelDelegate,
+    reminderPreferencesRepository: ReminderPreferencesRepository,
     savedStateHandle: SavedStateHandle
 ): BaseViewModel<RelatedTasksUiModel, UiState<RelatedTasksUiModel>, RelatedTasksUiAction, RelatedTasksUiEvent>(),
     TasksViewModelDelegate by tasksViewModelDelegate {
@@ -57,6 +59,8 @@ class ProjectWithTasksViewModel @Inject constructor(
         private set
 
     val pomodoroState = timerManager.pomodoroTimerState
+
+    val reminderPreferences = reminderPreferencesRepository.reminderPreferences
 
     override fun initState(): UiState<RelatedTasksUiModel> = UiState.Loading
 
@@ -75,7 +79,7 @@ class ProjectWithTasksViewModel @Inject constructor(
             UpdateDueDatePressed -> updateDueDatePressed()
             UpdateDueDateDismissed -> updateDueDateDismissed()
             is UpdateDueDateConfirmed -> {
-                updateDueDateConfirmed(action.offsetDateTime)
+                updateDueDateConfirmed(action.offsetDateTime, action.remindTaskAt, action.isReminderSet)
                 submitSingleEvent(RelatedTasksUiEvent.DueDateUpdated)
             }
             UpdatePomodoroPressed -> updatePomodoroPressed()

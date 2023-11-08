@@ -16,6 +16,7 @@ import com.zn.apps.feature.tasks.list.TasksUiEvent
 import com.zn.apps.feature.tasks.list.TasksViewModel
 import com.zn.apps.focused.R
 import com.zn.apps.focused.ui.FocusedAppState
+import com.zn.apps.model.datastore.ReminderPreferences
 import com.zn.apps.ui_common.state.CommonScreen
 import com.zn.apps.ui_design.icon.FAIcons
 import com.zn.apps.ui_design.icon.Icon
@@ -42,6 +43,9 @@ data object TasksScreenSpec: BottomNavScreenSpec {
 
         val selectedTagId by viewModel.selectedTag.collectAsStateWithLifecycle()
         val uiStateHolder by viewModel.tasksUiStateHolder.collectAsStateWithLifecycle()
+        val reminderPreferences by viewModel.reminderPreferences.collectAsStateWithLifecycle(
+            initialValue = ReminderPreferences.initPreferences
+        )
 
         viewModel.uiStateFlow.collectAsStateWithLifecycle().value.let { state ->
             CommonScreen(
@@ -54,6 +58,7 @@ data object TasksScreenSpec: BottomNavScreenSpec {
                     tasksUiModel = tasksUiModel,
                     uiStateHolder = uiStateHolder,
                     selectedTagId = selectedTagId,
+                    defaultTaskReminder = reminderPreferences.taskReminder,
                     coroutineScope = appState.coroutineScope,
                     onRelatedTasksSelected = { deadlineType ->
                         viewModel.submitAction(TasksUiAction.NavigateToRelatedTasks(deadlineType))

@@ -7,7 +7,9 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.zn.apps.common.network.Dispatcher
 import com.zn.apps.common.network.FocusedDispatchers.IO
 import com.zn.apps.data_local.database.DatabaseMigrations.MIGRATION_1_2
+import com.zn.apps.data_local.database.DatabaseMigrations.MIGRATION_2_3
 import com.zn.apps.data_local.database.FocusedDatabase
+import com.zn.apps.data_local.database.alarm.AlarmDao
 import com.zn.apps.data_local.database.ioThread
 import com.zn.apps.data_local.database.project.ProjectDao
 import com.zn.apps.data_local.database.report.ReportDao
@@ -57,7 +59,7 @@ object DatabaseModule {
                     }
                 }
             )
-            .addMigrations(MIGRATION_1_2)
+            .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
             .build()
 
     @Provides
@@ -79,4 +81,9 @@ object DatabaseModule {
     fun providesReportDao(
         database: FocusedDatabase
     ): ReportDao = database.reportDao()
+
+    @Provides
+    fun providesAlarmDao(
+        database: FocusedDatabase
+    ): AlarmDao = database.alarmDao()
 }

@@ -70,4 +70,13 @@
     <!-- Grouping -->
     <string name="group_tasks">Group tasks by</string>
 
+    <!-- Reminder -->
+    <string name="reminder">Reminder</string>
+    <string name="on">on</string>
+    <string name="off">off</string>
+    <string name="reminder_text">Reminder is </string>
+    <string name="remind_at">Remind at</string>
+    <string name="no_time">No Time</string>
+    <string name="minutes_before">minutes before</string>
+
 </resources>

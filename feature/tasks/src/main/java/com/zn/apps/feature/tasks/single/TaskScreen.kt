@@ -135,7 +135,9 @@ fun TaskContent(
                 selectedProjectId = task.projectId,
                 pomodoroLength = task.pomodoro.pomodoroLength.millisecondsToMinutes(),
                 pomodoroNumber = task.pomodoro.pomodoroNumber,
-                dueDate = task.dueDate
+                dueDate = task.dueDate,
+                remindBefore = task.remindTaskAt,
+                isReminderSet = task.shouldRemindTask
             )
         )
     }
@@ -160,14 +162,18 @@ fun TaskContent(
     if (showDueDateDialog) {
         DeadlineSelectionDialog(
             dateTime = formState.dueDate,
-            onDateTimeSelected = {
+            onDateTimeWithReminderSet = { dueDate, remindBefore, isReminderSet ->
                 formStateSetter(
                     formState.copy(
-                        dueDate = it
+                        dueDate = dueDate,
+                        remindBefore = remindBefore,
+                        isReminderSet = isReminderSet
                     )
                 )
             },
-            onDismissRequest = { showDueDateDialog = it }
+            onDismissRequest = { showDueDateDialog = it },
+            remindBeforeValue = formState.remindBefore,
+            isReminderSet = formState.isReminderSet
         )
     }
 
@@ -278,7 +284,9 @@ fun TaskContent(
                         priority = formState.priority,
                         projectId = formState.selectedProjectId,
                         tagId = formState.selectedTagId,
-                        dueDate = formState.dueDate
+                        dueDate = formState.dueDate,
+                        remindTaskAt = formState.remindBefore,
+                        shouldRemindTask = formState.isReminderSet
                     )
                     onUpdatePressed(taskToUpdate)
                 },
@@ -403,7 +411,9 @@ data class TaskFormState(
     var priority: TaskPriority = TaskPriority.NONE,
     var pomodoroNumber: Int = 0,
     var pomodoroLength: Int = 0,
-    var dueDate: OffsetDateTime? = null
+    var dueDate: OffsetDateTime? = null,
+    var remindBefore: Int = 0,
+    var isReminderSet: Boolean = false
 )
 
 @ThemePreviews

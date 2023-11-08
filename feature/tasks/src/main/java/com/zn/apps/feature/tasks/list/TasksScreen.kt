@@ -51,6 +51,7 @@ fun TasksRoute(
     tasksUiModel: TasksUiModel,
     uiStateHolder: TasksUiStateHolder,
     selectedTagId: String,
+    defaultTaskReminder: Int,
     coroutineScope: CoroutineScope,
     onRelatedTasksSelected: (Int) -> Unit,
     onTagPressed: (String) -> Unit,
@@ -68,7 +69,8 @@ fun TasksRoute(
         upsertTask = upsertTask,
         uiStateHolder = uiStateHolder,
         showModalBottomSheet = showModalBottomSheet,
-        shouldShowModalSheet = { showModalBottomSheet = it }
+        shouldShowModalSheet = { showModalBottomSheet = it },
+        defaultTaskReminder = defaultTaskReminder
     )
 
     TasksScreen(
@@ -238,8 +240,10 @@ fun TaskSection(
             viewModel.submitAction(TasksUiAction.UpdateDueDatePressed)
         },
         onUpdateDueDateDismissed = { viewModel.submitAction(TasksUiAction.UpdateDueDateDismissed) },
-        onUpdateDueDateConfirmed = {
-            viewModel.submitAction(TasksUiAction.UpdatedDueDateConfirmed(it))
+        onUpdateDueDateConfirmed = { dueDate, remindBefore, isReminderSet ->
+            viewModel.submitAction(
+                TasksUiAction.UpdatedDueDateConfirmed(dueDate, remindBefore, isReminderSet)
+            )
         },
         onUpdatePomodoroPressed = {
             viewModel.submitAction(TasksUiAction.UpdatePomodoroPressed)
