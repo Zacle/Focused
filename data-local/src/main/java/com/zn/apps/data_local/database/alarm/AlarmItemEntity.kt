@@ -3,6 +3,7 @@ package com.zn.apps.data_local.database.alarm
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.ForeignKey.Companion.CASCADE
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.zn.apps.data_local.database.task.TaskEntity
@@ -14,7 +15,8 @@ import java.time.OffsetDateTime
         ForeignKey(
             entity = TaskEntity::class,
             parentColumns = ["id"],
-            childColumns = ["task_id"]
+            childColumns = ["task_id"],
+            onDelete = CASCADE
         )
     ],
     indices = [Index(value = ["task_id"])]

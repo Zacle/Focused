@@ -2,6 +2,7 @@ package com.zn.apps.ui_design.component.dialog
 
 import android.content.Context
 import android.text.format.DateFormat
+import android.widget.Toast
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.background
@@ -313,18 +314,21 @@ fun ChooseTaskTimeAndReminder(
                     text = stringResource(id = R.string.time),
                     fontWeight = FontWeight.Medium,
                     color = MaterialTheme.colorScheme.onSurface,
-                    style = MaterialTheme.typography.bodyMedium
+                    style = MaterialTheme.typography.bodyLarge
                 )
             }
             Row {
                 Text(
                     text = getLocaleTime(LocalContext.current, time),
-                    style = MaterialTheme.typography.labelSmall,
+                    style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.onSurface,
                     textAlign = TextAlign.End
                 )
             }
         }
+        Spacer(modifier = Modifier.height(8.dp))
+        val warningText = stringResource(id = R.string.set_date_first)
+        val context = LocalContext.current
         Row(
             modifier = modifier
                 .fillMaxWidth()
@@ -333,7 +337,12 @@ fun ChooseTaskTimeAndReminder(
                     enabled = isDateSet,
                     indication = null,
                     interactionSource = remember { MutableInteractionSource() }
-                ) { showReminderDialog() },
+                ) {
+                    if (isDateSet)
+                        showReminderDialog()
+                    else
+                        Toast.makeText(context, warningText, Toast.LENGTH_SHORT).show()
+                },
             verticalAlignment = Alignment.CenterVertically
         ) {
             Row(
@@ -352,15 +361,15 @@ fun ChooseTaskTimeAndReminder(
                     text = stringResource(id = R.string.reminder),
                     fontWeight = FontWeight.Medium,
                     color = MaterialTheme.colorScheme.onSurface,
-                    style = MaterialTheme.typography.bodyMedium
+                    style = MaterialTheme.typography.bodyLarge
                 )
             }
             Row {
                 Text(
-                    text = reminderTime?.let { getLocaleTime(LocalContext.current, time) } ?: stringResource(
+                    text = reminderTime?.let { getLocaleTime(LocalContext.current, it) } ?: stringResource(
                         id = R.string.no_time
                     ),
-                    style = MaterialTheme.typography.labelSmall,
+                    style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.onSurface,
                     textAlign = TextAlign.End
                 )

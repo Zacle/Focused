@@ -78,5 +78,6 @@
     <string name="remind_at">Remind at</string>
     <string name="no_time">No Time</string>
     <string name="minutes_before">minutes before</string>
+    <string name="set_date_first">Set date and time first</string>
 
 </resources>

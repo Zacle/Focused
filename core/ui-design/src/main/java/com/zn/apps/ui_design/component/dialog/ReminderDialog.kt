@@ -1,6 +1,7 @@
 package com.zn.apps.ui_design.component.dialog
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -80,7 +81,7 @@ fun ReminderDialog(
                             stringResource(id = R.string.off)
                     Text(
                         text = stringResource(id = R.string.reminder_text) + " " + reminderStatus,
-                        style = MaterialTheme.typography.labelMedium,
+                        style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurface,
                         modifier = Modifier
                             .weight(1f)
@@ -96,12 +97,15 @@ fun ReminderDialog(
                 ) {
                     Text(
                         text = stringResource(id = R.string.remind_at),
-                        style = MaterialTheme.typography.labelMedium,
+                        style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurface,
                         modifier = Modifier
                             .weight(1f)
                     )
-                    Box {
+                    Box(
+                        modifier = Modifier
+                            .clickable { expanded = true }
+                    ) {
                         Row(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
@@ -126,19 +130,19 @@ fun ReminderDialog(
                                     item = index * 5,
                                     onItemSelected = { remindBeforeValue = index * 5 },
                                     onDropDownExpanded = { expanded = false },
-                                    text = "" + remindBeforeValue + " " + stringResource(id = R.string.minutes_before),
+                                    text = "" + (index * 5) + " " + stringResource(id = R.string.minutes_before),
                                     color = Color.Transparent
                                 )
                             }
                         }
                     }
                 }
-                Spacer(modifier = Modifier.height(12.dp))
+                Spacer(modifier = Modifier.height(24.dp))
                 DialogDoneOrCancel(
                     onDismissRequest = { setShowDialog() },
                     value = remindBeforeValue,
                     onSave = {
-                        setReminder(isReminderSet)
+                        setReminder(reminderSet)
                         onReminderTimeSet(it)
                     }
                 )

@@ -9,8 +9,6 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.os.Build.VERSION
-import android.os.Build.VERSION_CODES
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -104,7 +102,6 @@ class TimerNotifier @Inject constructor(
     }
 
     override fun ensureNotificationChannelsExist() {
-        if (VERSION.SDK_INT < VERSION_CODES.O) return
 
         val timerChannel = NotificationChannel(
             TIMER_NOTIFICATION_CHANNEL_ID,

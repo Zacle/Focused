@@ -1,10 +1,14 @@
 package com.zn.apps.ui_common.delegate
 
+import com.zn.apps.common.alarm.TaskAlarmScheduler
 import com.zn.apps.common.network.di.ApplicationScope
+import com.zn.apps.domain.alarm.DeleteAlarmUseCase
+import com.zn.apps.domain.alarm.UpsertAlarmUseCase
 import com.zn.apps.domain.project.GetProjectsUseCase
 import com.zn.apps.domain.tag.GetTagsUseCase
 import com.zn.apps.domain.task.DeleteTaskUseCase
 import com.zn.apps.domain.task.UpsertTaskUseCase
+import com.zn.apps.model.data.alarm.AlarmItem
 import com.zn.apps.model.data.task.Pomodoro
 import com.zn.apps.model.data.task.Task
 import com.zn.apps.model.usecase.Result
@@ -15,6 +19,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.time.OffsetDateTime
 import javax.inject.Inject
 
@@ -89,6 +94,9 @@ class DefaultTasksViewModelDelegate @Inject constructor(
     private val deleteTaskUseCase: DeleteTaskUseCase,
     private val getTagsUseCase: GetTagsUseCase,
     private val getProjectsUseCase: GetProjectsUseCase,
+    private val upsertAlarmUseCase: UpsertAlarmUseCase,
+    private val deleteAlarmUseCase: DeleteAlarmUseCase,
+    private val taskAlarmScheduler: TaskAlarmScheduler,
     @ApplicationScope val scope: CoroutineScope
 ): TasksViewModelDelegate {
 
@@ -154,9 +162,35 @@ class DefaultTasksViewModelDelegate @Inject constructor(
         remindTaskAt: Int,
         isReminderSet: Boolean
     ) {
+        Timber.d("Reminder minutes = $remindTaskAt")
         val task = tasksUiStateHolder.value.taskPressed
         if (task != null) {
-            upsert(task.copy(dueDate = offsetDateTime))
+            upsert(
+                task.copy(
+                    dueDate = offsetDateTime,
+                    remindTaskAt = remindTaskAt,
+                    shouldRemindTask = isReminderSet
+                )
+            )
+            scope.launch {
+                if (isReminderSet && offsetDateTime != null) {
+                    upsertAlarm(
+                        AlarmItem(
+                            task = task,
+                            remindAt = offsetDateTime.minusMinutes(remindTaskAt.toLong())
+                        )
+                    )
+                    Timber.d("Alarm set")
+                }
+                if (!isReminderSet && task.shouldRemindTask) {
+                    cancelAlarm(
+                        AlarmItem(
+                            task = task,
+                            remindAt = OffsetDateTime.now()
+                        )
+                    )
+                }
+            }
         }
         tasksUiStateHolder.update {
             it.copy(showDueDateDialog = false, taskPressed = null)
@@ -206,6 +240,12 @@ class DefaultTasksViewModelDelegate @Inject constructor(
                         task = task
                     )
                 )
+                cancelAlarm(
+                    AlarmItem(
+                        task = task,
+                        remindAt = OffsetDateTime.now()
+                    )
+                )
             }
         }
         tasksUiStateHolder.update {
@@ -213,8 +253,34 @@ class DefaultTasksViewModelDelegate @Inject constructor(
         }
     }
 
+    private fun cancelAlarm(alarmItem: AlarmItem) {
+        scope.launch {
+            taskAlarmScheduler.cancelAlarm(alarmItem)
+            deleteAlarmUseCase.execute(
+                DeleteAlarmUseCase.Request(alarmItem.task.id)
+            )
+        }
+    }
+
+    private fun upsertAlarm(alarmItem: AlarmItem) {
+        scope.launch {
+            taskAlarmScheduler.scheduleAlarm(alarmItem)
+            upsertAlarmUseCase.execute(
+                UpsertAlarmUseCase.Request(alarmItem)
+            )
+        }
+    }
+
     override fun upsertTask(task: Task) {
         upsert(task)
+        if (task.shouldRemindTask && task.dueDate != null) {
+            upsertAlarm(
+                AlarmItem(
+                    task = task,
+                    remindAt = task.dueDate!!.minusMinutes(task.remindTaskAt.toLong())
+                )
+            )
+        }
     }
 
     override fun expand(task: Task) {

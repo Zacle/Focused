@@ -37,10 +37,14 @@ android {
 
 dependencies {
 
+    implementation(project(":core:model"))
+    implementation(project(":core:notification"))
     implementation(project(":domain"))
     // Hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
+
+    implementation(libs.timber)
 
     implementation(libs.kotlinx.coroutines.android)
 }

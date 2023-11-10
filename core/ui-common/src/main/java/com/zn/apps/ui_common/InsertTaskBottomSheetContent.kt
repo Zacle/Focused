@@ -84,7 +84,7 @@ fun InsertTaskBottomSheetContent(
                     )
                 )
             },
-            onDismissRequest = { showDueDateDialog = it },
+            onDismissRequest = { showDueDateDialog = false },
             isReminderSet = formState.dueDate != null,
             remindBeforeValue = taskReminder
         )
@@ -231,5 +231,5 @@ data class FormState(
     var pomodoroLength: Int = 0,
     var dueDate: OffsetDateTime? = null,
     var remindBefore: Int = 0,
-    var isReminderSet: Boolean = false
+    var isReminderSet: Boolean = true
 )

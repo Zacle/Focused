@@ -16,4 +16,12 @@
     <string name="break_over_description">
         Break is over. Please get back to work
     </string>
+
+    <string name="task_alarm_notification_channel_name">Task Alarm</string>
+    <string name="task_alarm_notification_channel_description">
+        Task alarm reminder
+    </string>
+    <string name="task_alarm_notification_text">
+        This is a reminder to do the following task:
+    </string>
 </resources>

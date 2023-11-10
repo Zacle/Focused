@@ -1,6 +1,9 @@
 package com.zn.apps.ui_common.delegate
 
+import com.zn.apps.common.alarm.TaskAlarmScheduler
 import com.zn.apps.common.network.di.ApplicationScope
+import com.zn.apps.domain.alarm.DeleteAlarmUseCase
+import com.zn.apps.domain.alarm.UpsertAlarmUseCase
 import com.zn.apps.domain.project.DeleteProjectUseCase
 import com.zn.apps.domain.project.GetProjectsUseCase
 import com.zn.apps.domain.project.UpsertProjectUseCase
@@ -23,6 +26,9 @@ object DelegateModule {
         deleteTaskUseCase: DeleteTaskUseCase,
         getProjectsUseCase: GetProjectsUseCase,
         getTagsUseCase: GetTagsUseCase,
+        upsertAlarmUseCase: UpsertAlarmUseCase,
+        deleteAlarmUseCase: DeleteAlarmUseCase,
+        taskAlarmScheduler: TaskAlarmScheduler,
         @ApplicationScope scope: CoroutineScope
     ): TasksViewModelDelegate =
         DefaultTasksViewModelDelegate(
@@ -30,7 +36,10 @@ object DelegateModule {
             deleteTaskUseCase = deleteTaskUseCase,
             getTagsUseCase = getTagsUseCase,
             getProjectsUseCase = getProjectsUseCase,
-            scope = scope
+            scope = scope,
+            upsertAlarmUseCase = upsertAlarmUseCase,
+            deleteAlarmUseCase = deleteAlarmUseCase,
+            taskAlarmScheduler = taskAlarmScheduler
         )
 
     @Provides

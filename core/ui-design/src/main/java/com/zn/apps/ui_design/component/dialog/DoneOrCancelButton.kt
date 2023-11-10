@@ -40,21 +40,24 @@ fun <T> DialogDoneOrCancel(
             ) {
                 Text(
                     text = stringResource(id = R.string.cancel),
-                    style = MaterialTheme.typography.labelMedium,
+                    style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.error
                 )
             }
             Box(
                 modifier = Modifier
-                    .clickable { onSave(value) }
+                    .clickable {
+                        onSave(value)
+                        onDismissRequest(false)
+                    }
                     .clip(MaterialTheme.shapes.large)
                     .background(MaterialTheme.colorScheme.primary)
-                    .padding(horizontal = 12.dp, vertical = 4.dp),
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
                     text = stringResource(id = R.string.done),
-                    style = MaterialTheme.typography.labelMedium,
+                    style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onPrimary
                 )
             }
