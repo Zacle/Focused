@@ -229,7 +229,7 @@ data class FormState(
     var priority: TaskPriority = TaskPriority.NONE,
     var pomodoroNumber: Int = 0,
     var pomodoroLength: Int = 0,
-    var dueDate: OffsetDateTime? = null,
+    var dueDate: OffsetDateTime? = OffsetDateTime.now(),
     var remindBefore: Int = 0,
     var isReminderSet: Boolean = true
 )

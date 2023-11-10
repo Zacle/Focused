@@ -162,7 +162,7 @@ class DefaultTasksViewModelDelegate @Inject constructor(
         remindTaskAt: Int,
         isReminderSet: Boolean
     ) {
-        Timber.d("Reminder minutes = $remindTaskAt")
+        Timber.d("reminder set = $isReminderSet")
         val task = tasksUiStateHolder.value.taskPressed
         if (task != null) {
             upsert(
@@ -180,9 +180,8 @@ class DefaultTasksViewModelDelegate @Inject constructor(
                             remindAt = offsetDateTime.minusMinutes(remindTaskAt.toLong())
                         )
                     )
-                    Timber.d("Alarm set")
                 }
-                if (!isReminderSet && task.shouldRemindTask) {
+                if (!isReminderSet) {
                     cancelAlarm(
                         AlarmItem(
                             task = task,

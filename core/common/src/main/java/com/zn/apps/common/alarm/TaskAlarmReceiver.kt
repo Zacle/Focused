@@ -12,7 +12,6 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -30,7 +29,6 @@ class TaskAlarmReceiver: BroadcastReceiver() {
 
     @OptIn(DelicateCoroutinesApi::class)
     override fun onReceive(context: Context?, intent: Intent?) {
-        Timber.d("Received intent $intent")
         if (intent != null) {
             val taskId = intent.getStringExtra(AlarmConstants.TASK_ID)
             val taskName = intent.getStringExtra(AlarmConstants.TASK_NAME)

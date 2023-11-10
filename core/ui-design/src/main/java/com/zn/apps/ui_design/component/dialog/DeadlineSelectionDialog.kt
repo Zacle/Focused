@@ -94,7 +94,7 @@ fun DeadlineSelectionDialog(
         mutableStateOf(dateTime?.toLocalTime() ?: LocalTime.of(8, 0))
     }
     var timeType: DeadlineType? by remember {
-        mutableStateOf(null)
+        mutableStateOf(DeadlineType.TODAY)
     }
     var reminderTimeValue by remember {
         mutableIntStateOf(remindBeforeValue)
@@ -205,6 +205,7 @@ fun DeadlineSelectionDialog(
                     onSelected = {
                         date = null
                         timeType = DeadlineType.SOMEDAY
+                        shouldRemind = false
                         datePickerState.setSelection(null)
                     },
                     text = stringResource(id = R.string.someday)
@@ -217,6 +218,7 @@ fun DeadlineSelectionDialog(
                     onSelected = {
                         date = LocalDate.now()
                         timeType = DeadlineType.TODAY
+                        shouldRemind = isReminderSet
                         datePickerState.setSelection(
                             date?.atStartOfDay()?.toInstant(ZoneOffset.UTC)?.toEpochMilli()
                         )
@@ -231,6 +233,7 @@ fun DeadlineSelectionDialog(
                     onSelected = {
                         date = LocalDate.now().plusDays(1)
                         timeType = DeadlineType.TOMORROW
+                        shouldRemind = isReminderSet
                         datePickerState.setSelection(
                             date?.atStartOfDay()?.toInstant(ZoneOffset.UTC)?.toEpochMilli()
                         )
@@ -245,6 +248,7 @@ fun DeadlineSelectionDialog(
                     onSelected = {
                         date = LocalDate.now().plusDays(7)
                         timeType = DeadlineType.UPCOMING
+                        shouldRemind = isReminderSet
                         datePickerState.setSelection(
                             date?.atStartOfDay()?.toInstant(ZoneOffset.UTC)?.toEpochMilli()
                         )
