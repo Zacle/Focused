@@ -16,6 +16,7 @@ import androidx.navigation.compose.rememberNavController
 import com.zn.apps.focused.ui.screenspecs.BottomNavScreenSpec
 import com.zn.apps.focused.ui.screenspecs.NavigationDrawerScreenSpec
 import com.zn.apps.focused.ui.screenspecs.PomodoroSettingsScreenSpec
+import com.zn.apps.focused.ui.screenspecs.SoundNotificationSettingsScreenSpec
 import kotlinx.coroutines.CoroutineScope
 
 @Composable
@@ -95,5 +96,9 @@ class FocusedAppState(
 
     fun navigateToPomodoroSettings() {
         navController.navigate(PomodoroSettingsScreenSpec.route)
+    }
+
+    fun navigateToSoundNotificationSettings() {
+        navController.navigate(SoundNotificationSettingsScreenSpec.route)
     }
 }

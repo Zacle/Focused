@@ -35,6 +35,7 @@ fun SettingsRoute(
     onUpPressed: () -> Unit,
     onPomodoroSettingsPressed: () -> Unit,
     onCustomizeSettingsPressed: () -> Unit,
+    onSoundNotificationPressed: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Scaffold(
@@ -49,7 +50,8 @@ fun SettingsRoute(
     ) { innerPadding ->
         SettingsCard(
             onPomodoroSettingsPressed = onPomodoroSettingsPressed,
-            onCustomizeSettingsPressed = {},
+            onCustomizeSettingsPressed = onCustomizeSettingsPressed,
+            onSoundNotificationPressed = onSoundNotificationPressed,
             modifier = modifier
                 .padding(innerPadding)
                 .padding(
@@ -65,12 +67,12 @@ fun SettingsRoute(
 fun SettingsCard(
     onPomodoroSettingsPressed: () -> Unit,
     onCustomizeSettingsPressed: () -> Unit,
+    onSoundNotificationPressed: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Surface(
         tonalElevation = 16.dp,
         shape = MaterialTheme.shapes.medium,
-        shadowElevation = 12.dp,
         modifier = modifier
     ) {
         Spacer(modifier = Modifier.height(12.dp))
@@ -89,6 +91,13 @@ fun SettingsCard(
                 trailingIcon = Icon.ImageVectorIcon(FAIcons.KeyboardArrowRight),
                 onClick = onCustomizeSettingsPressed
             )
+            SettingsRow(
+                title = stringResource(id = R.string.sound_notification),
+                subtitle = stringResource(id = R.string.reminders),
+                leadingIcon = Icon.DrawableResourceIcon(FAIcons.notification),
+                trailingIcon = Icon.ImageVectorIcon(FAIcons.KeyboardArrowRight),
+                onClick = onSoundNotificationPressed
+            )
         }
         Spacer(modifier = Modifier.height(12.dp))
     }
@@ -105,8 +114,8 @@ fun SettingsRow(
 ) {
     Row(
         modifier = modifier
-            .padding(horizontal = 8.dp, vertical = 12.dp)
-            .clickable { onClick() },
+            .clickable { onClick() }
+            .padding(horizontal = 8.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         when(leadingIcon) {
@@ -180,7 +189,8 @@ fun SettingsCardPreview() {
     FocusedAppTheme {
         SettingsCard(
             onPomodoroSettingsPressed = {},
-            onCustomizeSettingsPressed = {}
+            onCustomizeSettingsPressed = {},
+            onSoundNotificationPressed = {}
         )
     }
 }

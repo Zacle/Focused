@@ -24,4 +24,14 @@
     <string name="disable_break">Disable Break</string>
     <string name="auto_start_next_pomodoro">Auto Start Next Pomodoro</string>
     <string name="auto_start_break">Auto Start Break</string>
+
+    <!-- Reminder -->
+    <string name="sound_notification">Sound and Notification</string>
+    <string name="sound_notification_settings">Sound and Notification Settings</string>
+    <string name="reminders">Reminders</string>
+    <string name="task_reminder_default">Task reminder default</string>
+    <string name="todo_reminder">Daily todo reminder</string>
+    <string name="snooze_task_reminder">Snooze the task reminder</string>
+    <string name="on">on</string>
+    <string name="off">off</string>
 </resources>

@@ -14,6 +14,7 @@ import com.zn.apps.focused.ui.screenspecs.dueDateTasksScreen
 import com.zn.apps.focused.ui.screenspecs.pomodoroSettingsScreen
 import com.zn.apps.focused.ui.screenspecs.projectScreen
 import com.zn.apps.focused.ui.screenspecs.projectWithTasksScreen
+import com.zn.apps.focused.ui.screenspecs.soundNotificationSettingsScreen
 import com.zn.apps.focused.ui.screenspecs.taskScreen
 
 @Composable
@@ -41,6 +42,7 @@ fun FANavHost(
         projectWithTasksScreen(appState)
         dueDateTasksScreen(appState)
         pomodoroSettingsScreen(appState)
+        soundNotificationSettingsScreen(appState)
     }
 }
 

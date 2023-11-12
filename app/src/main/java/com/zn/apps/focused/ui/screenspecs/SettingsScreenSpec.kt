@@ -23,7 +23,10 @@ data object SettingsScreenSpec: NavigationDrawerScreenSpec {
             onPomodoroSettingsPressed = {
                 appState.navigateToPomodoroSettings()
             },
-            onCustomizeSettingsPressed = {}
+            onCustomizeSettingsPressed = {},
+            onSoundNotificationPressed = {
+                appState.navigateToSoundNotificationSettings()
+            }
         )
     }
 }

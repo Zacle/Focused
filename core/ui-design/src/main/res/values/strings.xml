@@ -76,8 +76,10 @@
     <string name="off">off</string>
     <string name="reminder_text">Reminder is </string>
     <string name="remind_at">Remind at</string>
+    <string name="snooze_after">Snooze after</string>
     <string name="no_time">No Time</string>
     <string name="minutes_before">minutes before</string>
     <string name="set_date_first">Set date and time first</string>
+    <string name="snooze_task_reminder">Snooze the task reminder</string>
 
 </resources>

@@ -61,7 +61,8 @@ fun PomodoroSettingsRoute(
                 navigationIcon = Icon.ImageVectorIcon(FAIcons.ArrowBack),
                 onNavigationIconClicked = onUpPressed
             ) {}
-        }
+        },
+        modifier = modifier
     ) { innerPadding ->
         PomodoroSettingsScreen(
             pomodoroPreferences = pomodoroSettingsUiModel.pomodoroPreferences,
@@ -72,7 +73,7 @@ fun PomodoroSettingsRoute(
             onDisableBreak = onDisableBreak,
             onSetAutoStartNextPomodoro = onSetAutoStartNextPomodoro,
             onSetAutoStartBreak = onSetAutoStartBreak,
-            modifier = modifier
+            modifier = Modifier
                 .padding(innerPadding)
                 .padding(
                     top = 32.dp,
