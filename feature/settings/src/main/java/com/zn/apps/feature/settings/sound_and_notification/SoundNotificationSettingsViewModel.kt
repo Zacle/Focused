@@ -1,6 +1,7 @@
 package com.zn.apps.feature.settings.sound_and_notification
 
 import androidx.lifecycle.viewModelScope
+import com.zn.apps.common.alarm.DailyTodoReminderAlarmScheduler
 import com.zn.apps.domain.datastore.GetReminderPreferencesUseCase
 import com.zn.apps.domain.repository.ReminderPreferencesRepository
 import com.zn.apps.feature.settings.sound_and_notification.SoundNotificationSettingsUiAction.Load
@@ -20,7 +21,8 @@ import javax.inject.Inject
 class SoundNotificationSettingsViewModel @Inject constructor(
     private val getReminderPreferencesUseCase: GetReminderPreferencesUseCase,
     private val reminderPreferencesRepository: ReminderPreferencesRepository,
-    private val converter: SoundNotificationSettingsUiConverter
+    private val converter: SoundNotificationSettingsUiConverter,
+    private val dailyTodoReminderAlarmScheduler: DailyTodoReminderAlarmScheduler
 ): BaseViewModel<SoundNotificationSettingsUiModel, UiState<SoundNotificationSettingsUiModel>, SoundNotificationSettingsUiAction, UiEvent>() {
 
     override fun initState(): UiState<SoundNotificationSettingsUiModel> = UiState.Loading
@@ -53,6 +55,11 @@ class SoundNotificationSettingsViewModel @Inject constructor(
 
     private fun setDailyTodoReminder(dailyTodoReminder: Boolean) {
         viewModelScope.launch {
+            if (dailyTodoReminder) {
+                dailyTodoReminderAlarmScheduler.scheduleAlarm()
+            } else {
+                dailyTodoReminderAlarmScheduler.cancel()
+            }
             reminderPreferencesRepository.setTodoReminder(dailyTodoReminder)
         }
     }

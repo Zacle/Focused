@@ -30,6 +30,8 @@
         </activity>
         <service android:name="com.zn.apps.core.timer.service.TimerService"/>
         <receiver android:name="com.zn.apps.common.alarm.TaskAlarmReceiver" android:exported="false" />
+        <receiver android:name="com.zn.apps.common.alarm.DailyTodoReminderAlarmReceiver"
+            android:exported="false" />
     </application>
 
 </manifest>

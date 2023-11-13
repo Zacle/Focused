@@ -18,7 +18,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class TaskAlarmNotifier @Inject constructor(
+class DailyTodoReminderNotifier @Inject constructor(
     @ApplicationContext private val context: Context
 ): Notifier {
     private val notificationManager = NotificationManagerCompat.from(context)
@@ -29,15 +29,15 @@ class TaskAlarmNotifier @Inject constructor(
     ): Notification {
         ensureNotificationChannelsExist()
         return NotificationCompat.Builder(context, channelId)
-            .setSmallIcon(FAIcons.task)
+            .setSmallIcon(FAIcons.notification)
             .setSilent(false)
-            .setContentIntent(taskPendingIntent())
+            .setContentIntent(dailyTodoPendingIntent())
             .setAutoCancel(true)
             .apply(block)
             .build()
     }
 
-    fun showTaskReminder(title: String) = with(context) {
+    fun showDailyTodoReminder() = with(context) {
         if (ActivityCompat.checkSelfPermission(
                 this,
                 Manifest.permission.POST_NOTIFICATIONS
@@ -45,32 +45,26 @@ class TaskAlarmNotifier @Inject constructor(
         ) {
             return
         }
-        val notification = createBaseNotification(TASK_ALARM_NOTIFICATION_CHANNEL_ID) {
-            setContentTitle(getString(R.string.task_alarm_notification_channel_description))
-            setContentText(getString(R.string.task_alarm_notification_text) + " " + title)
-            setStyle(
-                NotificationCompat
-                    .BigTextStyle()
-                    .bigText(getString(R.string.task_alarm_notification_text) + " " + title)
-            )
+        val notification = createBaseNotification(DAILY_TODO_REMINDER_CHANNEL_ID) {
+            setContentTitle(getString(R.string.daily_todo_reminder_notification_text))
+            setContentText(getString(R.string.daily_todo_reminder_notification_description))
             priority = NotificationCompat.PRIORITY_DEFAULT
         }
-        notificationManager.notify(TASK_ALARM_NOTIFICATION_ID, notification)
+        notificationManager.notify(DAILY_TODO_REMINDER_NOTIFICATION_ID, notification)
     }
 
     override fun ensureNotificationChannelsExist() {
         val channel = NotificationChannel(
-            TASK_ALARM_NOTIFICATION_CHANNEL_ID,
-            context.getString(R.string.task_alarm_notification_channel_name),
+            DAILY_TODO_REMINDER_CHANNEL_ID,
+            context.getString(R.string.daily_todo_reminder_notification_channel),
             NotificationManager.IMPORTANCE_DEFAULT
         ).apply {
-            description = context.getString(R.string.task_alarm_notification_channel_name)
+            description = context.getString(R.string.daily_todo_reminder_notification_description)
         }
-
         NotificationManagerCompat.from(context).createNotificationChannel(channel)
     }
 
-    private fun taskPendingIntent(): PendingIntent? =
+    private fun dailyTodoPendingIntent(): PendingIntent? =
         PendingIntent.getActivity(
             context,
             CLICK_REQUEST_CODE,
@@ -85,7 +79,7 @@ class TaskAlarmNotifier @Inject constructor(
         )
 }
 
-private const val TASK_ALARM_NOTIFICATION_CHANNEL_ID = "TASK_ALARM_NOTIFICATION_CHANNEL_ID"
-private const val TASK_ALARM_NOTIFICATION_ID = 11
+private const val DAILY_TODO_REMINDER_CHANNEL_ID = "DAILY_TODO_REMINDER"
+private const val DAILY_TODO_REMINDER_NOTIFICATION_ID = 12
 private const val CLICK_REQUEST_CODE = 10
 private const val TARGET_ACTIVITY_NAME = "com.zn.apps.focused.MainActivity"

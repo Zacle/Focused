@@ -8,7 +8,7 @@
     <string name="timer_completed_notification_channel_description">
         Timer has finished running
     </string>
-    <string name="pomodoro_completed">Pomodoro finished</string>
+    <string name="pomodoro_completed">Pomodoro finished 🎉</string>
     <string name="pomodoro_completed_message">
         Congratulations, you can take a rest.
     </string>
@@ -19,9 +19,16 @@
 
     <string name="task_alarm_notification_channel_name">Task Alarm</string>
     <string name="task_alarm_notification_channel_description">
-        Task alarm reminder
+        Task alarm reminder ⏰
     </string>
     <string name="task_alarm_notification_text">
         This is a reminder to do the following task:
+    </string>
+    <string name="daily_todo_reminder_notification_channel">Daily Todo Reminder</string>
+    <string name="daily_todo_reminder_notification_text">
+        What are your plans 📑 today?
+    </string>
+    <string name="daily_todo_reminder_notification_description">
+        Do not forget to schedule your tasks.
     </string>
 </resources>
