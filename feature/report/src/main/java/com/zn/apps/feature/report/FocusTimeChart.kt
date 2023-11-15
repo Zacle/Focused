@@ -27,9 +27,9 @@ import com.patrykandpatrick.vico.core.entry.ChartEntryModel
 import com.patrykandpatrick.vico.core.entry.ChartEntryModelProducer
 import com.zn.apps.model.data.report.CalendarReportType
 import com.zn.apps.ui_design.R
-import java.time.DayOfWeek
+import java.text.SimpleDateFormat
 import java.time.OffsetDateTime
-import java.time.format.TextStyle
+import java.util.Date
 import java.util.Locale
 import kotlin.math.max
 
@@ -78,7 +78,8 @@ fun FocusTimeChart(
             FABarChart(
                 chartEntryModelProducer = chartEntryModelProducer,
                 stats = stats,
-                calendarReportType = calendarReportType
+                calendarReportType = calendarReportType,
+                xAxisLabels = getWeeklyAxisLabels(startDayInterval, endDayInterval)
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -86,11 +87,27 @@ fun FocusTimeChart(
     }
 }
 
+private fun getWeeklyAxisLabels(
+    startDayInterval: OffsetDateTime,
+    endDayInterval: OffsetDateTime
+): List<String> {
+    val xAxisLabels = mutableListOf<String>()
+    var currentDay = startDayInterval
+    while (currentDay <= endDayInterval) {
+        xAxisLabels.add(
+            SimpleDateFormat("EEE", Locale.getDefault()).format(Date.from(currentDay.toInstant()))
+        )
+        currentDay = currentDay.plusDays(1)
+    }
+    return xAxisLabels
+}
+
 @Composable
 fun FABarChart(
     chartEntryModelProducer: ChartEntryModelProducer,
     stats: Map<Int, Int>,
-    calendarReportType: CalendarReportType
+    calendarReportType: CalendarReportType,
+    xAxisLabels: List<String>
 ) {
     val ySteps = 5
     val yMaxRange = max(ySteps, if (stats.isEmpty()) 0 else getMaxRange(stats.values.max(), ySteps))
@@ -121,7 +138,7 @@ fun FABarChart(
                 ),
                 valueFormatter =
                     if (calendarReportType == CalendarReportType.WEEKLY) {
-                        getValueFormatter()
+                        getValueFormatter(xAxisLabels)
                     } else {
                         DecimalFormatAxisValueFormatter()
                     }
@@ -130,13 +147,13 @@ fun FABarChart(
     }
 }
 
-private fun getValueFormatter(): AxisValueFormatter<AxisPosition.Horizontal.Bottom> {
+private fun getValueFormatter(xAxisLabels: List<String>): AxisValueFormatter<AxisPosition.Horizontal.Bottom> {
     return AxisValueFormatter { value, _ ->
         val xValue = value.toInt()
-        if (xValue < 1 || xValue > 7)
+        if (xValue >= 7)
             xValue.toString()
         else
-            DayOfWeek.of(xValue).getDisplayName(TextStyle.SHORT, Locale.getDefault())
+            xAxisLabels[xValue]
     }
 }
 

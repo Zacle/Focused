@@ -14,8 +14,7 @@ class DailyReport(override val currentDay: OffsetDateTime): CalendarReport(curre
             .withHour(0)
             .withMinute(0)
             .withSecond(1)
-        val endTime = OffsetDateTime
-            .now()
+        val endTime = currentDay
             .withHour(23)
             .withMinute(59)
             .withSecond(59)

@@ -5,7 +5,6 @@ import com.zn.apps.model.data.report.ReportInterval
 import com.zn.apps.model.data.report.ReportResource
 import com.zn.apps.model.data.report.StatsReport
 import com.zn.apps.model.data.task.TaskResource
-import timber.log.Timber
 import java.time.DayOfWeek
 import java.time.OffsetDateTime
 import java.time.temporal.TemporalAdjusters
@@ -21,7 +20,6 @@ class WeeklyReport(override val currentDay: OffsetDateTime): CalendarReport(curr
             .withHour(0)
             .withMinute(0)
             .withSecond(1)
-        Timber.d("$startTime")
         val endTime = startTime
             .plusDays(6)
             .withHour(23)
@@ -34,10 +32,10 @@ class WeeklyReport(override val currentDay: OffsetDateTime): CalendarReport(curr
         var totalHours: Long = 0
         var focusDays = 0
         val completedPomodoro = reportResources.size
-        val stats: MutableMap<Int, Int> = initStatMap(1, 7)
+        val stats: MutableMap<Int, Int> = initStatMap(0, 6)
         reportResources.forEach { reportResource ->
             totalHours += reportResource.elapsedTime
-            val dayOfWeekCompleted = reportResource.completedTime.dayOfWeek.value
+            val dayOfWeekCompleted = getStatsIndex(reportResource.completedTime.dayOfMonth)
             stats[dayOfWeekCompleted] = stats.getOrDefault(dayOfWeekCompleted, 0) + 1
         }
         stats.forEach { (_, pomodoroCompleted) ->
@@ -55,10 +53,10 @@ class WeeklyReport(override val currentDay: OffsetDateTime): CalendarReport(curr
         var totalHours: Long = 0
         var focusDays = 0
         val completedTasks = taskResources.size
-        val stats: MutableMap<Int, Int> = initStatMap(1, 7)
+        val stats: MutableMap<Int, Int> = initStatMap(0, 6)
         taskResources.forEach { taskResource ->
             totalHours += taskResource.task.pomodoro.elapsedTime
-            val dayOfWeekCompleted = taskResource.task.completedTime!!.dayOfWeek.value
+            val dayOfWeekCompleted = getStatsIndex(taskResource.task.completedTime!!.dayOfMonth)
             stats[dayOfWeekCompleted] = stats.getOrDefault(dayOfWeekCompleted, 0) + 1
         }
         stats.forEach { (_, taskCompleted) ->
@@ -70,5 +68,16 @@ class WeeklyReport(override val currentDay: OffsetDateTime): CalendarReport(curr
             totalCompleted = completedTasks,
             stats = stats.toMap()
         )
+    }
+
+    private fun getStatsIndex(day: Int): Int {
+        val interval = getReportInterval()
+        var index = 0
+        var currentDay = interval.startTime
+        while (day != currentDay.dayOfMonth && currentDay < interval.endTime) {
+            index++
+            currentDay = currentDay.plusDays(1)
+        }
+        return index
     }
 }
