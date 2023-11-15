@@ -14,6 +14,7 @@ import com.zn.apps.model.data.pomodoro.PomodoroState
 import com.zn.apps.model.data.pomodoro.TimerState
 import com.zn.apps.model.data.report.Report
 import com.zn.apps.model.data.task.Task
+import com.zn.apps.model.datastore.PomodoroPreferences
 import com.zn.apps.model.usecase.Result
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.collectLatest
@@ -169,9 +170,20 @@ class TimerManager @Inject constructor(
 
     private suspend fun nextPhase() {
         val pomodoroState = pomodoroTimerState.first()
+        val pomodoroPreferences = pomodoroPreferences.first()
         val nextPhase = getNextPhase(pomodoroState.currentPhase, isLongBreakReached(pomodoroState))
-
-        updatePomodoroStateForNextPhase(nextPhase, pomodoroState.taskIdRunning)
+        if (pomodoroPreferences.disableBreak)
+            updatePomodoroStateForNextPhase(
+                nextPhase = PomodoroPhase.POMODORO,
+                taskIdRunning = pomodoroState.taskIdRunning,
+                pomodoroPreferences = pomodoroPreferences
+            )
+        else
+            updatePomodoroStateForNextPhase(
+                nextPhase = nextPhase,
+                taskIdRunning = pomodoroState.taskIdRunning,
+                pomodoroPreferences = pomodoroPreferences
+            )
         notifier.removeTimerServiceNotification()
     }
 
@@ -183,6 +195,7 @@ class TimerManager @Inject constructor(
      */
     private suspend fun updatePomodoroStateForNextPhase(
         nextPhase: PomodoroPhase,
+        pomodoroPreferences: PomodoroPreferences,
         taskIdRunning: String
     ) {
         when (nextPhase) {
@@ -206,12 +219,18 @@ class TimerManager @Inject constructor(
                 } else {
                     resetPomodoroState(nextPhase)
                 }
+                if (pomodoroPreferences.autoStartNextPomodoro) {
+                    startTimer()
+                }
             }
             PomodoroPhase.LONG_BREAK -> {
                 pomodoroStateRepository.setPomodoroCompletedSoFar(0)
                 resetPomodoroState(nextPhase)
             }
             else -> resetPomodoroState(nextPhase)
+        }
+        if (nextPhase != PomodoroPhase.POMODORO && pomodoroPreferences.autoStartBreak) {
+            startTimer()
         }
     }
 

@@ -19,6 +19,7 @@ class DailyTodoReminderAlarmScheduler @Inject constructor(
         val intent = Intent(context, DailyTodoReminderAlarmReceiver::class.java)
         val time = OffsetDateTime
             .now()
+            .plusDays(1)
             .withHour(9)
             .withMinute(0)
             .withSecond(0)
