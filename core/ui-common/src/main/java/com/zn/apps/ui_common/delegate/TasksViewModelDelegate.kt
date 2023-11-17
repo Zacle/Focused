@@ -263,7 +263,8 @@ class DefaultTasksViewModelDelegate @Inject constructor(
 
     private fun upsertAlarm(alarmItem: AlarmItem) {
         scope.launch {
-            taskAlarmScheduler.scheduleAlarm(alarmItem)
+            if (alarmItem.remindAt > OffsetDateTime.now())
+                taskAlarmScheduler.scheduleAlarm(alarmItem)
             upsertAlarmUseCase.execute(
                 UpsertAlarmUseCase.Request(alarmItem)
             )

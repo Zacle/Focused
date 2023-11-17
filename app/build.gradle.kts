@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId = "com.zn.apps.focused"
-        minSdkVersion(libs.versions.minSdk.get().toInt())
+        minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
@@ -78,6 +78,8 @@ dependencies {
     implementation(project(":data-local"))
     implementation(project(":datastore"))
 
+    implementation(project(":sync"))
+
     // Core Android dependencies
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -119,6 +121,11 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
     kapt(libs.hilt.compiler)
+
+    // Worker
+    implementation(libs.androidx.work)
+    implementation(libs.hilt.work)
+    kapt(libs.hilt.work.compiler)
 
     implementation(libs.timber)
 

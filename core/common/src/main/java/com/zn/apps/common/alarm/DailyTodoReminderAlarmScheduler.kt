@@ -15,14 +15,27 @@ class DailyTodoReminderAlarmScheduler @Inject constructor(
 ) {
     private val alarmManager = context.getSystemService(AlarmManager::class.java)
 
+    /**
+     * Schedule daily reminders alarm. If at the time of scheduling we are already past 9AM,
+     * the alarm is set to be fired the next day at 9AM, otherwise we schedule the same day and
+     * repeatedly daily at 9AM
+     */
     fun scheduleAlarm() {
         val intent = Intent(context, DailyTodoReminderAlarmReceiver::class.java)
-        val time = OffsetDateTime
+        val targetAlarmTime = OffsetDateTime
             .now()
-            .plusDays(1)
             .withHour(9)
             .withMinute(0)
             .withSecond(0)
+        val time = if (OffsetDateTime.now() > targetAlarmTime)
+                        OffsetDateTime
+                        .now()
+                        .plusDays(1)
+                        .withHour(9)
+                        .withMinute(0)
+                        .withSecond(0)
+                    else
+                        targetAlarmTime
 
         alarmManager.setRepeating(
             AlarmManager.RTC_WAKEUP,

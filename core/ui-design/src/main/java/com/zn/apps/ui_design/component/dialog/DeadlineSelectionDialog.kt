@@ -60,6 +60,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import com.zn.apps.common.DeadlineTimeHelper
 import com.zn.apps.common.DeadlineType
 import com.zn.apps.ui_design.R
 import com.zn.apps.ui_design.component.FocusedAppBackground
@@ -94,7 +95,7 @@ fun DeadlineSelectionDialog(
         mutableStateOf(dateTime?.toLocalTime() ?: LocalTime.of(8, 0))
     }
     var timeType: DeadlineType? by remember {
-        mutableStateOf(DeadlineType.TODAY)
+        mutableStateOf(DeadlineTimeHelper.convertToDeadlineType(dateTime))
     }
     var reminderTimeValue by remember {
         mutableIntStateOf(remindBeforeValue)
@@ -467,11 +468,7 @@ fun DefaultDueDate(
     modifier: Modifier = Modifier
 ) {
 
-    val selectedState by remember {
-        mutableStateOf(selected)
-    }
-
-    val transition = updateTransition(targetState = selectedState, label = "pomodoro tab transition")
+    val transition = updateTransition(targetState = selected, label = "pomodoro tab transition")
 
     val backgroundColor by transition.animateColor(
         label = "default due date background transition"

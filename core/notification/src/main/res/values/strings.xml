@@ -31,4 +31,9 @@
     <string name="daily_todo_reminder_notification_description">
         Do not forget to schedule your tasks.
     </string>
+
+    <string name="sync_alarm">Syncing alarms</string>
+    <string name="sync_alarm_description">
+        Display notification to sync alarms after device reboot
+    </string>
 </resources>
