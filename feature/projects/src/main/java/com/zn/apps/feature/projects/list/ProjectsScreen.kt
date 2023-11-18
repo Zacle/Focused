@@ -13,13 +13,10 @@ import androidx.compose.foundation.layout.add
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
@@ -45,7 +42,6 @@ import com.zn.apps.ui_common.delegate.ProjectsUiStateHolder
 import com.zn.apps.ui_design.component.EmptyScreen
 import com.zn.apps.ui_design.component.FAFloatingButton
 import com.zn.apps.ui_design.component.FATopAppBar
-import com.zn.apps.ui_design.component.FATopAppBarDefaults
 import com.zn.apps.ui_design.icon.FAIcons
 import com.zn.apps.ui_design.icon.Icon
 import kotlinx.coroutines.CoroutineScope
@@ -132,17 +128,7 @@ fun ProjectsScreen(
             FATopAppBar(
                 titleName = stringResource(id = R.string.projects),
                 navigationIcon = Icon.DrawableResourceIcon(FAIcons.menu),
-                onNavigationIconClicked = onDrawerPressed,
-                actions = {
-                    IconButton(onClick = { /*TODO*/ }) {
-                        Icon(
-                            painter = painterResource(id = FAIcons.search),
-                            contentDescription = stringResource(id = R.string.search_project),
-                            tint = FATopAppBarDefaults.appBarContentColor(),
-                            modifier = Modifier.size(24.dp)
-                        )
-                    }
-                }
+                onNavigationIconClicked = onDrawerPressed
             ) {
                 ProjectsAppBarFilter(
                     onFilterSelected = onProjectFilterTypeSelected,

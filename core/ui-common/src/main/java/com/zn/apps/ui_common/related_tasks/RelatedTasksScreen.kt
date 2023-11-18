@@ -52,6 +52,7 @@ import com.zn.apps.ui_design.component.FATopAppBarDefaults
 import com.zn.apps.ui_design.component.IconMetadata
 import com.zn.apps.ui_design.component.PercentageMetadata
 import com.zn.apps.ui_design.component.SelectGroupingType
+import com.zn.apps.ui_design.component.ThemePreviews
 import com.zn.apps.ui_design.icon.FAIcons
 import com.zn.apps.ui_design.icon.Icon
 import kotlinx.coroutines.CoroutineScope
@@ -415,10 +416,11 @@ fun RelatedTasksShowMetadata(
     }
 }
 
+@ThemePreviews
 @Composable
 fun RelatedTasksHideMetadata(
-    metadataResult: MetadataResult,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    metadataResult: MetadataResult = MetadataResult.initialMetadataResult
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(12.dp),
@@ -435,7 +437,9 @@ fun RelatedTasksHideMetadata(
             IconMetadata(
                 text = stringResource(id = R.string.estimated_task_time),
                 icon = Icon.DrawableResourceIcon(FAIcons.TimerDestination),
-                modifier = Modifier.weight(1f)
+                modifier = Modifier
+                    .size(hideMetadataHeight)
+                    .weight(1f)
             ) {
                 CompletionTime(
                     hour = metadataResult.estimatedTaskTime.hours,
@@ -448,7 +452,9 @@ fun RelatedTasksHideMetadata(
             IconMetadata(
                 text = stringResource(id = R.string.tasks_to_be_completed),
                 icon = Icon.DrawableResourceIcon(FAIcons.task),
-                modifier = Modifier.weight(1f)
+                modifier = Modifier
+                    .size(hideMetadataHeight)
+                    .weight(1f)
             ) {
                 Text(
                     text = "${metadataResult.tasksToBeCompleted}",
@@ -458,3 +464,5 @@ fun RelatedTasksHideMetadata(
         }
     }
 }
+
+private val hideMetadataHeight = 120.dp
