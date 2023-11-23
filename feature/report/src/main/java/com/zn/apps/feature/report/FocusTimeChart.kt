@@ -8,7 +8,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.content.res.ResourcesCompat
@@ -18,11 +20,13 @@ import com.patrykandpatrick.vico.compose.axis.vertical.rememberStartAxis
 import com.patrykandpatrick.vico.compose.chart.Chart
 import com.patrykandpatrick.vico.compose.chart.column.columnChart
 import com.patrykandpatrick.vico.compose.style.ProvideChartStyle
+import com.patrykandpatrick.vico.compose.style.currentChartStyle
 import com.patrykandpatrick.vico.core.axis.AxisItemPlacer
 import com.patrykandpatrick.vico.core.axis.AxisPosition
 import com.patrykandpatrick.vico.core.axis.formatter.AxisValueFormatter
 import com.patrykandpatrick.vico.core.axis.formatter.DecimalFormatAxisValueFormatter
 import com.patrykandpatrick.vico.core.chart.values.AxisValuesOverrider
+import com.patrykandpatrick.vico.core.component.shape.LineComponent
 import com.patrykandpatrick.vico.core.entry.ChartEntryModel
 import com.patrykandpatrick.vico.core.entry.ChartEntryModelProducer
 import com.zn.apps.model.data.report.CalendarReportType
@@ -117,11 +121,22 @@ fun FABarChart(
     val typeFace = ResourcesCompat.getFont(context, R.font.poppins_regular) ?: Typeface.MONOSPACE
 
     ProvideChartStyle {
+        val defaultColumns = currentChartStyle.columnChart.columns
+        val color = MaterialTheme.colorScheme.onSurface.toArgb()
         Chart(
             chart = columnChart(
                 axisValuesOverrider = object : AxisValuesOverrider<ChartEntryModel> {
                     override fun getMaxY(model: ChartEntryModel): Float {
                         return yMaxRange.toFloat()
+                    }
+                },
+                columns = remember(defaultColumns) {
+                    defaultColumns.map {
+                        LineComponent(
+                            color = color,
+                            thicknessDp = it.thicknessDp,
+                            shape = it.shape
+                        )
                     }
                 }
             ),
