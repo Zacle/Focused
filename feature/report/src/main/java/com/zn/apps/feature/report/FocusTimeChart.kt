@@ -144,12 +144,14 @@ fun FABarChart(
             startAxis = rememberStartAxis(
                 itemPlacer = AxisItemPlacer.Vertical.default(maxItemCount = START_AXIS_STEPS),
                 label = axisLabelComponent(
-                    typeface = typeFace
+                    typeface = typeFace,
+                    color = MaterialTheme.colorScheme.onSurface
                 )
             ),
             bottomAxis = rememberBottomAxis(
                 label = axisLabelComponent(
-                    typeface = typeFace
+                    typeface = typeFace,
+                    color = MaterialTheme.colorScheme.onSurface
                 ),
                 valueFormatter =
                     if (calendarReportType == CalendarReportType.WEEKLY) {
