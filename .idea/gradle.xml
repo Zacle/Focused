@@ -33,6 +33,7 @@
             <option value="$PROJECT_DIR$/feature/tags" />
             <option value="$PROJECT_DIR$/feature/tasks" />
             <option value="$PROJECT_DIR$/feature/timer" />
+            <option value="$PROJECT_DIR$/mylibrary" />
             <option value="$PROJECT_DIR$/sync" />
           </set>
         </option>
