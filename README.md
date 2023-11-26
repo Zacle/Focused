@@ -82,7 +82,7 @@ The data layer is the source of truth of data in the app.
 
 ![Screenshot of Data layer](https://github.com/Zacle/Focused/blob/master/docs/images/Data%20layer.png?raw=true)
 
-Each repository has its own model. For example, the TaskRepository has a TaskResource model and the ReportRepository has a ReportResource model.
+Each repository has its own model. For example, the `TaskRepository` has a `TaskResource` model and the `ReportRepository` has a `ReportResource` model.
 
 Repositories are the public API for other layers, they provide the only way to access the app data. The repositories typically offer one or more methods for reading and writing data.
 
