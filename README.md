@@ -72,7 +72,7 @@ Here’s what’s happening in each steps:
 |7|Emit the stream of pomodoro preferences from local data store|`DefaultPomodoroPreferencesRepository.pomodoroPreferences`|
 |8|Handle the data emitted from the database to check if it was a Success or Error and emit the UseCase Result|`GetTaskUseCase`|
 |9|TimerManager combines the datastore emitted values, countdown timer, notification, service using the business logic and emit the timer’s pomodoro state|`TimerManager`|
-|10|TimerViewModel receive the use case case result and pomodoro state then emit them to the TimerScreen to render on the screen|`TimerViewModel`|
+|10|TimerViewModel receive the use case case result and pomodoro state then emit them to the TimerScreen to render on the screen|`TimerViewModel` <br/> `TimerScreen`|
 |11|Once the timer is completed, insert it to the report using InsertReportUseCase|`TimerManager.updateTask` <br/> `InsertReportUseCase`|
 |12|If the timer was completed, and a task was running, update the task’s pomodoro elapsed time and pomodoro completed|`TimerManager.updateTask` <br/> `UpsertTaskUseCase`|
 
