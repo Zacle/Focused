@@ -119,7 +119,7 @@ Then the local data source depends on one or more data storage. For example:
 
 # Domain Layer
 
-The domain layer contains use cases. These are classes that handle errors and failures on the execute method. They accept a Request object and return a Response object.
+The domain layer contains use cases. These are classes that handle errors and failures on the execute method. They accept a `Request` object and return a `Response` object.
 
 These use cases are used to simplify and remove duplicate logic from ViewModels. They typically get data from repositories.
 
