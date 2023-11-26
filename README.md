@@ -16,7 +16,7 @@ Focused is a fully functional Android app built entirely with Kotlin and Jetpack
 
 ## Features
 
-#### Tasks
+### Tasks
 
 Users should be able to schedule tasks that will be completed at any given time. Tasks can have a number of pomodoro with its specified length. The user can be reminded to do the task if he decides to be reminded while creating the task.
 
@@ -25,21 +25,21 @@ Tasks are also grouped by due date to make it easy to know the deadlines of each
 ![Screenshots of tasks feature](https://github.com/Zacle/Focused/blob/master/docs/images/focused-screenshots/tasks.png?raw=true)
 
 
-#### Projects
+### Projects
 
 Projects are used to group and organize tasks. Deleting a project will also delete all its associated tasks.
 
 ![Screenshots of projects feature](https://github.com/Zacle/Focused/blob/master/docs/images/focused-screenshots/projects.png?raw=true)
 
 
-#### Timer
+### Timer
 
 Timer is the main functionality that helps users focus on the task using the chosen time length from the preferences or the pomodoro length of the task. While running the screen stays on to keep track of the elapsed time.
 
 ![Screenshots of timer feature](https://github.com/Zacle/Focused/blob/master/docs/images/focused-screenshots/timer.png?raw=true)
 
 
-#### Report
+### Report
 
 The stats of completed tasks and pomodoro. Users can filter to find reports: daily, weekly and monthly. As for now only the bar chart displays the report.
 
