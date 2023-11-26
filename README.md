@@ -74,7 +74,7 @@ Here’s what’s happening in each steps:
 |9|TimerManager combines the datastore emitted values, countdown timer, notification, service using the business logic and emit the timer’s pomodoro state|`TimerManager`|
 |10|TimerViewModel receive the use case case result and pomodoro state then emit them to the TimerScreen to render on the screen|`TimerViewModel`|
 |11|Once the timer is completed, insert it to the report using InsertReportUseCase|`TimerManager.updateTask` <br/> `InsertReportUseCase`|
-|12|If the timer was completed, and a task was running, update the task’s pomodoro elapsed time and pomodoro completed|`TimerManager.updateTask`|
+|12|If the timer was completed, and a task was running, update the task’s pomodoro elapsed time and pomodoro completed|`TimerManager.updateTask` <br/> `UpsertTaskUseCase`|
 
 # Data Layer
 
